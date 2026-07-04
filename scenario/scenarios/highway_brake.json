@@ -1,0 +1,84 @@
+{
+  "name": "highway_brake",
+  "description": "Highway: the SUV directly ahead performs emergency braking; a faster SUV occupies the right lane ahead and another SUV follows behind. Ported from legacy Test_scene/scenario_manager4.py; preview snapshot extrapolated 1 s backwards; outcomes authored for this port.",
+  "snapshots": [
+    {
+      "t": -1.0,
+      "ego": {
+        "id": "ego",
+        "type": "small car",
+        "coordinate": [0.0, 0.0],
+        "velocity": [22.0, 0.0],
+        "road_topology": "Normal Road",
+        "road_boundary_left": -1.5,
+        "road_boundary_right": 10
+      },
+      "obstacles": [],
+      "participants": [
+        {
+          "id": "SUV1",
+          "type": "SUV",
+          "coordinate": [9.0, 0.0],
+          "velocity": [20.0, 0.0],
+          "intention": "Emergency Braking"
+        },
+        {
+          "id": "SUV2",
+          "type": "SUV",
+          "coordinate": [14.0, 6.0],
+          "velocity": [23.0, 0.0],
+          "intention": "Maintain"
+        },
+        {
+          "id": "SUV3",
+          "type": "SUV",
+          "coordinate": [-5.0, 0.0],
+          "velocity": [21.0, 0.0],
+          "intention": "Maintain"
+        }
+      ]
+    },
+    {
+      "t": 0.0,
+      "ego": {
+        "id": "ego",
+        "type": "small car",
+        "coordinate": [0.0, 0.0],
+        "velocity": [22.0, 0.0],
+        "road_topology": "Normal Road",
+        "road_boundary_left": -1.5,
+        "road_boundary_right": 10
+      },
+      "obstacles": [],
+      "participants": [
+        {
+          "id": "SUV1",
+          "type": "SUV",
+          "coordinate": [7.0, 0.0],
+          "velocity": [17.0, 0.0],
+          "intention": "Emergency Braking"
+        },
+        {
+          "id": "SUV2",
+          "type": "SUV",
+          "coordinate": [15.0, 6.0],
+          "velocity": [23.0, 0.0],
+          "intention": "Maintain"
+        },
+        {
+          "id": "SUV3",
+          "type": "SUV",
+          "coordinate": [-6.0, 0.0],
+          "velocity": [21.0, 0.0],
+          "intention": "Maintain"
+        }
+      ]
+    }
+  ],
+  "execution_outcomes": {
+    "0": "Hard braking avoided SUV1, but following SUV3 impacted the rear at low relative speed; minor damage, no injuries.",
+    "4": "Changed lanes right while braking and merged behind SUV2; no collision occurred.",
+    "2": "Sharp right lane change avoided SUV1 but closed rapidly on SUV2; near miss with hard secondary braking.",
+    "default": "Rear-ended the braking SUV1 ahead; moderate vehicle damage."
+  }
+}
