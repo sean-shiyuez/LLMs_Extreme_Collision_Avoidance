@@ -1,0 +1,39 @@
+{
+ "description": "Normal-road left-crossing truck enters from the ego’s front-left on a deterministic collision course while the usual right-side escape corridor is occupied by a pedestrian/blocked curb and a follower is close behind the ego. Sweep the short actionable TTC band below the existing right-blocked/pedestrian rules to expose when ego should still brake, attempt a constrained left avoidance/T-drift away from the pedestrian, or accept a front impact rather than endanger the escape-side pedestrian.",
+ "family_id": "left-crossing-right-escape-blocked-short-ttc",
+ "hypothesis": "With the right escape side blocked by a pedestrian, the dominant maneuver should switch from right T-drift at moderate TTC/high crossing speed to braking or constrained left avoidance as TTC decreases and ego/follower closing speed rises; the boundary should occur around TTC 1.0–1.3 s and depend strongly on lateral crossing speed.",
+ "parameters": [
+  {
+   "name": "ego_speed",
+   "min": 5.0,
+   "max": 30.0,
+   "steps": 3
+  },
+  {
+   "name": "ttc",
+   "min": 0.4,
+   "max": 2.4,
+   "steps": 3
+  },
+  {
+   "name": "lateral_speed",
+   "min": 2.0,
+   "max": 12.0,
+   "steps": 3
+  }
+ ],
+ "pattern": "lateral_crossing",
+ "template": {
+  "blocked_side": "right",
+  "follower": true,
+  "from_side": "left",
+  "pedestrian": {
+   "present": true,
+   "side": "right"
+  },
+  "road_boundary_left": null,
+  "road_boundary_right": 3.5,
+  "road_topology": "Normal Road",
+  "threat_type": "truck"
+ }
+}

@@ -1,0 +1,39 @@
+{
+ "description": "Fast normal-road left-crossing truck at actionable TTC with a pedestrian standing in the nominal right-side T-drift escape corridor and a close follower behind ego; the truck is placed on a collision course deterministically, with lateral offset derived as lateral_speed_mps × ttc_s.",
+ "family_id": "left-crossing-escape-ped-highspeed-short-ttc",
+ "hypothesis": "With the right escape corridor socially blocked by a pedestrian, the optimal law should switch from right T-drift to hard braking or left-biased evasive drift depending mainly on TTC and ego speed/follower rear-end risk.",
+ "parameters": [
+  {
+   "name": "ego_speed",
+   "min": 5.0,
+   "max": 30.0,
+   "steps": 3
+  },
+  {
+   "name": "ttc",
+   "min": 0.4,
+   "max": 2.4,
+   "steps": 3
+  },
+  {
+   "name": "lateral_speed",
+   "min": 2.0,
+   "max": 12.0,
+   "steps": 3
+  }
+ ],
+ "pattern": "lateral_crossing",
+ "template": {
+  "blocked_side": null,
+  "follower": true,
+  "from_side": "left",
+  "pedestrian": {
+   "present": true,
+   "side": "right"
+  },
+  "road_boundary_left": null,
+  "road_boundary_right": null,
+  "road_topology": "Normal Road",
+  "threat_type": "truck"
+ }
+}

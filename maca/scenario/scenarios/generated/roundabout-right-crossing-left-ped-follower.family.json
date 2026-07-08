@@ -1,0 +1,39 @@
+{
+ "description": "Roundabout-entry lateral crossing: ego approaches the roundabout conflict point while a truck enters from the right/front-right on a constructed collision course. The nominal leftward T-drift escape for a right-side threat is constrained by a pedestrian on the left escape side, and a follower behind the ego makes hard braking nontrivial. Sweep actionable TTC, crossing speed, ego speed, and pedestrian-side escape gap to expose brake-vs-drift tradeoffs outside current normal-road rules.",
+ "family_id": "roundabout-right-crossing-left-ped-follower",
+ "hypothesis": "With a pedestrian on the left escape side, right-side-crossing T-drift should dominate only at short TTC/high crossing speed when the pedestrian gap is large; otherwise controlled braking should dominate, especially at longer TTC or small escape gaps.",
+ "parameters": [
+  {
+   "name": "ego_speed",
+   "min": 5.0,
+   "max": 30.0,
+   "steps": 3
+  },
+  {
+   "name": "ttc",
+   "min": 0.4,
+   "max": 2.4,
+   "steps": 3
+  },
+  {
+   "name": "lateral_speed",
+   "min": 2.0,
+   "max": 12.0,
+   "steps": 3
+  }
+ ],
+ "pattern": "lateral_crossing",
+ "template": {
+  "blocked_side": null,
+  "follower": true,
+  "from_side": "right",
+  "pedestrian": {
+   "present": true,
+   "side": "left"
+  },
+  "road_boundary_left": 3.5,
+  "road_boundary_right": 3.5,
+  "road_topology": "Roundabout",
+  "threat_type": "truck"
+ }
+}

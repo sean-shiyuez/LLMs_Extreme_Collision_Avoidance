@@ -1,0 +1,39 @@
+{
+ "description": "Normal-road lead-braking rear-end threat: a lead vehicle in the ego lane hard-brakes onto a collision course while a follower is close behind ego. The right corridor is blocked, leaving only a left evasive corridor, so the sweep tests braking versus left lane-change/T-drift under rear-impact pressure.",
+ "family_id": "lead-braking-follower-left-escape",
+ "hypothesis": "Full braking should dominate at higher TTC or larger follower gaps, while left evasive maneuvering should dominate at lower TTC, higher ego speed, and tight follower gaps where rear-end risk makes braking costly.",
+ "parameters": [
+  {
+   "name": "ego_speed",
+   "min": 5.0,
+   "max": 30.0,
+   "steps": 3
+  },
+  {
+   "name": "gap",
+   "min": 3.0,
+   "max": 60.0,
+   "steps": 3
+  },
+  {
+   "name": "speed_diff",
+   "min": 0.0,
+   "max": 12.0,
+   "steps": 3
+  }
+ ],
+ "pattern": "lead_braking",
+ "template": {
+  "blocked_side": "right",
+  "follower": true,
+  "from_side": "left",
+  "pedestrian": {
+   "present": false,
+   "side": "right"
+  },
+  "road_boundary_left": null,
+  "road_boundary_right": null,
+  "road_topology": "Normal Road",
+  "threat_type": "lead_vehicle_hard_braking"
+ }
+}

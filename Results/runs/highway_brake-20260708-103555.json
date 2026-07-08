@@ -1,0 +1,76 @@
+{
+ "scenario": "highway_brake",
+ "libraries": {
+  "rules_active": 3,
+  "cases": 8
+ },
+ "assessment": {
+  "scene_risk": 0.783,
+  "band": "critical",
+  "min_ttc_s": 1.4,
+  "primary_threat": "SUV1"
+ },
+ "features": {
+  "discrete": {
+   "road_topology": "Normal Road",
+   "threat_kind": "suv",
+   "approach_sector": "front",
+   "pedestrian_side": "none",
+   "corridor_left_free": false,
+   "corridor_right_free": true,
+   "braking_sufficient": false,
+   "on_collision_course": true
+  },
+  "numeric": {
+   "ttc_s": 1.4,
+   "miss_m": 0.0,
+   "lateral_dist_m": 0.0,
+   "lateral_speed_mps": 0.0,
+   "closing_speed_mps": 5.0,
+   "ego_speed_mps": 22.0,
+   "hj_risk": 0.95,
+   "threat_dist_m": 7.0,
+   "scene_risk": 0.783
+  }
+ },
+ "rule_hit": null,
+ "case_hit": "seed-case-highway_brake",
+ "case_similarity": 1.0,
+ "observed_condition": "primary_threat_maintains",
+ "executed_code": 0,
+ "decision_source": "case[seed-case-highway_brake]",
+ "branch": {
+  "condition_type": "primary_threat_maintains",
+  "condition": "threat keeps closing on the current course",
+  "code": 0,
+  "target_speed_mps": 0.0,
+  "rationale": "Lead vehicle brakes hard: straight-line braking is least-harm.",
+  "confidence": 0.9
+ },
+ "timings": {
+  "monitor_ms": 1.686,
+  "features_ms": 0.13,
+  "rule_match_ms": 0.006,
+  "case_knn_ms": 0.058,
+  "evolution_ms": 0.095,
+  "trigger_path_total_ms": 1.989
+ },
+ "outcome": {
+  "severity": 3,
+  "text": "Collision with SUV1 at t=0.4s, front impact at 5.2 m/s relative speed: moderate damage, injuries possible.",
+  "collision": {
+   "target": "SUV1",
+   "kind": "SUV",
+   "t": 0.4,
+   "relative_speed_mps": 5.16,
+   "impact_face": "front",
+   "vulnerable": false
+  },
+  "hj_constraint": {
+   "worst_end_risk": 1.0,
+   "baseline_risk": 0.66,
+   "acceptable": false
+  }
+ },
+ "ran_at": "2026-07-08 10:35:55"
+}

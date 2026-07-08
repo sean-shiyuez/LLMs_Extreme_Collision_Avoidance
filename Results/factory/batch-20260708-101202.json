@@ -1,0 +1,33 @@
+{
+ "started_at": "2026-07-08 10:12:02",
+ "mock": true,
+ "source": "queue",
+ "queue_processed": [
+  {
+   "kind": "gap",
+   "scenario": "novel_gap",
+   "case_id": "case-3e34fc3f",
+   "executed_code": 0,
+   "severity": 4,
+   "effective": true
+  }
+ ],
+ "families": [],
+ "revalidation": [],
+ "library_before": {
+  "rules_total": 3,
+  "rules_active": 3,
+  "rules_candidate": 0,
+  "rules_deprecated": 0,
+  "cases": 8,
+  "queued": 1
+ },
+ "library_after": {
+  "rules_total": 3,
+  "rules_active": 3,
+  "rules_candidate": 0,
+  "rules_deprecated": 0,
+  "cases": 9,
+  "queued": 0
+ }
+}

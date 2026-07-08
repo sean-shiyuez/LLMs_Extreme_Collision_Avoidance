@@ -1,0 +1,99 @@
+# ======================================================================
+# MACA 库成长日志 (library_growth.log)
+# 记录离线工厂"生成案例 / 判断 / 完善规则"的每一步，供人工审阅。
+# 与 batch-*.json（机器可读完整报告）互补。可 `tail -f` 实时观察。
+#
+# 事件标签含义：
+#   [批次开始]/[批次结束]  一次工厂批次的起止 + 库现状统计
+#   [场景族]              生成器设计的参数化场景族被网格扫描；给出
+#                         规律/模糊/绝境点数 + 规则反例数 + 假设
+#     · 规律点：某机动明显最优 → 用于归纳规则
+#     · 模糊点：严重度接近/涉行人权衡 → 交委员会深思成案例
+#     · 绝境点：所有机动都最严重、无区分 → 丢弃(学不到规律)
+#     · 规则反例：现有规则命中但非最优的点 → 回喂归纳器收紧规则
+#   [队列处理]/[队列跳过]  运行时反馈(gap/冲突)：未覆盖→深思；已覆盖或
+#                         绝境(所有机动均最严重、无区分度)→跳过，不建无意义案例
+#   [案例生成]            新案例三行：① 决策机动码 ② 仿真判断(严重度+结局)
+#                         ③ 评估(是否有效 + 可迁移教训)
+#   [案例退役]            案例被冲突裁决否决，退出在线索引(保留追溯)
+#   [规则完善]            候选规则过晋升电池：检查数/通过率 → active 或 candidate
+#                         (通过率<0.9 留 candidate，附失败样本 = 数值复核在起作用)
+#   [提案被拒]            归纳提案未过网格数值复核(幻觉边界被拦下)，附具体不符点
+#   [归纳跳过]            区域/格点已被库覆盖 → 不花 LLM
+#   [规则修订]            既有规则被收紧/废弃(evidence-driven)
+#   [规则复验]            批末抗漂移：现役规则重新验证，失效即废弃
+# ======================================================================
+[2026-07-08 10:24:45] ======================================================================
+[2026-07-08 10:24:45] [批次开始] mock=True source=both | 库现状: {"rules_total": 3, "rules_active": 3, "rules_candidate": 0, "rules_deprecated": 0, "cases": 8, "queued": 1}
+[2026-07-08 10:24:45] [队列处理] gap @ novel_gap —— 未覆盖，交委员会深思
+[2026-07-08 10:24:45] [案例生成] case-8832f35f @ novel_gap 来源=gap_fill
+[2026-07-08 10:24:45]            决策: code 0（Full emergency braking）
+[2026-07-08 10:24:45]            判断: 仿真结局 severity 4/4 —— Collision with slowtruck at t=0.4s, front impact at 17.9 m/s relative speed: severe damage, serious injuries likely.
+[2026-07-08 10:24:45]            评估: effective=True | 教训: In this feature region, prefer the maneuver with the lowest simulated severity; braking is not automatically the safest choice.
+[2026-07-08 10:24:45] [场景族] mock-lateral-crossing-left（lateral_crossing）网格 12 点：规律 5（未覆盖 4）/ 模糊 0 / 绝境 7 / 规则反例 1
+[2026-07-08 10:24:45]            假设: T-drift should dominate at short TTC / fast lateral closing; braking or no-op should win at long TTC.
+[2026-07-08 10:24:45] [规则完善] mock-lateral-crossing-left-r1 maintains=code 0 —— 晋升电池 9 项检查, 通过率 0.889 → candidate | 失败样本: scenario test1: severity 4 vs achievable 2
+[2026-07-08 10:24:45] [批次结束] 库现状: {"rules_total": 4, "rules_active": 3, "rules_candidate": 1, "rules_deprecated": 0, "cases": 9, "queued": 0} | 报告: /Users/Shared/maca/Code/Results/factory/batch-20260708-102445.json
+[2026-07-08 10:24:45] ======================================================================
+[2026-07-08 10:24:45] [批次开始] mock=True source=generate | 库现状: {"rules_total": 4, "rules_active": 3, "rules_candidate": 1, "rules_deprecated": 0, "cases": 9, "queued": 0}
+[2026-07-08 10:24:45] [场景族] mock-lateral-crossing-left（lateral_crossing）网格 12 点：规律 5（未覆盖 4）/ 模糊 0 / 绝境 7 / 规则反例 1
+[2026-07-08 10:24:45]            假设: T-drift should dominate at short TTC / fast lateral closing; braking or no-op should win at long TTC.
+[2026-07-08 10:24:45] [规则完善] mock-lateral-crossing-left-r1 maintains=code 0 —— 晋升电池 9 项检查, 通过率 0.889 → candidate | 失败样本: scenario test1: severity 4 vs achievable 2
+[2026-07-08 10:24:45] [批次结束] 库现状: {"rules_total": 4, "rules_active": 3, "rules_candidate": 1, "rules_deprecated": 0, "cases": 9, "queued": 0} | 报告: /Users/Shared/maca/Code/Results/factory/batch-20260708-102445.json
+[2026-07-08 10:24:45] ======================================================================
+[2026-07-08 10:24:45] [批次开始] mock=True source=generate | 库现状: {"rules_total": 4, "rules_active": 3, "rules_candidate": 1, "rules_deprecated": 0, "cases": 9, "queued": 0}
+[2026-07-08 10:24:45] [场景族] mock-lateral-crossing-left（lateral_crossing）网格 12 点：规律 5（未覆盖 4）/ 模糊 0 / 绝境 7 / 规则反例 1
+[2026-07-08 10:24:45]            假设: T-drift should dominate at short TTC / fast lateral closing; braking or no-op should win at long TTC.
+[2026-07-08 10:24:45] [规则完善] mock-lateral-crossing-left-r1 maintains=code 0 —— 晋升电池 9 项检查, 通过率 0.889 → candidate | 失败样本: scenario test1: severity 4 vs achievable 2
+[2026-07-08 10:24:45] [批次结束] 库现状: {"rules_total": 4, "rules_active": 3, "rules_candidate": 1, "rules_deprecated": 0, "cases": 9, "queued": 0} | 报告: /Users/Shared/maca/Code/Results/factory/batch-20260708-102445.json
+[2026-07-08 18:51:48] ======================================================================
+[2026-07-08 18:51:48] [批次开始] mock=False source=both | 库现状: {"rules_total": 3, "rules_active": 3, "rules_candidate": 0, "rules_deprecated": 0, "cases": 8, "queued": 0}
+[2026-07-08 18:52:16] [场景族] right-cutin-left-ped-follower（cut_in）网格 27 点：规律 0（未覆盖 0）/ 模糊 0 / 绝境 27
+[2026-07-08 18:52:16]            假设: For right-side cut-ins, left evasive/T-drift maneuvers dominate only when TTC and left escape clearance are sufficient; with short TTC, high cut-in lateral speed, or tight pedestrian-side clearance, braking/holding becomes preferable despite rear-end risk from the follower.
+[2026-07-08 18:52:16] [归纳跳过] lawful region already covered (0 points, 0 uncovered)
+[2026-07-08 18:54:07] [场景族] left-cut-in-close-follower-right-gap（cut_in）网格 27 点：规律 0（未覆盖 0）/ 模糊 27
+[2026-07-08 18:54:07]            假设: With a close follower and a left-side cut-in, braking should dominate at long TTC or tight right gaps, while right evasive drift/lane-change should dominate at mid/short actionable TTC with high closing speed and sufficient right escape gap.
+[2026-07-08 18:54:07] [归纳跳过] lawful region already covered (0 points, 0 uncovered)
+[2026-07-08 18:54:22] [案例生成] case-da401162 @ left-cut-in-close-follower-right-gap@ego_speed=5.0,gap=3.0,speed_diff=0.0 来源=committee
+[2026-07-08 18:54:22]            决策: code 7（No need to intervene）
+[2026-07-08 18:54:22]            判断: 仿真结局 severity 3/4 —— Collision with neighbor at t=0.05s, side impact at 0.0 m/s relative speed: moderate damage, injuries possible.
+[2026-07-08 18:54:22]            评估: effective=False | 教训: When a cut-in/trajectory threatens a near-term conflict and the lateral escape corridor is blocked (e.g., the left side is occupied by another vehicle), assume that steering-based evasions will produce side impacts. In such cases, prioritize longitudinal safety actions (full emergency braking to reduce closing speed/impact energy while keeping steering neutral to avoid entering the occupied corridor). Only maintain course if the threat behavior clearly breaks the collision course (e.g., the cutter yields enough to remove the on-collision course) and a safe, continuously available lateral corridor exists; otherwise, do not rely on late lateral maneuvering when TTC is short and braking/space is insufficient.
+[2026-07-08 18:54:36] [案例生成] case-09303b47 @ left-cut-in-close-follower-right-gap@ego_speed=5.0,gap=31.5,speed_diff=0.0 来源=committee
+[2026-07-08 18:54:36]            决策: code 2（Turn right sharply to change lanes and resume direction）
+[2026-07-08 18:54:36]            判断: 仿真结局 severity 3/4 —— Collision with neighbor at t=0.05s, side impact at 0.0 m/s relative speed: moderate damage, injuries possible.
+[2026-07-08 18:54:36]            评估: effective=True | 教训: When a close-by vehicle occupies the front-left space such that the left corridor is blocked and braking is insufficient, treat the neighbor as the dominant instantaneous threat. If available options are all predicted to yield the same (or worse) imminent side-impact severity, prioritize the least disruptive safe choice: maintain course (and avoid steering toward the occupied side). Only deviate when occupancy changes in a way that truly opens a safer corridor (e.g., the neighbor yields/clears the conflict zone) rather than relying on maneuvers that merely shift the geometry without reducing impact severity.
+[2026-07-08 18:54:48] [案例生成] case-6be173bb @ left-cut-in-close-follower-right-gap@ego_speed=5.0,gap=31.5,speed_diff=12.0 来源=committee
+[2026-07-08 18:54:48]            决策: code 7（No need to intervene）
+[2026-07-08 18:54:48]            判断: 仿真结局 severity 3/4 —— Collision with neighbor at t=0.05s, side impact at 0.0 m/s relative speed: moderate damage, injuries possible.
+[2026-07-08 18:54:48]            评估: effective=True | 教训: When a cut-in threat leaves an adjacent side lane occupied (e.g., left corridor blocked by a neighboring vehicle), treat lateral steering as high-risk or inadmissible and prioritize straight-line emergency braking to minimize impact energy and preserve vehicle alignment. Only consider “no intervention” or lane changes after the on-collision course is actually resolved; otherwise, avoid adding lateral motion that can convert a front conflict into a side-swipe exposure. In practice: if the lateral escape corridor is not safely usable, longitudinal deceleration is typically the safest dominant action, even if it cannot fully avert contact in the given geometry.
+[2026-07-08 18:54:48] [归纳跳过] 3 个模糊格点已被库覆盖，跳过委员会
+[2026-07-08 18:54:48] [批次结束] 库现状: {"rules_total": 3, "rules_active": 3, "rules_candidate": 0, "rules_deprecated": 0, "cases": 11, "queued": 0} | 报告: /Users/Shared/maca/Code/Results/factory/batch-20260708-185448.json
+[2026-07-08 19:00:10] ======================================================================
+[2026-07-08 19:00:10] [批次开始] mock=False source=queue | 库现状: {"rules_total": 3, "rules_active": 3, "rules_candidate": 0, "rules_deprecated": 0, "cases": 11, "queued": 2}
+[2026-07-08 19:00:10] [队列处理] gap @ gap_vru_right_block —— 未覆盖，交委员会深思
+[2026-07-08 19:00:29] [案例生成] case-81a46d13 @ gap_vru_right_block 来源=gap_fill
+[2026-07-08 19:00:29]            决策: code 2（Turn right sharply to change lanes and resume direction）
+[2026-07-08 19:00:29]            判断: 仿真结局 severity 1/4 —— Near miss: minimum separation 0.45 m.
+[2026-07-08 19:00:29]            评估: effective=True | 教训: In asymmetric intersection scenarios where a vulnerable road user occupies one side (here, the pedestrian blocks the right corridor), enforce a hard veto on steering toward that side. If the primary threat (truck) is on a collision course and braking alone is insufficient, prioritize the still-free alternative corridor (here, left is free) with a decisive evasive lane change. If the only safe corridor becomes blocked by new hazards or boundaries, then switch to emergency braking as the fallback rather than attempting a forbidden side maneuver. (In this scene, the left-escape commitment was the only maneuver consistent with constraints and it produced the simulator’s best achievable result: severity 1 near miss.)
+[2026-07-08 19:00:29] [队列处理] gap @ gap_vru_left_block —— 未覆盖，交委员会深思
+[2026-07-08 19:00:46] [案例生成] case-1b87d79f @ gap_vru_left_block 来源=gap_fill
+[2026-07-08 19:00:46]            决策: code 1（Turn left sharply to change lanes and resume direction）
+[2026-07-08 19:00:46]            判断: 仿真结局 severity 1/4 —— Near miss: minimum separation 0.45 m.
+[2026-07-08 19:00:46]            评估: effective=True | 教训: When a vulnerable road user blocks one lateral escape corridor (e.g., pedestrian on the left vetoes left steering), do not consider that corridor even if it appears geometrically promising. Instead, commit to the least-harm maneuver family that does not violate the veto (and that the system can execute reliably): prioritize maintaining lane discipline / non-vetoed action and maximize longitudinal control. In this scenario, following the simulator-aligned least-harm option (leading to a near miss, not a collision) shows that respecting lateral veto constraints can be the difference between avoiding impact and causing a more severe outcome. Re-evaluate only if the scene evolution opens a road-boundary-safe, non-vetoed lateral path (e.g., a clearly valid right corridor).
+[2026-07-08 19:00:46] [批次结束] 库现状: {"rules_total": 3, "rules_active": 3, "rules_candidate": 0, "rules_deprecated": 0, "cases": 13, "queued": 0} | 报告: /Users/Shared/maca/Code/Results/factory/batch-20260708-190046.json
+[2026-07-08 19:05:17] ======================================================================
+[2026-07-08 19:05:17] [批次开始] mock=False source=queue | 库现状: {"rules_total": 3, "rules_active": 3, "rules_candidate": 0, "rules_deprecated": 0, "cases": 13, "queued": 1}
+[2026-07-08 19:05:17] [队列处理] gap @ gap_cyclist_cross_left —— 未覆盖，交委员会深思
+[2026-07-08 19:05:30] [案例生成] case-ba4bb98d @ gap_cyclist_cross_left 来源=gap_fill
+[2026-07-08 19:05:30]            决策: code 6（T-type drift avoidance maneuver, ending with the car perpendicular to the lane, facing right）
+[2026-07-08 19:05:30]            判断: 仿真结局 severity 4/4 —— Collision with cyc1 at t=0.7s, side impact at 10.6 m/s relative speed, involving a vulnerable road user: severe damage, serious injuries likely.
+[2026-07-08 19:05:30]            评估: effective=False | 教训: When TTC is extremely short (here ~0.84 s) and braking is insufficient, and one side is legally/operationally blocked by a pedestrian-side hazard, avoid steering toward the occupied side. Use the only remaining corridor(s) to execute a conservative lateral geometry change (e.g., the rightward T-type drift that reorients the ego to reduce the likelihood of a direct side strike), but explicitly recognize that if all simulated options still yield the same worst/severe severity class, the maneuver may be at best a “least-bad geometry” choice rather than a collision-avoidance solution. In such cases, prioritize (1) never violating the prohibited-side constraint, (2) selecting the corridor that keeps the collision mode less severe if avoidance is impossible, and (3) treating inability to brake sufficiently as an indicator that outcomes may be dominated by physics/kinematics rather than by branching choices.
+[2026-07-08 19:05:30] [批次结束] 库现状: {"rules_total": 3, "rules_active": 3, "rules_candidate": 0, "rules_deprecated": 0, "cases": 14, "queued": 0} | 报告: /Users/Shared/maca/Code/Results/factory/batch-20260708-190530.json
+[2026-07-08 19:07:51] ======================================================================
+[2026-07-08 19:07:51] [批次开始] mock=False source=queue | 库现状: {"rules_total": 3, "rules_active": 3, "rules_candidate": 0, "rules_deprecated": 0, "cases": 13, "queued": 1}
+[2026-07-08 19:07:51] [队列跳过] gap @ gap_cyclist_cross_left —— 绝境场景（所有机动均最严重、无区分度），学不到决策规律，丢弃不建案例
+[2026-07-08 19:07:51] [批次结束] 库现状: {"rules_total": 3, "rules_active": 3, "rules_candidate": 0, "rules_deprecated": 0, "cases": 13, "queued": 0} | 报告: /Users/Shared/maca/Code/Results/factory/batch-20260708-190751.json
+[2026-07-08 19:08:37] ======================================================================
+[2026-07-08 19:08:37] [批次开始] mock=False source=queue | 库现状: {"rules_total": 3, "rules_active": 3, "rules_candidate": 0, "rules_deprecated": 0, "cases": 13, "queued": 1}
+[2026-07-08 19:08:37] [队列跳过] gap @ gap_cyclist_cross_left —— 绝境场景（所有机动均最严重、无区分度），学不到决策规律，丢弃不建案例
+[2026-07-08 19:08:37] [批次结束] 库现状: {"rules_total": 3, "rules_active": 3, "rules_candidate": 0, "rules_deprecated": 0, "cases": 13, "queued": 0} | 报告: /Users/Shared/maca/Code/Results/factory/batch-20260708-190837.json

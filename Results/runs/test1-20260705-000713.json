@@ -1,0 +1,76 @@
+{
+ "scenario": "test1",
+ "libraries": {
+  "rules_active": 6,
+  "cases": 11
+ },
+ "assessment": {
+  "scene_risk": 0.769,
+  "band": "critical",
+  "min_ttc_s": 0.740484429065744,
+  "primary_threat": "truck1"
+ },
+ "features": {
+  "discrete": {
+   "road_topology": "Intersection",
+   "threat_kind": "truck",
+   "approach_sector": "front_left",
+   "pedestrian_side": "left",
+   "corridor_left_free": false,
+   "corridor_right_free": true,
+   "braking_sufficient": true,
+   "on_collision_course": true
+  },
+  "numeric": {
+   "ttc_s": 0.74,
+   "miss_m": 2.35,
+   "lateral_dist_m": 8.0,
+   "lateral_speed_mps": 8.0,
+   "closing_speed_mps": 17.0,
+   "ego_speed_mps": 15.0,
+   "hj_risk": 0.78,
+   "threat_dist_m": 12.806,
+   "scene_risk": 0.769
+  }
+ },
+ "rule_hit": "seed-tdrift-right",
+ "case_hit": "case-3993b89d",
+ "case_similarity": 1.0,
+ "observed_condition": "primary_threat_maintains",
+ "executed_code": 6,
+ "decision_source": "rule[seed-tdrift-right]+case[case-3993b89d] (agree)",
+ "branch": {
+  "condition_type": "primary_threat_maintains",
+  "condition": "laterally crossing threat keeps closing",
+  "code": 6,
+  "target_speed_mps": 0.0,
+  "rationale": "Collision unavoidable: rightward T-drift takes the impact on the energy-absorbing rear.",
+  "confidence": 0.9
+ },
+ "timings": {
+  "monitor_ms": 1.841,
+  "features_ms": 0.025,
+  "rule_match_ms": 0.008,
+  "case_knn_ms": 0.496,
+  "evolution_ms": 0.096,
+  "trigger_path_total_ms": 2.48
+ },
+ "outcome": {
+  "severity": 3,
+  "text": "Collision with truck1 at t=0.65s, rear impact at 13.5 m/s relative speed: moderate damage, injuries possible.",
+  "collision": {
+   "target": "truck1",
+   "kind": "Large Truck",
+   "t": 0.65,
+   "relative_speed_mps": 13.53,
+   "impact_face": "rear",
+   "vulnerable": false
+  },
+  "hj_constraint": {
+   "worst_end_risk": 0.24,
+   "baseline_risk": 0.17,
+   "acceptable": false
+  }
+ },
+ "ran_at": "2026-07-05 00:07:13"
+}

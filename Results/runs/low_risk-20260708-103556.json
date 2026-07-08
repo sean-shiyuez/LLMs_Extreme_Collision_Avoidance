@@ -1,0 +1,32 @@
+{
+ "scenario": "low_risk",
+ "libraries": {
+  "rules_active": 3,
+  "cases": 8
+ },
+ "assessment": {
+  "scene_risk": 0.354,
+  "band": "low",
+  "min_ttc_s": null,
+  "primary_threat": "pedestrian"
+ },
+ "executed_code": 7,
+ "decision_source": "reflex_no_intervention",
+ "branch": null,
+ "observed_condition": "low_risk",
+ "timings": {
+  "monitor_ms": 1.329,
+  "trigger_path_total_ms": 1.332
+ },
+ "outcome": {
+  "severity": 0,
+  "text": "No collision; minimum separation 6.0 m.",
+  "collision": null,
+  "hj_constraint": {
+   "worst_end_risk": 0.21,
+   "baseline_risk": 0.21,
+   "acceptable": true
+  }
+ },
+ "ran_at": "2026-07-08 10:35:56"
+}

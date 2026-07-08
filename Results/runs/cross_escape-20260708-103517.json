@@ -1,0 +1,88 @@
+{
+ "scenario": "cross_escape",
+ "libraries": {
+  "rules_active": 3,
+  "cases": 8
+ },
+ "assessment": {
+  "scene_risk": 0.759,
+  "band": "critical",
+  "min_ttc_s": 0.8144796380090498,
+  "primary_threat": "truck1"
+ },
+ "features": {
+  "discrete": {
+   "road_topology": "Intersection",
+   "threat_kind": "truck",
+   "approach_sector": "front_left",
+   "pedestrian_side": "none",
+   "corridor_left_free": true,
+   "corridor_right_free": true,
+   "braking_sufficient": false,
+   "on_collision_course": true
+  },
+  "numeric": {
+   "ttc_s": 0.81,
+   "miss_m": 4.17,
+   "lateral_dist_m": 8.0,
+   "lateral_speed_mps": 5.0,
+   "closing_speed_mps": 14.866,
+   "ego_speed_mps": 14.0,
+   "hj_risk": 0.78,
+   "threat_dist_m": 12.806,
+   "scene_risk": 0.759
+  }
+ },
+ "rule_hit": "seed-tdrift-right",
+ "case_hit": "seed-case-cross_escape",
+ "case_similarity": 1.0,
+ "observed_condition": "primary_threat_maintains",
+ "conflict": {
+  "rule": {
+   "code": 6,
+   "severity": 4,
+   "contact_speed": 11.29,
+   "aggressiveness": 4,
+   "outcome": "Collision with truck1 at t=0.7s, side impact at 11.3 m/s relative speed: severe damage, serious injuries likely."
+  },
+  "case": {
+   "code": 2,
+   "severity": 1,
+   "contact_speed": 0.0,
+   "aggressiveness": 3,
+   "outcome": "Near miss: minimum separation 0.06 m."
+  },
+  "chosen": "case"
+ },
+ "conflict_adjudicated": true,
+ "executed_code": 2,
+ "decision_source": "conservative_arbitration->case (rule 6 vs case 2)",
+ "branch": {
+  "condition_type": "primary_threat_maintains",
+  "condition": "threat keeps closing on the current course",
+  "code": 2,
+  "target_speed_mps": 0.0,
+  "rationale": "Clear escape corridor exists: sharp lane change beats T-drift; corrects the over-claiming seed rule.",
+  "confidence": 0.9
+ },
+ "timings": {
+  "monitor_ms": 1.318,
+  "features_ms": 0.109,
+  "rule_match_ms": 0.006,
+  "case_knn_ms": 0.04,
+  "evolution_ms": 0.044,
+  "arbitration_ms": 0.207,
+  "trigger_path_total_ms": 1.74
+ },
+ "outcome": {
+  "severity": 1,
+  "text": "Near miss: minimum separation 0.06 m.",
+  "collision": null,
+  "hj_constraint": {
+   "worst_end_risk": 0.22,
+   "baseline_risk": 0.2,
+   "acceptable": true
+  }
+ },
+ "ran_at": "2026-07-08 10:35:17"
+}

@@ -1,0 +1,76 @@
+{
+ "scenario": "highway_brake",
+ "libraries": {
+  "rules_active": 4,
+  "cases": 5
+ },
+ "assessment": {
+  "scene_risk": 0.783,
+  "band": "critical",
+  "min_ttc_s": 1.4,
+  "primary_threat": "SUV1"
+ },
+ "features": {
+  "discrete": {
+   "road_topology": "Normal Road",
+   "threat_kind": "suv",
+   "approach_sector": "front",
+   "pedestrian_side": "none",
+   "corridor_left_free": false,
+   "corridor_right_free": true,
+   "braking_sufficient": false,
+   "on_collision_course": true
+  },
+  "numeric": {
+   "ttc_s": 1.4,
+   "miss_m": 0.0,
+   "lateral_dist_m": 0.0,
+   "lateral_speed_mps": 0.0,
+   "closing_speed_mps": 5.0,
+   "ego_speed_mps": 22.0,
+   "hj_risk": 0.95,
+   "threat_dist_m": 7.0,
+   "scene_risk": 0.783
+  }
+ },
+ "rule_hit": null,
+ "case_hit": "case-2916767b",
+ "case_similarity": 1.0,
+ "observed_condition": "primary_threat_maintains",
+ "executed_code": 0,
+ "decision_source": "case[case-2916767b]",
+ "branch": {
+  "condition_type": "primary_threat_maintains",
+  "condition": "threat keeps closing",
+  "code": 0,
+  "target_speed_mps": 0.0,
+  "rationale": "Follow the simulator's least-harm ranking.",
+  "confidence": 0.8
+ },
+ "timings": {
+  "monitor_ms": 1.172,
+  "features_ms": 0.022,
+  "rule_match_ms": 0.004,
+  "case_knn_ms": 0.039,
+  "evolution_ms": 0.089,
+  "trigger_path_total_ms": 1.34
+ },
+ "outcome": {
+  "severity": 2,
+  "text": "Collision with SUV3 at t=1.05s, rear impact at 7.4 m/s relative speed: minor damage, no injuries expected.",
+  "collision": {
+   "target": "SUV3",
+   "kind": "SUV",
+   "t": 1.05,
+   "relative_speed_mps": 7.4,
+   "impact_face": "rear",
+   "vulnerable": false
+  },
+  "hj_constraint": {
+   "worst_end_risk": 1.0,
+   "baseline_risk": 0.66,
+   "acceptable": false
+  }
+ },
+ "ran_at": "2026-07-04 23:51:04"
+}

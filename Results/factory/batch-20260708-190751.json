@@ -1,0 +1,31 @@
+{
+ "started_at": "2026-07-08 19:07:51",
+ "mock": false,
+ "source": "queue",
+ "queue_processed": [
+  {
+   "kind": "gap",
+   "scenario": "gap_cyclist_cross_left",
+   "skipped": true,
+   "reason": "doomed"
+  }
+ ],
+ "families": [],
+ "revalidation": [],
+ "library_before": {
+  "rules_total": 3,
+  "rules_active": 3,
+  "rules_candidate": 0,
+  "rules_deprecated": 0,
+  "cases": 13,
+  "queued": 1
+ },
+ "library_after": {
+  "rules_total": 3,
+  "rules_active": 3,
+  "rules_candidate": 0,
+  "rules_deprecated": 0,
+  "cases": 13,
+  "queued": 0
+ }
+}

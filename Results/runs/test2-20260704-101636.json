@@ -1,0 +1,963 @@
+{
+ "scenario": "test2",
+ "description": "Normal road: static obstacle blocks the ego lane while an SUV cuts in from the right lane. Ported from legacy Test_scene/scenario_manager_test2.py; preview snapshot extrapolated 1 s backwards.",
+ "mock": false,
+ "started_at": "2026-07-04 10:14:19",
+ "phases": {
+  "reflex_preview": {
+   "elapsed_ms": 11.32,
+   "scene_risk": 0.456,
+   "band": "elevated",
+   "min_ttc_s": 2.3000000000000003,
+   "primary_threat": "SUV1",
+   "per_target": {
+    "obs1": {
+     "hj_risk": 0.45,
+     "ttc_s": 2.3,
+     "miss_m": 0.0,
+     "on_collision_course": true,
+     "urgency": 0.233,
+     "combined": 0.363
+    },
+    "obs2": {
+     "hj_risk": 0.38,
+     "ttc_s": null,
+     "miss_m": 7.5,
+     "on_collision_course": false,
+     "urgency": 0.0,
+     "combined": 0.228
+    },
+    "SUV1": {
+     "hj_risk": 0.76,
+     "ttc_s": 4.12,
+     "miss_m": 0.47,
+     "on_collision_course": true,
+     "urgency": 0.0,
+     "combined": 0.456
+    }
+   },
+   "budget": {
+    "deadline_s": 1.8000000000000005,
+    "decision_role": "decision",
+    "allow_vision": true,
+    "allow_debate": true,
+    "max_tool_iters": 6,
+    "tier": "deliberate"
+   }
+  },
+  "deliberation": {
+   "elapsed_s": 135.151,
+   "deadline_s": 1.8,
+   "deadline_met": false,
+   "armed_policy": {
+    "scenario_name": "test2",
+    "source": "deliberation",
+    "primary_threat": "SUV1",
+    "deliberation_s": 135.151,
+    "branches": [
+     {
+      "condition_type": "primary_threat_maintains",
+      "condition": "SUV1 maintains its current left-lane-change trajectory while obs1 remains centered in the ego lane and no new vulnerable road user appears",
+      "code": 0,
+      "target_speed_mps": 0.0,
+      "rationale": "Full emergency braking is the safest primary response. Braking from 12 m/s at 8 m/s^2 requires about 9.0 m, while the anticipated gap to obs1 is 15.6 m, so stopping before the in-lane obstacle is feasible on the sunny, good-friction road. Rollout for code 0 gave the best tested minimum separation, 5.3 m to obs1, with ego speed reduced to 4.0 m/s after 1 s. It also avoids steering right toward SUV1 or left across the road boundary.",
+      "confidence": 0.86
+     },
+     {
+      "condition_type": "primary_threat_yields",
+      "condition": "SUV1 clearly yields by slowing, stopping lateral intrusion, or moving away so obs1 becomes the dominant immediate threat",
+      "code": 0,
+      "target_speed_mps": 0.0,
+      "rationale": "If SUV1 yields, obs1 remains directly ahead with TTC about 1.3 s. Emergency braking is physically sufficient because the 9.0 m stopping distance is less than the 15.6 m available gap. Steering is unnecessary and would either approach the right-side hazard corridor or violate the left boundary constraint.",
+      "confidence": 0.9
+     },
+     {
+      "condition_type": "primary_threat_accelerates",
+      "condition": "SUV1 accelerates or cuts harder left, but T-drift criteria remain unmet and the right corridor is not safely clear of SUV1's swept path",
+      "code": 0,
+      "target_speed_mps": 0.0,
+      "rationale": "Emergency braking reduces ego kinetic energy and avoids moving laterally into SUV1's path. The previous safety veto is respected: code 5 is forbidden because T-drift preconditions are unmet at anticipated execution, with SUV1 lateral closing only about 2.5 m/s and TTC about 3.12 s rather than TTC <= 1.3 s and lateral closing > 4 m/s. Braking keeps the ego aligned and avoids exposing the weak vehicle side through an unjustified rotation or sharp lateral maneuver.",
+      "confidence": 0.78
+     },
+     {
+      "condition_type": "secondary_threat_activates",
+      "condition": "obs2 or another secondary right-side threat activates, intrudes, or makes the right escape corridor unsafe",
+      "code": 0,
+      "target_speed_mps": 0.0,
+      "rationale": "If the right corridor becomes occupied or uncertain, steering right is unsafe. Steering left is also infeasible because the left boundary margin is only about 0.5 m and lane change is not possible. Emergency braking remains feasible against obs1 and minimizes impact speed if any residual conflict occurs.",
+      "confidence": 0.84
+     },
+     {
+      "condition_type": "default",
+      "condition": "default: branch predicates are uncertain, sensor classification is ambiguous, or the scene evolves within normal prediction error",
+      "code": 0,
+      "target_speed_mps": 0.0,
+      "rationale": "Default to full emergency braking because it is the only maneuver with verified stopping feasibility and the best tested rollout among serious candidates. Evidence gathered: SUV1 is on a collision course with TTC 3.12 s and HJ risk 0.87; obs1 is on a collision course with TTC 1.3 s; braking distance is 9.0 m versus 15.6 m available; left lane change is impossible due to the road boundary; right lane change is geometrically possible but moves toward SUV1 and had worse rollout risk than braking. Code 7 is rejected because intervention is required.",
+      "confidence": 0.82
+     }
+    ]
+   },
+   "safety_rounds": 2,
+   "debate_ran": true
+  },
+  "reflex_trigger": {
+   "scene_risk": 0.647,
+   "band": "critical",
+   "assess_ms": 0.31,
+   "match_ms": 0.15,
+   "trigger_decision_latency_ms": 0.46,
+   "executed_code": 0,
+   "maneuver": "Full emergency braking",
+   "decision_source": "armed_policy[secondary_threat_activates]",
+   "matched_branch": {
+    "condition_type": "secondary_threat_activates",
+    "condition": "obs2 or another secondary right-side threat activates, intrudes, or makes the right escape corridor unsafe",
+    "code": 0,
+    "target_speed_mps": 0.0,
+    "rationale": "If the right corridor becomes occupied or uncertain, steering right is unsafe. Steering left is also infeasible because the left boundary margin is only about 0.5 m and lane change is not possible. Emergency braking remains feasible against obs1 and minimizes impact speed if any residual conflict occurs.",
+    "confidence": 0.84
+   }
+  },
+  "consolidation": {
+   "assessment": "Effective. Full emergency braking was feasible and successfully stopped the ego vehicle before obs1 with no collision. Given the tight left boundary and the conflicting SUV on the right, avoiding lateral maneuvering was the correct conservative choice.",
+   "lesson": "When both lateral escape paths are constrained or uncertain, commit immediately to maximum braking and hold lane; do not trade braking distance for a risky swerve unless you have a clearly open corridor with verified clearance.",
+   "better_alternative": "None"
+  }
+ },
+ "execution_outcome": "Successfully braked before obs1, no collision occurred.",
+ "trace": [
+  {
+   "phase": "deliberation",
+   "agent": "orchestrator",
+   "output": "scene projected 1.00s forward to the anticipated execution state (risk 0.647)"
+  },
+  {
+   "phase": "deliberation",
+   "agent": "memory",
+   "t_wall": 1783131261.919997,
+   "output": {
+    "cases": [
+     {
+      "scenario": "EGO: small car, v=(10.0,0.0)m/s, road=Intersection, weather=Sunny (good road conditions)\nLARGE TRUCK truck1: 23.0m ahead, 14.4m left, v=(0.0,8.0)m/s, intention=Maintain\nPEDESTRIAN pedestrian: 16.0m ahead, 4.0m left, v=(0.0,0.0)m/s, intention=Maintain",
+      "decision_code": "0",
+      "outcome": "Side collision with the truck occurred, followed by vehicle instability. Both vehicle damage and injuries were severe.",
+      "lesson": "In an intersection, if a large vehicle is crossing laterally, do not rely on straight-line hard braking alone; immediately assess lateral threat and, if space exists, combine braking with an escape path away from the crossing vehicle while maintaining stability.",
+      "distance": 0.1964
+     },
+     {
+      "scenario": "EGO: small car, v=(10.0,0.0)m/s, road=Intersection, weather=Sunny (good road conditions)\nLARGE TRUCK truck1: 23.0m ahead, 14.4m left, v=(0.0,8.0)m/s, intention=Maintain\nPEDESTRIAN pedestrian: 16.0m ahead, 4.0m left, v=(0.0,0.0)m/s, intention=Maintain",
+      "decision_code": "6",
+      "outcome": "Rear collision with the truck occurred. Due to low relative velocity, no injuries were sustained.",
+      "lesson": "In a close cross-traffic conflict, do not commit to a side-rotation maneuver unless you have a verified escape path; if the obstacle is already inside the stopping/evading envelope, prioritize the maneuver that maximizes full-body clearance and preserves braking while keeping the vehicle stable.",
+      "distance": 0.1964
+     }
+    ],
+    "precomputed_policy": null
+   },
+   "elapsed_s": 1.776
+  },
+  {
+   "phase": "deliberation",
+   "agent": "risk",
+   "t_wall": 1783131262.366431,
+   "output": {
+    "summary": "Highest risk is SUV1: it has the largest HJ risk (0.76), is on a collision course, and has a short TTC of 4.12 s with a small miss distance of 0.47 m. obs1 is the immediate longitudinal hazard with TTC 2.3 s, zero miss distance, and on-collision-course status, but braking alone is sufficient with the current 15.6 m gap. obs2 is lower concern by comparison because it is not on a collision course and has a 7.5 m miss distance. Right-side lane change appears available, while the left corridor is blocked.",
+    "primary_threat": "SUV1"
+   },
+   "model": "gpt-5.4-mini",
+   "elapsed_s": 2.222,
+   "usage": {
+    "prompt_tokens": 679,
+    "completion_tokens": 145
+   },
+   "tool_calls": []
+  },
+  {
+   "phase": "deliberation",
+   "agent": "perception",
+   "t_wall": 1783131264.669528,
+   "output": {
+    "summary": "Obstacle obs1 is directly in ego lane 27.6 m ahead, creating a forward hazard. SUV1 is 8.6 m ahead-right and moving leftward toward ego’s lane while slightly slower longitudinally, so lateral separation is shrinking quickly. Right side is additionally constrained by obs2 at x=31.6, y=7.5; left side has no listed actors but only 1.5 m to the road boundary, so it is not a viable full evasive corridor.",
+    "hazards": [
+     {
+      "id": "SUV1",
+      "kind": "SUV",
+      "note": "Highest-risk dynamic hazard; ahead-right, left lane change toward ego path, closing laterally and only slightly slower in x."
+     },
+     {
+      "id": "obs1",
+      "kind": "obstacle",
+      "note": "Static obstacle centered in ego lane at 27.6 m; blocks continued straight path."
+     },
+     {
+      "id": "obs2",
+      "kind": "obstacle",
+      "note": "Static obstacle in right corridor ahead; reduces/blocks right-side bypass space."
+     }
+    ],
+    "free_corridor_left": false,
+    "free_corridor_right": false,
+    "occlusions": "No clear occlusion indicated; geometry shows a narrowing gap: SUV1 intrudes from the right while obs1 blocks ahead and obs2 occupies the farther right corridor.",
+    "primary_threat": "SUV1"
+   },
+   "model": "gpt-5.4",
+   "elapsed_s": 4.526,
+   "usage": {
+    "prompt_tokens": 1113,
+    "completion_tokens": 269
+   },
+   "tool_calls": []
+  },
+  {
+   "phase": "deliberation",
+   "agent": "decision",
+   "t_wall": 1783131327.5924768,
+   "output": {
+    "branches": [
+     {
+      "code": 5,
+      "condition": "SUV1 accelerates its leftward lane intrusion so lateral closing speed exceeds 4 m/s, lateral separation is <= 8 m, and side-impact TTC to SUV1 falls to <= 1.3 s while ego remains within road bounds.",
+      "condition_type": "primary_threat_accelerates",
+      "confidence": 0.72,
+      "rationale": "If SUV1 turns this into an imminent high-speed lateral impact from the right, the T-drift criterion is met. Code 5 points the ego nose left so the rear faces the incoming SUV from the right, preferring rear crash structure over weak side/battery-side exposure. Current rollout for code 5 gives min separation 4.32 m and end speed 6.0 m/s, with risk 0.97; it is not the default because the current SUV lateral closing speed is only 2.5 m/s and TTC is 3.12 s, but it is reserved for unavoidable side-impact escalation.",
+      "target_speed_mps": 0
+     },
+     {
+      "code": 4,
+      "condition": "obs1/stopping margin worsens so straight braking no longer has at least 2 m residual gap, while the right corridor remains free of pedestrians/cyclists and within road boundary, and SUV1 is no longer occupying the rightward swept path.",
+      "condition_type": "secondary_threat_activates",
+      "confidence": 0.64,
+      "rationale": "If the in-lane obstacle becomes the dominant immediate hazard and braking-only margin collapses, use the verified right corridor with braking rather than an unbraked swerve. Target 4 m/s is feasible on sunny normal road: reducing from 12 to 4 m/s at about 8 m/s² requires about 8 m, within the current 15.6 m gap to obs1, with residual margin if the right swept path is clear. Rollout for code 4 gives min separation 4.04 m; it is worse than full braking in the current scene, so this branch is only for secondary-threat escalation when braking-only is no longer sufficient.",
+      "target_speed_mps": 4
+     },
+     {
+      "code": 0,
+      "condition": "SUV1 aborts or slows its left lane change so its predicted miss distance increases outside collision radius and it no longer intrudes into ego lane.",
+      "condition_type": "primary_threat_yields",
+      "confidence": 0.9,
+      "rationale": "With SUV1 yielding, the main remaining threat is obs1 directly ahead. Braking evidence: stopping distance from 12 m/s at 8 m/s² is 9.0 m versus 15.6 m gap, so full emergency braking avoids the in-lane obstacle without steering toward the constrained left boundary or toward the right-side obstacle field.",
+      "target_speed_mps": 0
+     },
+     {
+      "code": 0,
+      "condition": "SUV1 continues the currently predicted left lane change without escalation: collision-course TTC remains around 3 s, lateral closing remains below 4 m/s, and no vulnerable road user appears in either swept path.",
+      "condition_type": "primary_threat_maintains",
+      "confidence": 0.82,
+      "rationale": "Current evidence favors full braking: obs1 TTC is 1.3 s but braking alone is sufficient with 9.0 m stopping distance against 15.6 m gap. SUV1 is on a collision course but not yet in the T-drift envelope; steering right would move toward SUV1 and obs2, and rollout for code 4/right-with-braking has worse worst-end HJ risk 0.98 than braking 0.94. Left lane change is vetoed by the 0.5 m boundary margin. Full braking reduces speed rapidly and lets the SUV pass ahead/left rather than exposing ego’s side through a rightward swerve.",
+      "target_speed_mps": 0
+     },
+     {
+      "code": 0,
+      "condition": "Ambiguous evolution, stale perception, or no branch predicate is confidently satisfied.",
+      "condition_type": "default",
+      "confidence": 0.78,
+      "rationale": "The safest robust fallback is full emergency braking. It is physically feasible, does not cross the left road boundary, does not steer toward the right-side SUV/obs2 conflict, and has the best current rollout among seriously considered candidates: code 0 min separation 5.3 m and worst HJ risk 0.94 versus code 4 risk 0.98, code 2 risk 1.0, and code 5 risk 0.97.",
+      "target_speed_mps": 0
+     }
+    ],
+    "overall_rationale": "Evidence gathered before decision: SUV1 TTC 3.12 s, on collision course, predicted miss distance 0.47 m, HJ risk 0.87; obs1 TTC 1.3 s, on collision course; full braking from 12 m/s at 8 m/s² stops in 9.0 m with 15.6 m available, so braking alone is physically sufficient for obs1. Left corridor is not viable because boundary margin is only 0.5 m; right corridor is geometrically possible but currently hazardous because SUV1 is ahead-right and moving left, and obs2 constrains the farther right side. Rollouts show full braking has the best current safety profile. Historical cases warn not to rely blindly on braking in fast lateral cross-traffic, so the tree includes a T-drift escalation branch if SUV1 becomes an imminent high-speed lateral impact; however, current SUV1 lateral closing speed and TTC do not meet that trigger. Rejected: code 1/3 due left boundary, code 2 due unbraked right swerve toward SUV1 and rollout risk 1.0, code 4 as default because rollout is worse than braking, code 5 unless T-drift criteria become true, code 6 wrong rear-orientation for a threat from the right, and code 7 because intervention is required."
+   },
+   "model": "gpt-5.5",
+   "elapsed_s": 62.922,
+   "usage": {
+    "prompt_tokens": 18713,
+    "completion_tokens": 5069
+   },
+   "tool_calls": [
+    {
+     "tool": "compute_ttc",
+     "arguments": {
+      "target_id": "SUV1"
+     },
+     "result": {
+      "target": "SUV1",
+      "on_collision_course": true,
+      "ttc_s": 3.12,
+      "predicted_miss_distance_m": 0.47,
+      "collision_radius_m": 3.8,
+      "current_distance_m": 9.99
+     },
+     "elapsed": 9.979200000032051e-05
+    },
+    {
+     "tool": "compute_ttc",
+     "arguments": {
+      "target_id": "obs1"
+     },
+     "result": {
+      "target": "obs1",
+      "on_collision_course": true,
+      "ttc_s": 1.3,
+      "predicted_miss_distance_m": 0.0,
+      "collision_radius_m": 3.5,
+      "current_distance_m": 15.6
+     },
+     "elapsed": 4.233299999967244e-05
+    },
+    {
+     "tool": "braking_distance",
+     "arguments": {
+      "decel_mps2": 8
+     },
+     "result": {
+      "ego_speed_mps": 12.0,
+      "decel_mps2": 8,
+      "stopping_distance_m": 9.0,
+      "nearest_in_lane_object": "obs1",
+      "gap_to_it_m": 15.6,
+      "braking_alone_sufficient": true
+     },
+     "elapsed": 2.4959000000990272e-05
+    },
+    {
+     "tool": "lateral_clearance",
+     "arguments": {
+      "side": "left"
+     },
+     "result": {
+      "side": "left",
+      "occupants": [],
+      "boundary_margin_m": 0.5,
+      "lane_change_possible": false
+     },
+     "elapsed": 1.2874999999468173e-05
+    },
+    {
+     "tool": "lateral_clearance",
+     "arguments": {
+      "side": "right"
+     },
+     "result": {
+      "side": "right",
+      "occupants": [],
+      "boundary_margin_m": 9.0,
+      "lane_change_possible": true
+     },
+     "elapsed": 7.374999999143483e-06
+    },
+    {
+     "tool": "query_hj_risk",
+     "arguments": {
+      "target_id": "SUV1"
+     },
+     "result": {
+      "target": "SUV1",
+      "hj_risk": 0.87,
+      "vulnerability_weight": 0.8
+     },
+     "elapsed": 0.0009855420000022264
+    },
+    {
+     "tool": "query_hj_risk",
+     "arguments": {
+      "target_id": "obs1"
+     },
+     "result": {
+      "target": "obs1",
+      "hj_risk": 0.7,
+      "vulnerability_weight": 0.8
+     },
+     "elapsed": 0.0002582910000015204
+    },
+    {
+     "tool": "retrieve_similar_cases",
+     "arguments": {
+      "k": 3
+     },
+     "result": {
+      "cases": [
+       {
+        "document": "EGO: small car, v=(10.0,0.0)m/s, road=Intersection, weather=Sunny (good road conditions)\nLARGE TRUCK truck1: 23.0m ahead, 14.4m left, v=(0.0,8.0)m/s, intention=Maintain\nPEDESTRIAN pedestrian: 16.0m ahead, 4.0m left, v=(0.0,0.0)m/s, intention=Maintain",
+        "metadata": {
+         "decision_code": "0",
+         "lesson": "In an intersection, if a large vehicle is crossing laterally, do not rely on straight-line hard braking alone; immediately assess lateral threat and, if space exists, combine braking with an escape path away from the crossing vehicle while maintaining stability.",
+         "outcome": "Side collision with the truck occurred, followed by vehicle instability. Both vehicle damage and injuries were severe.",
+         "policy_tree": "{\"branches\": [{\"condition_type\": \"default\", \"condition\": \"deadline exceeded\", \"code\": 0, \"target_speed_mps\": 0.0, \"rationale\": \"Deliberation missed its deadline; anytime fallback to the minimal-risk maneuver.\", \"confidence\": 1.0}], \"overall_rationale\": \"deadline fallback\"}",
+         "scenario_name": "test1",
+         "stored_at": "2026-07-04 10:09:43"
+        },
+        "distance": 0.19647020742827193
+       },
+       {
+        "document": "EGO: small car, v=(10.0,0.0)m/s, road=Intersection, weather=Sunny (good road conditions)\nLARGE TRUCK truck1: 23.0m ahead, 14.4m left, v=(0.0,8.0)m/s, intention=Maintain\nPEDESTRIAN pedestrian: 16.0m ahead, 4.0m left, v=(0.0,0.0)m/s, intention=Maintain",
+        "metadata": {
+         "decision_code": "6",
+         "lesson": "In a close cross-traffic conflict, do not commit to a side-rotation maneuver unless you have a verified escape path; if the obstacle is already inside the stopping/evading envelope, prioritize the maneuver that maximizes full-body clearance and preserves braking while keeping the vehicle stable.",
+         "outcome": "Rear collision with the truck occurred. Due to low relative velocity, no injuries were sustained.",
+         "policy_tree": "{\"branches\": [{\"code\": 6, \"condition\": \"truck1 accelerates or continues closing laterally such that a left-side impact is imminent with TTC <= 1.3 s, while the pedestrian is not in the rightward swept path\", \"condition_type\": \"secondary_threat_activates\", \"confidence\": 0.74, \"rationale\": \"Truck1 is ahead-left, within the 8 m lateral trigger distance at execution, closing laterally at about 8 m/s, and has TTC about 1.2 s. This satisfies the T-drift criterion. Code 6 points the ego nose right so the rear faces the incoming truck from the left, using the rear crash structure instead of exposing the weak side. This is physically different from the previously vetoed straight-line braking fallback.\", \"target_speed_mps\": 0}, {\"code\": 4, \"condition\": \"pedestrian moves further into the ego/left-forward conflict area or pedestrian position uncertainty increases\", \"condition_type\": \"primary_threat_accelerates\", \"confidence\": 0.82, \"rationale\": \"The left corridor is occupied by a vulnerable pedestrian, so steering left is prohibited. The right corridor is clear. Right lane change with braking moves away from the pedestrian while reducing speed. Target 3 m/s is feasible on sunny/good-friction pavement: reducing from 10 to 3 m/s at about 8 m/s\\u00b2 requires roughly 5.7 m, within the approximately 7 m longitudinal gap at anticipated execution. Rollout for code 4 reduced pedestrian end HJ risk to 0.29, far better than braking-only or sharp right without braking.\", \"target_speed_mps\": 3}, {\"code\": 4, \"condition\": \"pedestrian remains stationary near the forward-left conflict area and truck1 does not yet make an unavoidable side-impact condition\", \"condition_type\": \"primary_threat_maintains\", \"confidence\": 0.83, \"rationale\": \"The pedestrian remains the highest vulnerability threat, and the left side is unavailable. Code 4 uses the clear right corridor while braking, matching the historical lesson not to rely on straight-line braking alone when a large crossing truck is present. Target 3 m/s is justified by good road friction and the remaining gap: decelerating from 10 to 3 m/s needs about 5.7 m, less than the 7 m pedestrian longitudinal gap, while the lateral escape increases pedestrian clearance.\", \"target_speed_mps\": 3}, {\"code\": 6, \"condition\": \"pedestrian clearly retreats or clears the forward-left conflict zone before ego reaches it, while truck1 remains on the lateral crossing course\", \"condition_type\": \"primary_threat_yields\", \"confidence\": 0.7, \"rationale\": \"If the vulnerable-road-user conflict is resolved, the dominant remaining danger is the laterally crossing truck. With truck1 TTC about 1.2 s and lateral closing speed above 4 m/s, code 6 rotates the ego vehicle so any unavoidable truck impact is preferentially taken on the rear rather than the side, reducing crash severity and EV side/battery fire risk.\", \"target_speed_mps\": 0}, {\"code\": 4, \"condition\": \"default: perception is ambiguous, branch predicates are not cleanly satisfied, or the scene evolves within expected uncertainty\", \"condition_type\": \"default\", \"confidence\": 0.78, \"rationale\": \"The default must avoid the previously vetoed full-brake-only fallback. Code 4 is the most robust defensible maneuver: it does not steer toward the pedestrian, uses the clear right corridor, adds braking for speed control, and follows the historical lesson to combine braking with an escape path away from the crossing truck. Target 3 m/s is feasible on good-friction pavement within the available gap and materially reduces harm risk versus sharp right without braking.\", \"target_speed_mps\": 3}], \"overall_rationale\": \"Evidence gathered before decision: full braking from 10 m/s at 8 m/s\\u00b2 needs 6.25 m and is physically feasible, but a prior safety veto and the retrieved historical case both show that straight-line hard braking alone is hazardous here because the crossing truck can still strike the ego side. Left corridor is occupied by a vulnerable pedestrian and is therefore forbidden; right corridor is clear. Pedestrian HJ risk is high at 0.94, and truck1 is on a collision course with TTC about 1.2 s. Rollouts showed code 4 is the best robust pedestrian-safe default, while code 6 is reserved for the truck-dominant unavoidable lateral-impact case because it presents the rear, not the side, to the incoming truck. Codes 1, 3, and 5 are rejected because they steer toward the occupied left side; code 2 is rejected because sharp right without braking had only 1.26 m minimum separation and worst HJ risk 1.0; code 0 is rejected by the previous safety veto; and code 7 is inappropriate because intervention is required.\"}",
+         "scenario_name": "test1",
+         "stored_at": "2026-07-04 10:12:32"
+        },
+        "distance": 0.19649778453422917
+       }
+      ]
+     },
+     "elapsed": 1.6075222920000023
+    },
+    {
+     "tool": "rollout_maneuver",
+     "arguments": {
+      "code": 0,
+      "target_speed_mps": 0
+     },
+     "result": {
+      "code": 0,
+      "maneuver": "straight-line full braking",
+      "min_separation_m": 5.3,
+      "closest_target": "obs1",
+      "time_of_closest_m": 1.0,
+      "end_speed_mps": 4.0,
+      "end_lateral_offset_m": 0.0,
+      "end_state_hj_risk_per_target": {
+       "obs1": 0.94,
+       "obs2": 0.75,
+       "SUV1": 0.87
+      },
+      "worst_end_hj_risk": 0.94,
+      "baseline_no_intervention_hj_risk": 1.0,
+      "hj_acceptable": true
+     },
+     "elapsed": 0.0019798749999964116
+    },
+    {
+     "tool": "rollout_maneuver",
+     "arguments": {
+      "code": 4,
+      "target_speed_mps": 4
+     },
+     "result": {
+      "code": 4,
+      "maneuver": "right lane change with braking",
+      "min_separation_m": 4.04,
+      "closest_target": "SUV1",
+      "time_of_closest_m": 0.9,
+      "end_speed_mps": 8.0,
+      "end_lateral_offset_m": 3.5,
+      "end_state_hj_risk_per_target": {
+       "obs1": 0.98,
+       "obs2": 0.86,
+       "SUV1": 0.97
+      },
+      "worst_end_hj_risk": 0.98,
+      "baseline_no_intervention_hj_risk": 1.0,
+      "hj_acceptable": true
+     },
+     "elapsed": 0.007754499999997222
+    },
+    {
+     "tool": "rollout_maneuver",
+     "arguments": {
+      "code": 2,
+      "target_speed_mps": 0
+     },
+     "result": {
+      "code": 2,
+      "maneuver": "sharp right lane change",
+      "min_separation_m": 2.04,
+      "closest_target": "SUV1",
+      "time_of_closest_m": 1.0,
+      "end_speed_mps": 12.0,
+      "end_lateral_offset_m": 3.5,
+      "end_state_hj_risk_per_target": {
+       "obs1": 1.0,
+       "obs2": 0.92,
+       "SUV1": 1.0
+      },
+      "worst_end_hj_risk": 1.0,
+      "baseline_no_intervention_hj_risk": 1.0,
+      "hj_acceptable": true
+     },
+     "elapsed": 0.0009447500000021591
+    },
+    {
+     "tool": "rollout_maneuver",
+     "arguments": {
+      "code": 5,
+      "target_speed_mps": 0
+     },
+     "result": {
+      "code": 5,
+      "maneuver": "T-drift, nose left (rear faces right)",
+      "min_separation_m": 4.32,
+      "closest_target": "obs1",
+      "time_of_closest_m": 1.0,
+      "end_speed_mps": 6.0,
+      "end_lateral_offset_m": -1.0,
+      "end_state_hj_risk_per_target": {
+       "obs1": 0.97,
+       "obs2": 0.75,
+       "SUV1": 0.88
+      },
+      "worst_end_hj_risk": 0.97,
+      "baseline_no_intervention_hj_risk": 1.0,
+      "hj_acceptable": true
+     },
+     "elapsed": 0.004891791999995121
+    }
+   ],
+   "decision_round": 1,
+   "role_used": "decision"
+  },
+  {
+   "phase": "deliberation",
+   "agent": "debate",
+   "t_wall": 1783131341.639637,
+   "output": {
+    "safety_argument": "The safest choice is full emergency braking, because it minimizes worst-case harm without steering the car toward the right-side SUV or the right-rear obstacle field. Even though SUV1 is the higher dynamic threat, it is not yet in the escalation envelope that would justify a lateral maneuver; the evidence says braking is already sufficient for the forward obstacle and avoids creating a side-impact hazard. If conditions worsen into a true imminent side-strike, a protective reorientation could be reconsidered, but at present the least harmful action is to slow hard and stay within lane bounds.",
+    "efficiency_argument": "The mildest maneuver supported by the physics is full straight braking, not an evasive swerve. With sunny normal-road conditions, ego can stop in about 9 m from 12 m/s, and the 15.6 m gap to obs1 leaves enough margin, while a rightward maneuver would unnecessarily move toward the intruding SUV1 and the right-side obstacle field. SUV1 is concerning, but its current lateral closing is not yet in the high-imminence envelope that would justify a sharper emergency maneuver, so avoid overreacting and preserve stability.",
+    "resolution": "Adopt the proposed policy without code changes. The evidence and both advocates support full emergency braking as the current/default and maintain/yield response: it is sufficient for obs1, avoids the blocked left boundary, and avoids steering toward the right-side SUV/obs2 conflict. The right-with-braking branch is appropriately limited to cases where braking margin collapses and the right swept path is clear. The T-drift/protective reorientation branch is acceptable only under the stated high-imminence lateral side-impact escalation; it should not be used in the current scene.",
+    "revisions": {}
+   },
+   "model": "gpt-5.5",
+   "elapsed_s": 12.147,
+   "usage": {
+    "prompt_tokens": 2000,
+    "completion_tokens": 781
+   },
+   "tool_calls": []
+  },
+  {
+   "phase": "deliberation",
+   "agent": "safety",
+   "t_wall": 1783131343.654321,
+   "output": {
+    "round": 1,
+    "approved": false,
+    "veto_reason": "branch[primary_threat_accelerates] code 5: T-drift preconditions unmet at the anticipated execution state (needs a laterally approaching target ahead, |vy|>4 m/s, lateral distance <8 m, TTC<=1.3 s) | LLM: Deterministic checks already failed, so approval is prohibited. Specifically, branch code 5 / condition_type 'primary_threat_accelerates' is not physically defensible because its listed T-drift preconditions are unmet at the anticipated execution state."
+   },
+   "model": "gpt-5.4",
+   "elapsed_s": 2.008,
+   "usage": {
+    "prompt_tokens": 2548,
+    "completion_tokens": 113
+   },
+   "tool_calls": [],
+   "branch_verdicts": [
+    {
+     "condition_type": "primary_threat_accelerates",
+     "code": 5,
+     "approved": false,
+     "violations": [
+      "T-drift preconditions unmet at the anticipated execution state (needs a laterally approaching target ahead, |vy|>4 m/s, lateral distance <8 m, TTC<=1.3 s)"
+     ]
+    },
+    {
+     "condition_type": "secondary_threat_activates",
+     "code": 4,
+     "approved": true,
+     "violations": []
+    },
+    {
+     "condition_type": "primary_threat_yields",
+     "code": 0,
+     "approved": true,
+     "violations": []
+    },
+    {
+     "condition_type": "primary_threat_maintains",
+     "code": 0,
+     "approved": true,
+     "violations": []
+    },
+    {
+     "condition_type": "default",
+     "code": 0,
+     "approved": true,
+     "violations": []
+    }
+   ]
+  },
+  {
+   "phase": "deliberation",
+   "agent": "decision",
+   "t_wall": 1783131392.136588,
+   "output": {
+    "branches": [
+     {
+      "code": 0,
+      "condition": "SUV1 maintains its current left-lane-change trajectory while obs1 remains centered in the ego lane and no new vulnerable road user appears",
+      "condition_type": "primary_threat_maintains",
+      "confidence": 0.86,
+      "rationale": "Full emergency braking is the safest primary response. Braking from 12 m/s at 8 m/s^2 requires about 9.0 m, while the anticipated gap to obs1 is 15.6 m, so stopping before the in-lane obstacle is feasible on the sunny, good-friction road. Rollout for code 0 gave the best tested minimum separation, 5.3 m to obs1, with ego speed reduced to 4.0 m/s after 1 s. It also avoids steering right toward SUV1 or left across the road boundary.",
+      "target_speed_mps": 0
+     },
+     {
+      "code": 0,
+      "condition": "SUV1 clearly yields by slowing, stopping lateral intrusion, or moving away so obs1 becomes the dominant immediate threat",
+      "condition_type": "primary_threat_yields",
+      "confidence": 0.9,
+      "rationale": "If SUV1 yields, obs1 remains directly ahead with TTC about 1.3 s. Emergency braking is physically sufficient because the 9.0 m stopping distance is less than the 15.6 m available gap. Steering is unnecessary and would either approach the right-side hazard corridor or violate the left boundary constraint.",
+      "target_speed_mps": 0
+     },
+     {
+      "code": 0,
+      "condition": "SUV1 accelerates or cuts harder left, but T-drift criteria remain unmet and the right corridor is not safely clear of SUV1's swept path",
+      "condition_type": "primary_threat_accelerates",
+      "confidence": 0.78,
+      "rationale": "Emergency braking reduces ego kinetic energy and avoids moving laterally into SUV1's path. The previous safety veto is respected: code 5 is forbidden because T-drift preconditions are unmet at anticipated execution, with SUV1 lateral closing only about 2.5 m/s and TTC about 3.12 s rather than TTC <= 1.3 s and lateral closing > 4 m/s. Braking keeps the ego aligned and avoids exposing the weak vehicle side through an unjustified rotation or sharp lateral maneuver.",
+      "target_speed_mps": 0
+     },
+     {
+      "code": 0,
+      "condition": "obs2 or another secondary right-side threat activates, intrudes, or makes the right escape corridor unsafe",
+      "condition_type": "secondary_threat_activates",
+      "confidence": 0.84,
+      "rationale": "If the right corridor becomes occupied or uncertain, steering right is unsafe. Steering left is also infeasible because the left boundary margin is only about 0.5 m and lane change is not possible. Emergency braking remains feasible against obs1 and minimizes impact speed if any residual conflict occurs.",
+      "target_speed_mps": 0
+     },
+     {
+      "code": 0,
+      "condition": "default: branch predicates are uncertain, sensor classification is ambiguous, or the scene evolves within normal prediction error",
+      "condition_type": "default",
+      "confidence": 0.82,
+      "rationale": "Default to full emergency braking because it is the only maneuver with verified stopping feasibility and the best tested rollout among serious candidates. Evidence gathered: SUV1 is on a collision course with TTC 3.12 s and HJ risk 0.87; obs1 is on a collision course with TTC 1.3 s; braking distance is 9.0 m versus 15.6 m available; left lane change is impossible due to the road boundary; right lane change is geometrically possible but moves toward SUV1 and had worse rollout risk than braking. Code 7 is rejected because intervention is required.",
+      "target_speed_mps": 0
+     }
+    ],
+    "overall_rationale": "Safety is prioritized over legality and comfort. Full emergency braking is selected across the contingency tree because it can stop within the available gap to obs1, avoids crossing the left road boundary, and avoids steering into the laterally intruding SUV/right-side obstacle corridor. Historical cases warn that braking alone can be poor for fast lateral cross-traffic, but this scene does not satisfy the T-drift trigger: SUV1's lateral closing is about 2.5 m/s, not >4 m/s, and TTC is about 3.12 s, not <=1.3 s. Right lane change with braking was considered, with a physically feasible reduced speed, but rollout showed worse minimum separation and higher end risk than braking. The prior veto is honored by not using code 5 for the accelerating-threat branch or elsewhere."
+   },
+   "model": "gpt-5.5",
+   "elapsed_s": 48.504,
+   "usage": {
+    "prompt_tokens": 19602,
+    "completion_tokens": 3783
+   },
+   "tool_calls": [
+    {
+     "tool": "compute_ttc",
+     "arguments": {
+      "target_id": "SUV1"
+     },
+     "result": {
+      "target": "SUV1",
+      "on_collision_course": true,
+      "ttc_s": 3.12,
+      "predicted_miss_distance_m": 0.47,
+      "collision_radius_m": 3.8,
+      "current_distance_m": 9.99
+     },
+     "elapsed": 2.808400000731126e-05
+    },
+    {
+     "tool": "compute_ttc",
+     "arguments": {
+      "target_id": "obs1"
+     },
+     "result": {
+      "target": "obs1",
+      "on_collision_course": true,
+      "ttc_s": 1.3,
+      "predicted_miss_distance_m": 0.0,
+      "collision_radius_m": 3.5,
+      "current_distance_m": 15.6
+     },
+     "elapsed": 7.0410000034826226e-06
+    },
+    {
+     "tool": "braking_distance",
+     "arguments": {
+      "decel_mps2": 8
+     },
+     "result": {
+      "ego_speed_mps": 12.0,
+      "decel_mps2": 8,
+      "stopping_distance_m": 9.0,
+      "nearest_in_lane_object": "obs1",
+      "gap_to_it_m": 15.6,
+      "braking_alone_sufficient": true
+     },
+     "elapsed": 1.1416999996072263e-05
+    },
+    {
+     "tool": "lateral_clearance",
+     "arguments": {
+      "side": "left"
+     },
+     "result": {
+      "side": "left",
+      "occupants": [],
+      "boundary_margin_m": 0.5,
+      "lane_change_possible": false
+     },
+     "elapsed": 8.334000000331798e-06
+    },
+    {
+     "tool": "lateral_clearance",
+     "arguments": {
+      "side": "right"
+     },
+     "result": {
+      "side": "right",
+      "occupants": [],
+      "boundary_margin_m": 9.0,
+      "lane_change_possible": true
+     },
+     "elapsed": 3.2920000023750617e-06
+    },
+    {
+     "tool": "query_hj_risk",
+     "arguments": {
+      "target_id": "SUV1"
+     },
+     "result": {
+      "target": "SUV1",
+      "hj_risk": 0.87,
+      "vulnerability_weight": 0.8
+     },
+     "elapsed": 0.00022104199999262164
+    },
+    {
+     "tool": "retrieve_similar_cases",
+     "arguments": {
+      "k": 3
+     },
+     "result": {
+      "cases": [
+       {
+        "document": "EGO: small car, v=(10.0,0.0)m/s, road=Intersection, weather=Sunny (good road conditions)\nLARGE TRUCK truck1: 23.0m ahead, 14.4m left, v=(0.0,8.0)m/s, intention=Maintain\nPEDESTRIAN pedestrian: 16.0m ahead, 4.0m left, v=(0.0,0.0)m/s, intention=Maintain",
+        "metadata": {
+         "decision_code": "0",
+         "lesson": "In an intersection, if a large vehicle is crossing laterally, do not rely on straight-line hard braking alone; immediately assess lateral threat and, if space exists, combine braking with an escape path away from the crossing vehicle while maintaining stability.",
+         "outcome": "Side collision with the truck occurred, followed by vehicle instability. Both vehicle damage and injuries were severe.",
+         "policy_tree": "{\"branches\": [{\"condition_type\": \"default\", \"condition\": \"deadline exceeded\", \"code\": 0, \"target_speed_mps\": 0.0, \"rationale\": \"Deliberation missed its deadline; anytime fallback to the minimal-risk maneuver.\", \"confidence\": 1.0}], \"overall_rationale\": \"deadline fallback\"}",
+         "scenario_name": "test1",
+         "stored_at": "2026-07-04 10:09:43"
+        },
+        "distance": 0.19647020742827193
+       },
+       {
+        "document": "EGO: small car, v=(10.0,0.0)m/s, road=Intersection, weather=Sunny (good road conditions)\nLARGE TRUCK truck1: 23.0m ahead, 14.4m left, v=(0.0,8.0)m/s, intention=Maintain\nPEDESTRIAN pedestrian: 16.0m ahead, 4.0m left, v=(0.0,0.0)m/s, intention=Maintain",
+        "metadata": {
+         "decision_code": "6",
+         "lesson": "In a close cross-traffic conflict, do not commit to a side-rotation maneuver unless you have a verified escape path; if the obstacle is already inside the stopping/evading envelope, prioritize the maneuver that maximizes full-body clearance and preserves braking while keeping the vehicle stable.",
+         "outcome": "Rear collision with the truck occurred. Due to low relative velocity, no injuries were sustained.",
+         "policy_tree": "{\"branches\": [{\"code\": 6, \"condition\": \"truck1 accelerates or continues closing laterally such that a left-side impact is imminent with TTC <= 1.3 s, while the pedestrian is not in the rightward swept path\", \"condition_type\": \"secondary_threat_activates\", \"confidence\": 0.74, \"rationale\": \"Truck1 is ahead-left, within the 8 m lateral trigger distance at execution, closing laterally at about 8 m/s, and has TTC about 1.2 s. This satisfies the T-drift criterion. Code 6 points the ego nose right so the rear faces the incoming truck from the left, using the rear crash structure instead of exposing the weak side. This is physically different from the previously vetoed straight-line braking fallback.\", \"target_speed_mps\": 0}, {\"code\": 4, \"condition\": \"pedestrian moves further into the ego/left-forward conflict area or pedestrian position uncertainty increases\", \"condition_type\": \"primary_threat_accelerates\", \"confidence\": 0.82, \"rationale\": \"The left corridor is occupied by a vulnerable pedestrian, so steering left is prohibited. The right corridor is clear. Right lane change with braking moves away from the pedestrian while reducing speed. Target 3 m/s is feasible on sunny/good-friction pavement: reducing from 10 to 3 m/s at about 8 m/s\\u00b2 requires roughly 5.7 m, within the approximately 7 m longitudinal gap at anticipated execution. Rollout for code 4 reduced pedestrian end HJ risk to 0.29, far better than braking-only or sharp right without braking.\", \"target_speed_mps\": 3}, {\"code\": 4, \"condition\": \"pedestrian remains stationary near the forward-left conflict area and truck1 does not yet make an unavoidable side-impact condition\", \"condition_type\": \"primary_threat_maintains\", \"confidence\": 0.83, \"rationale\": \"The pedestrian remains the highest vulnerability threat, and the left side is unavailable. Code 4 uses the clear right corridor while braking, matching the historical lesson not to rely on straight-line braking alone when a large crossing truck is present. Target 3 m/s is justified by good road friction and the remaining gap: decelerating from 10 to 3 m/s needs about 5.7 m, less than the 7 m pedestrian longitudinal gap, while the lateral escape increases pedestrian clearance.\", \"target_speed_mps\": 3}, {\"code\": 6, \"condition\": \"pedestrian clearly retreats or clears the forward-left conflict zone before ego reaches it, while truck1 remains on the lateral crossing course\", \"condition_type\": \"primary_threat_yields\", \"confidence\": 0.7, \"rationale\": \"If the vulnerable-road-user conflict is resolved, the dominant remaining danger is the laterally crossing truck. With truck1 TTC about 1.2 s and lateral closing speed above 4 m/s, code 6 rotates the ego vehicle so any unavoidable truck impact is preferentially taken on the rear rather than the side, reducing crash severity and EV side/battery fire risk.\", \"target_speed_mps\": 0}, {\"code\": 4, \"condition\": \"default: perception is ambiguous, branch predicates are not cleanly satisfied, or the scene evolves within expected uncertainty\", \"condition_type\": \"default\", \"confidence\": 0.78, \"rationale\": \"The default must avoid the previously vetoed full-brake-only fallback. Code 4 is the most robust defensible maneuver: it does not steer toward the pedestrian, uses the clear right corridor, adds braking for speed control, and follows the historical lesson to combine braking with an escape path away from the crossing truck. Target 3 m/s is feasible on good-friction pavement within the available gap and materially reduces harm risk versus sharp right without braking.\", \"target_speed_mps\": 3}], \"overall_rationale\": \"Evidence gathered before decision: full braking from 10 m/s at 8 m/s\\u00b2 needs 6.25 m and is physically feasible, but a prior safety veto and the retrieved historical case both show that straight-line hard braking alone is hazardous here because the crossing truck can still strike the ego side. Left corridor is occupied by a vulnerable pedestrian and is therefore forbidden; right corridor is clear. Pedestrian HJ risk is high at 0.94, and truck1 is on a collision course with TTC about 1.2 s. Rollouts showed code 4 is the best robust pedestrian-safe default, while code 6 is reserved for the truck-dominant unavoidable lateral-impact case because it presents the rear, not the side, to the incoming truck. Codes 1, 3, and 5 are rejected because they steer toward the occupied left side; code 2 is rejected because sharp right without braking had only 1.26 m minimum separation and worst HJ risk 1.0; code 0 is rejected by the previous safety veto; and code 7 is inappropriate because intervention is required.\"}",
+         "scenario_name": "test1",
+         "stored_at": "2026-07-04 10:12:32"
+        },
+        "distance": 0.19649778453422917
+       }
+      ]
+     },
+     "elapsed": 0.9522369999999967
+    },
+    {
+     "tool": "rollout_maneuver",
+     "arguments": {
+      "code": 0,
+      "target_speed_mps": 0
+     },
+     "result": {
+      "code": 0,
+      "maneuver": "straight-line full braking",
+      "min_separation_m": 5.3,
+      "closest_target": "obs1",
+      "time_of_closest_m": 1.0,
+      "end_speed_mps": 4.0,
+      "end_lateral_offset_m": 0.0,
+      "end_state_hj_risk_per_target": {
+       "obs1": 0.94,
+       "obs2": 0.75,
+       "SUV1": 0.87
+      },
+      "worst_end_hj_risk": 0.94,
+      "baseline_no_intervention_hj_risk": 1.0,
+      "hj_acceptable": true
+     },
+     "elapsed": 0.006147583999990047
+    },
+    {
+     "tool": "rollout_maneuver",
+     "arguments": {
+      "code": 4,
+      "target_speed_mps": 4
+     },
+     "result": {
+      "code": 4,
+      "maneuver": "right lane change with braking",
+      "min_separation_m": 4.04,
+      "closest_target": "SUV1",
+      "time_of_closest_m": 0.9,
+      "end_speed_mps": 8.0,
+      "end_lateral_offset_m": 3.5,
+      "end_state_hj_risk_per_target": {
+       "obs1": 0.98,
+       "obs2": 0.86,
+       "SUV1": 0.97
+      },
+      "worst_end_hj_risk": 0.98,
+      "baseline_no_intervention_hj_risk": 1.0,
+      "hj_acceptable": true
+     },
+     "elapsed": 0.0011008749999916745
+    },
+    {
+     "tool": "rollout_maneuver",
+     "arguments": {
+      "code": 2,
+      "target_speed_mps": 0
+     },
+     "result": {
+      "code": 2,
+      "maneuver": "sharp right lane change",
+      "min_separation_m": 2.04,
+      "closest_target": "SUV1",
+      "time_of_closest_m": 1.0,
+      "end_speed_mps": 12.0,
+      "end_lateral_offset_m": 3.5,
+      "end_state_hj_risk_per_target": {
+       "obs1": 1.0,
+       "obs2": 0.92,
+       "SUV1": 1.0
+      },
+      "worst_end_hj_risk": 1.0,
+      "baseline_no_intervention_hj_risk": 1.0,
+      "hj_acceptable": true
+     },
+     "elapsed": 0.0008937079999924435
+    },
+    {
+     "tool": "rollout_maneuver",
+     "arguments": {
+      "code": 3,
+      "target_speed_mps": 4
+     },
+     "result": {
+      "code": 3,
+      "maneuver": "left lane change with braking",
+      "min_separation_m": 4.19,
+      "closest_target": "obs1",
+      "time_of_closest_m": 1.0,
+      "end_speed_mps": 8.0,
+      "end_lateral_offset_m": -3.5,
+      "end_state_hj_risk_per_target": {
+       "obs1": 0.98,
+       "obs2": 0.71,
+       "SUV1": 0.83
+      },
+      "worst_end_hj_risk": 0.98,
+      "baseline_no_intervention_hj_risk": 1.0,
+      "hj_acceptable": true
+     },
+     "elapsed": 0.0009738749999996799
+    },
+    {
+     "tool": "rollout_maneuver",
+     "arguments": {
+      "code": 7,
+      "target_speed_mps": 0
+     },
+     "result": {
+      "code": 7,
+      "maneuver": "no intervention",
+      "min_separation_m": 1.1,
+      "closest_target": "obs1",
+      "time_of_closest_m": 1.0,
+      "end_speed_mps": 12.0,
+      "end_lateral_offset_m": 0.0,
+      "end_state_hj_risk_per_target": {
+       "obs1": 1.0,
+       "obs2": 0.85,
+       "SUV1": 0.98
+      },
+      "worst_end_hj_risk": 1.0,
+      "baseline_no_intervention_hj_risk": 1.0,
+      "hj_acceptable": true
+     },
+     "elapsed": 0.00043666599999880873
+    }
+   ],
+   "decision_round": 2,
+   "role_used": "decision"
+  },
+  {
+   "phase": "deliberation",
+   "agent": "safety",
+   "t_wall": 1783131394.340435,
+   "output": {
+    "round": 2,
+    "approved": true,
+    "veto_reason": ""
+   },
+   "model": "gpt-5.4",
+   "elapsed_s": 2.203,
+   "usage": {
+    "prompt_tokens": 2211,
+    "completion_tokens": 152
+   },
+   "tool_calls": [],
+   "branch_verdicts": [
+    {
+     "condition_type": "primary_threat_maintains",
+     "code": 0,
+     "approved": true,
+     "violations": []
+    },
+    {
+     "condition_type": "primary_threat_yields",
+     "code": 0,
+     "approved": true,
+     "violations": []
+    },
+    {
+     "condition_type": "primary_threat_accelerates",
+     "code": 0,
+     "approved": true,
+     "violations": []
+    },
+    {
+     "condition_type": "secondary_threat_activates",
+     "code": 0,
+     "approved": true,
+     "violations": []
+    },
+    {
+     "condition_type": "default",
+     "code": 0,
+     "approved": true,
+     "violations": []
+    }
+   ]
+  },
+  {
+   "phase": "consolidation",
+   "agent": "evaluation",
+   "t_wall": 1783131395.571451,
+   "output": {
+    "assessment": "Effective. Full emergency braking was feasible and successfully stopped the ego vehicle before obs1 with no collision. Given the tight left boundary and the conflicting SUV on the right, avoiding lateral maneuvering was the correct conservative choice.",
+    "lesson": "When both lateral escape paths are constrained or uncertain, commit immediately to maximum braking and hold lane; do not trade braking distance for a risky swerve unless you have a clearly open corridor with verified clearance.",
+    "better_alternative": "None"
+   },
+   "model": "gpt-5.4-mini",
+   "elapsed_s": 1.231,
+   "usage": {
+    "prompt_tokens": 383,
+    "completion_tokens": 102
+   },
+   "tool_calls": []
+  },
+  {
+   "phase": "consolidation",
+   "agent": "memory",
+   "t_wall": 1783131396.276523,
+   "output": {
+    "stored_case_id": "test2-77a9c536"
+   }
+  },
+  {
+   "phase": "consolidation",
+   "agent": "evaluation",
+   "t_wall": 1783131396.277324,
+   "output": {
+    "distill_sample_appended": "/Users/shown/Seafile/LLM+避撞问题/Code/fine-tuning/maca_distill.jsonl",
+    "at": "10:16:36"
+   }
+  }
+ ],
+ "latency_summary": {
+  "reflex_preview_ms": 11.32,
+  "deliberation_s": 135.151,
+  "trigger_decision_latency_ms": 0.46,
+  "llm_calls_on_trigger_path": 0
+ }
+}

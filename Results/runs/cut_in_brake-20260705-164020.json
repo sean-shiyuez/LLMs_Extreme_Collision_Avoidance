@@ -1,0 +1,69 @@
+{
+ "scenario": "cut_in_brake",
+ "libraries": {
+  "rules_active": 8,
+  "cases": 13
+ },
+ "assessment": {
+  "scene_risk": 0.643,
+  "band": "critical",
+  "min_ttc_s": 2.0,
+  "primary_threat": "cutter"
+ },
+ "features": {
+  "discrete": {
+   "road_topology": "Normal Road",
+   "threat_kind": "suv",
+   "approach_sector": "front",
+   "pedestrian_side": "none",
+   "corridor_left_free": false,
+   "corridor_right_free": false,
+   "braking_sufficient": true,
+   "on_collision_course": true
+  },
+  "numeric": {
+   "ttc_s": 2.0,
+   "miss_m": 0.0,
+   "lateral_dist_m": 4.0,
+   "lateral_speed_mps": 2.0,
+   "closing_speed_mps": 5.385,
+   "ego_speed_mps": 20.0,
+   "hj_risk": 0.85,
+   "threat_dist_m": 10.77,
+   "scene_risk": 0.643
+  }
+ },
+ "rule_hit": "mock-cut-in-right-r1",
+ "case_hit": null,
+ "case_similarity": 0.86,
+ "observed_condition": "primary_threat_maintains",
+ "executed_code": 0,
+ "decision_source": "rule[mock-cut-in-right-r1]",
+ "branch": {
+  "condition_type": "primary_threat_maintains",
+  "condition": "threat evolves as observed in the sweep",
+  "code": 0,
+  "target_speed_mps": 0.0,
+  "rationale": "Dominant maneuver over 8 lawful grid points (mean margin 0.0).",
+  "confidence": 0.95
+ },
+ "timings": {
+  "monitor_ms": 1.195,
+  "features_ms": 0.078,
+  "rule_match_ms": 0.012,
+  "case_knn_ms": 0.041,
+  "evolution_ms": 0.044,
+  "trigger_path_total_ms": 1.382
+ },
+ "outcome": {
+  "severity": 0,
+  "text": "No collision; minimum separation 6.1 m.",
+  "collision": null,
+  "hj_constraint": {
+   "worst_end_risk": 0.53,
+   "baseline_risk": 0.3,
+   "acceptable": false
+  }
+ },
+ "ran_at": "2026-07-05 16:40:20"
+}

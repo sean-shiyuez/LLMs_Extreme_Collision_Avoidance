@@ -1,0 +1,39 @@
+{
+ "description": "Unexplored cut-in family: on a normal multilane road, a car in the left adjacent lane performs a slow lateral cut-in into the ego lane while closing longitudinally; a close follower behind ego makes hard braking costly, the left/source corridor is blocked by adjacent traffic, and the right escape corridor width is swept. The cut-in car is placed deterministically so its lateral path reaches the ego lane centerline at the selected TTC.",
+ "family_id": "left-cut-in-close-follower-right-gap",
+ "hypothesis": "With a close follower and a left-side cut-in, braking should dominate at long TTC or tight right gaps, while right evasive drift/lane-change should dominate at mid/short actionable TTC with high closing speed and sufficient right escape gap.",
+ "parameters": [
+  {
+   "name": "ego_speed",
+   "min": 5.0,
+   "max": 30.0,
+   "steps": 3
+  },
+  {
+   "name": "gap",
+   "min": 3.0,
+   "max": 60.0,
+   "steps": 3
+  },
+  {
+   "name": "speed_diff",
+   "min": 0.0,
+   "max": 12.0,
+   "steps": 3
+  }
+ ],
+ "pattern": "cut_in",
+ "template": {
+  "blocked_side": "left",
+  "follower": true,
+  "from_side": "left",
+  "pedestrian": {
+   "present": false,
+   "side": "right"
+  },
+  "road_boundary_left": null,
+  "road_boundary_right": null,
+  "road_topology": "Normal Road",
+  "threat_type": "car_cutting_in_from_left"
+ }
+}

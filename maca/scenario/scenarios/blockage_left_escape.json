@@ -1,0 +1,67 @@
+{
+  "name": "blockage_left_escape",
+  "description": "High-speed approach (18 m/s) to a static lane blockage 24 m ahead. The braking distance exceeds the gap (braking_sufficient=false) so the scene commits despite the elevated band; full braking (code 0) is the strictly least-harm action because lane changes are too slow to complete under the actuator dynamics and end up striking the blockage or departing the road. Demonstrates the commit condition (on-course + cannot brake out) and the minimal-risk fallback.",
+  "snapshots": [
+    {
+      "t": -1.0,
+      "ego": {
+        "id": "ego",
+        "type": "small car",
+        "coordinate": [
+          0.0,
+          0.0
+        ],
+        "velocity": [
+          18.0,
+          0.0
+        ],
+        "road_topology": "Normal Road",
+        "road_boundary_left": -8,
+        "road_boundary_right": 6
+      },
+      "obstacles": [
+        {
+          "id": "blk",
+          "center": [
+            42.0,
+            0.0
+          ],
+          "ellipse_major_axis": 4,
+          "ellipse_minor_axis": 2
+        }
+      ],
+      "participants": []
+    },
+    {
+      "ego": {
+        "id": "ego",
+        "type": "small car",
+        "coordinate": [
+          0.0,
+          0.0
+        ],
+        "velocity": [
+          18.0,
+          0.0
+        ],
+        "road_topology": "Normal Road",
+        "road_boundary_left": -8,
+        "road_boundary_right": 6
+      },
+      "obstacles": [
+        {
+          "id": "blk",
+          "center": [
+            24.0,
+            0.0
+          ],
+          "ellipse_major_axis": 4,
+          "ellipse_minor_axis": 2
+        }
+      ],
+      "participants": [],
+      "t": 0.0
+    }
+  ],
+  "execution_outcomes": {}
+}

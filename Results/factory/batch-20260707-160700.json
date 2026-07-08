@@ -1,0 +1,177 @@
+{
+ "started_at": "2026-07-07 16:02:57",
+ "mock": false,
+ "source": "generate",
+ "queue_processed": [],
+ "families": [
+  {
+   "family_id": "right-crossing-left-escape-blocked-ped-follower",
+   "pattern": "lateral_crossing",
+   "hypothesis": "For right-side crossing threats with the left escape side occupied/blocked, the dominant maneuver should switch from nominal left-drift to hard braking or right/hold-lane avoidance as TTC shrinks and the left escape gap falls below a clearance threshold.",
+   "generator": {
+    "model": "gpt-5.5(high)",
+    "elapsed_s": 55.96,
+    "usage": {
+     "prompt_tokens": 1562,
+     "completion_tokens": 4418
+    }
+   },
+   "points": 27,
+   "lawful": 17,
+   "lawful_uncovered": 7,
+   "ambiguous": 10,
+   "rule_counterexamples": 0,
+   "rules": [
+    {
+     "rule_id": "right-crossing-left-escape-blocked-ped-follower-r1",
+     "status": "active",
+     "checked": 15,
+     "failures": [],
+     "pass_rate": 1.0,
+     "promoted": true
+    }
+   ],
+   "cases": [
+    {
+     "case_id": "case-1f569081",
+     "params": {
+      "ego_speed": 5.0,
+      "ttc": 0.4,
+      "lateral_speed": 2.0
+     },
+     "executed_code": 0,
+     "severity": 3
+    },
+    {
+     "case_id": "case-e17cef33",
+     "params": {
+      "ego_speed": 5.0,
+      "ttc": 0.4,
+      "lateral_speed": 7.0
+     },
+     "executed_code": 0,
+     "severity": 4
+    },
+    {
+     "case_id": "case-6f78cc3f",
+     "params": {
+      "ego_speed": 17.5,
+      "ttc": 0.4,
+      "lateral_speed": 7.0
+     },
+     "executed_code": 0,
+     "severity": 4
+    }
+   ],
+   "skipped_covered_points": 2,
+   "consolidator": {
+    "accepted": 1,
+    "rejected": 0,
+    "trace": [
+     {
+      "agent": "consolidator",
+      "round": 1,
+      "model": "gpt-5.5(medium)",
+      "elapsed_s": 35.99,
+      "n_proposals": 1,
+      "analysis": "The lawful portion of this family is dominated by maneuver 0: full emergency braking. Code 0 is a minimum-severity maneuver at 16 of 17 lawful grid points across TTC 1.4-2.4 s, ego speed 5-30 m/s, lateral speed 2-12 m/s, and both front/front_right sectors, provided braking_sufficient is true. The sole lawful non-braking dominant point is code 4 at ego_speed=30.0, ttc=1.4, lateral_speed=7.0, but it has braking_sufficient=false and only one supporting point, so it cannot support a standalone rule under the minimum-3-point requirement. Existing overlapping rules are not contradicted by this lawful grid: the active braking-sufficient seed remains consistent where its guards overlap, and the T-drift seeds are excluded by sector/pedestrian-side combinations."
+     }
+    ]
+   }
+  },
+  {
+   "family_id": "right-cross-left-blocked-ped-follower-short-ttc",
+   "pattern": "lateral_crossing",
+   "hypothesis": "Below the existing 1.4 s TTC boundary, the dominant maneuver should switch from evasive left-drift to hard braking/hold-lane unless rear gap is critically small, in which case minimal rightward bias behind the crossing truck may dominate.",
+   "generator": {
+    "model": "gpt-5.5(high)",
+    "elapsed_s": 99.42,
+    "usage": {
+     "prompt_tokens": 1802,
+     "completion_tokens": 2888
+    }
+   },
+   "points": 27,
+   "lawful": 17,
+   "lawful_uncovered": 1,
+   "ambiguous": 10,
+   "rule_counterexamples": 0,
+   "rules": [],
+   "cases": [
+    {
+     "case_id": "case-03677c2c",
+     "params": {
+      "ego_speed": 30.0,
+      "ttc": 1.4,
+      "lateral_speed": 2.0
+     },
+     "executed_code": 1,
+     "severity": 3
+    }
+   ],
+   "skipped_covered_points": 9,
+   "consolidator": {
+    "skipped": true,
+    "reason": "lawful region already covered (17 points, 1 uncovered)"
+   }
+  }
+ ],
+ "revalidation": [
+  {
+   "rule_id": "left-crossing-escape-side-ped-follower-r1",
+   "checked": 4,
+   "failures": [],
+   "pass_rate": 1.0,
+   "promoted": true,
+   "still_active": true
+  },
+  {
+   "rule_id": "mock-cut-in-right-r1",
+   "checked": 9,
+   "failures": [],
+   "pass_rate": 1.0,
+   "promoted": true,
+   "still_active": true
+  },
+  {
+   "rule_id": "mock-lateral-crossing-left-r1",
+   "checked": 8,
+   "failures": [],
+   "pass_rate": 1.0,
+   "promoted": true,
+   "still_active": true
+  },
+  {
+   "rule_id": "mock-crossing-escape-window-r1",
+   "checked": 12,
+   "failures": [],
+   "pass_rate": 1.0,
+   "promoted": true,
+   "still_active": true
+  },
+  {
+   "rule_id": "right-crossing-left-escape-blocked-ped-follower-r1",
+   "checked": 15,
+   "failures": [],
+   "pass_rate": 1.0,
+   "promoted": true,
+   "still_active": true
+  }
+ ],
+ "library_before": {
+  "rules_total": 9,
+  "rules_active": 8,
+  "rules_candidate": 0,
+  "rules_deprecated": 1,
+  "cases": 15,
+  "queued": 0
+ },
+ "library_after": {
+  "rules_total": 10,
+  "rules_active": 9,
+  "rules_candidate": 0,
+  "rules_deprecated": 1,
+  "cases": 19,
+  "queued": 0
+ }
+}

@@ -1,0 +1,37 @@
+{
+ "started_at": "2026-07-08 10:06:32",
+ "mock": true,
+ "source": "queue",
+ "queue_processed": [
+  {
+   "kind": "conflict",
+   "scenario": "cross_escape",
+   "skipped": true,
+   "covered_by": "case:seed-case-cross_escape"
+  },
+  {
+   "kind": "conflict",
+   "scenario": "test1",
+   "skipped": true,
+   "covered_by": "rule:seed-tdrift-right"
+  }
+ ],
+ "families": [],
+ "revalidation": [],
+ "library_before": {
+  "rules_total": 3,
+  "rules_active": 3,
+  "rules_candidate": 0,
+  "rules_deprecated": 0,
+  "cases": 4,
+  "queued": 2
+ },
+ "library_after": {
+  "rules_total": 3,
+  "rules_active": 3,
+  "rules_candidate": 0,
+  "rules_deprecated": 0,
+  "cases": 4,
+  "queued": 0
+ }
+}

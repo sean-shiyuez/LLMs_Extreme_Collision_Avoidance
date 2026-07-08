@@ -1,0 +1,39 @@
+{
+ "family_id": "mock-cut-in-right",
+ "description": "Mock family: a slower SUV cuts in from the right lane.",
+ "pattern": "cut_in",
+ "template": {
+  "road_topology": "Normal Road",
+  "threat_type": "SUV",
+  "from_side": "right",
+  "pedestrian": {
+   "present": false,
+   "side": "right"
+  },
+  "road_boundary_left": -1.5,
+  "road_boundary_right": 10,
+  "follower": false,
+  "blocked_side": null
+ },
+ "parameters": [
+  {
+   "name": "ego_speed",
+   "min": 18.0,
+   "max": 22.0,
+   "steps": 2
+  },
+  {
+   "name": "gap",
+   "min": 8.0,
+   "max": 16.0,
+   "steps": 3
+  },
+  {
+   "name": "speed_diff",
+   "min": 3.0,
+   "max": 6.0,
+   "steps": 2
+  }
+ ],
+ "hypothesis": "Braking dominates close cut-ins; no intervention suffices at long gaps."
+}

@@ -1,0 +1,39 @@
+{
+ "description": "Unexplored lead-braking family: ego is following a lead sedan in the same lane on a normal road when the lead performs hard emergency braking, creating a constructed rear-end collision course. The right escape corridor is blocked by a parked/slow vehicle, while the left adjacent corridor is potentially usable; a close follower behind ego creates a rear-impact penalty for pure braking. Sweep actionable TTC, ego speed, follower gap, and left escape gap to compare hard braking versus left lane-change/T-drift escape.",
+ "family_id": "lead-brake-left-escape-follower",
+ "hypothesis": "For lead-braking with a blocked right corridor and rear follower, braking dominates at longer TTC or large rear gap, while left escape maneuvers dominate as TTC shortens, ego speed rises, rear gap shrinks, and the left escape gap is sufficient.",
+ "parameters": [
+  {
+   "name": "ego_speed",
+   "min": 5.0,
+   "max": 30.0,
+   "steps": 3
+  },
+  {
+   "name": "gap",
+   "min": 3.0,
+   "max": 60.0,
+   "steps": 3
+  },
+  {
+   "name": "speed_diff",
+   "min": 0.0,
+   "max": 12.0,
+   "steps": 3
+  }
+ ],
+ "pattern": "lead_braking",
+ "template": {
+  "blocked_side": "right",
+  "follower": true,
+  "from_side": "left",
+  "pedestrian": {
+   "present": false,
+   "side": "right"
+  },
+  "road_boundary_left": null,
+  "road_boundary_right": null,
+  "road_topology": "Normal Road",
+  "threat_type": "lead_vehicle_hard_braking"
+ }
+}

@@ -1,0 +1,204 @@
+{
+ "started_at": "2026-07-07 16:09:09",
+ "mock": false,
+ "source": "generate",
+ "queue_processed": [],
+ "families": [
+  {
+   "family_id": "left-crossing-right-blocked-short-ttc",
+   "pattern": "lateral_crossing",
+   "hypothesis": "With a pedestrian blocking the normal right escape, rightward T-drift should be vetoed; braking should dominate at longer TTC/lower ego speed, while the shortest-TTC/high-speed corner should expose whether a leftward evasive maneuver becomes preferable despite the crossing threat.",
+   "generator": {
+    "model": "gpt-5.5(high)",
+    "elapsed_s": 60.48,
+    "usage": {
+     "prompt_tokens": 1802,
+     "completion_tokens": 4432
+    }
+   },
+   "points": 27,
+   "lawful": 17,
+   "lawful_uncovered": 6,
+   "ambiguous": 10,
+   "rule_counterexamples": 0,
+   "rules": [
+    {
+     "rule_id": "left-crossing-right-blocked-short-ttc-r1",
+     "status": "active",
+     "checked": 15,
+     "failures": [],
+     "pass_rate": 1.0,
+     "promoted": true
+    }
+   ],
+   "cases": [
+    {
+     "case_id": "case-08a98725",
+     "params": {
+      "ego_speed": 17.5,
+      "ttc": 0.4,
+      "lateral_speed": 2.0
+     },
+     "executed_code": 0,
+     "severity": 4
+    },
+    {
+     "case_id": "case-45a8952b",
+     "params": {
+      "ego_speed": 30.0,
+      "ttc": 0.4,
+      "lateral_speed": 7.0
+     },
+     "executed_code": 0,
+     "severity": 4
+    },
+    {
+     "case_id": "case-f87e56a9",
+     "params": {
+      "ego_speed": 30.0,
+      "ttc": 1.4,
+      "lateral_speed": 2.0
+     },
+     "executed_code": 2,
+     "severity": 3
+    }
+   ],
+   "skipped_covered_points": 7,
+   "consolidator": {
+    "accepted": 1,
+    "rejected": 0,
+    "trace": [
+     {
+      "agent": "consolidator",
+      "round": 1,
+      "model": "gpt-5.5(medium)",
+      "elapsed_s": 46.52,
+      "n_proposals": 1,
+      "analysis": "Across the 17 lawful points in this family, full emergency braking (code 0) is a minimum-severity maneuver at 16 points. The only lawful non-braking-dominant point is the high-speed, short-TTC corner at ego_speed_mps=30.0, ttc_s=1.4, lateral_speed_mps=7.0, lateral_dist_m=9.8, where braking_sufficient=false and code 3 dominates; it has only one supporting lawful point, so no general rule is proposed for it. All lawful points satisfying braking_sufficient=true, pedestrian_side=right, corridor_right_free=false, on_collision_course=true, ttc_s in [1.4,2.4], lateral_speed_mps in [2.0,12.0], ego_speed_mps in [5.0,30.0], and the observed crossing-distance/risk ranges have code 0 among their minimum-severity maneuvers. TTC=0.4 cases are ambiguous/all-severe and are deliberately excluded. Existing overlapping rules are not directly contradicted by this grid because their pedestrian-side, approach-sector, or braking_sufficient guards exclude the contradictory cases."
+     }
+    ]
+   }
+  },
+  {
+   "family_id": "intersection-left-crossing-right-blocked-ped-follower",
+   "pattern": "static_blockage",
+   "hypothesis": "With the right escape corridor blocked by a pedestrian at short TTC, the dominant maneuver should switch from right-drift escape to hard in-lane braking or left-behind-the-truck steering, with the boundary driven mainly by TTC, ego speed, and remaining right-side clearance.",
+   "generator": {
+    "model": "gpt-5.5(high)",
+    "elapsed_s": 53.29,
+    "usage": {
+     "prompt_tokens": 2060,
+     "completion_tokens": 3929
+    }
+   },
+   "points": 9,
+   "lawful": 5,
+   "lawful_uncovered": 3,
+   "ambiguous": 4,
+   "rule_counterexamples": 0,
+   "rules": [
+    {
+     "rule_id": "intersection-left-crossing-right-blocked-ped-follower-r1",
+     "status": "active",
+     "checked": 3,
+     "failures": [],
+     "pass_rate": 1.0,
+     "promoted": true
+    }
+   ],
+   "cases": [
+    {
+     "case_id": "case-a6ac57a7",
+     "params": {
+      "ego_speed": 5.0,
+      "gap": 3.0
+     },
+     "executed_code": 0,
+     "severity": 3
+    },
+    {
+     "case_id": "case-26596eba",
+     "params": {
+      "ego_speed": 30.0,
+      "gap": 31.5
+     },
+     "executed_code": 5,
+     "severity": 3
+    }
+   ],
+   "skipped_covered_points": 2,
+   "consolidator": {
+    "accepted": 1,
+    "rejected": 0,
+    "trace": [
+     {
+      "agent": "consolidator",
+      "round": 1,
+      "model": "gpt-5.5(medium)",
+      "elapsed_s": 147.8,
+      "n_proposals": 1,
+      "analysis": "The lawful grid contains 3 points where maneuver 7 is among the minimum-severity maneuvers and selected as dominant: low/moderate ego speed with longer TTC (ttc_s 3.43-12.0, ego_speed_mps/closing_speed_mps 5.0-17.5). The only lawful braking-dominant points are 2 points, so a new braking rule would not satisfy the minimum 3-support requirement; existing braking rules are not contradicted by the lawful points because their overlapping lawful cases also allow/choose code 0. The safest supported generalization is therefore a no-intervention/monitoring rule for the intersection, front obstacle, right pedestrian/right corridor blocked case at sufficiently long TTC and ego speed no greater than 17.5 m/s."
+     }
+    ]
+   }
+  }
+ ],
+ "revalidation": [
+  {
+   "rule_id": "mock-lateral-crossing-left-r1",
+   "checked": 8,
+   "failures": [],
+   "pass_rate": 1.0,
+   "promoted": true,
+   "still_active": true
+  },
+  {
+   "rule_id": "mock-crossing-escape-window-r1",
+   "checked": 12,
+   "failures": [],
+   "pass_rate": 1.0,
+   "promoted": true,
+   "still_active": true
+  },
+  {
+   "rule_id": "left-crossing-right-blocked-short-ttc-r1",
+   "checked": 15,
+   "failures": [],
+   "pass_rate": 1.0,
+   "promoted": true,
+   "still_active": true
+  },
+  {
+   "rule_id": "mock-cut-in-right-r2",
+   "checked": 9,
+   "failures": [],
+   "pass_rate": 1.0,
+   "promoted": true,
+   "still_active": true
+  },
+  {
+   "rule_id": "mock-cut-in-right-r1",
+   "checked": 9,
+   "failures": [],
+   "pass_rate": 1.0,
+   "promoted": true,
+   "still_active": true
+  }
+ ],
+ "library_before": {
+  "rules_total": 10,
+  "rules_active": 9,
+  "rules_candidate": 0,
+  "rules_deprecated": 1,
+  "cases": 19,
+  "queued": 0
+ },
+ "library_after": {
+  "rules_total": 12,
+  "rules_active": 11,
+  "rules_candidate": 0,
+  "rules_deprecated": 1,
+  "cases": 24,
+  "queued": 0
+ }
+}

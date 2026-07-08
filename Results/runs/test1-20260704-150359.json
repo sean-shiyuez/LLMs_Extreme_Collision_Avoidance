@@ -1,0 +1,359 @@
+{
+ "scenario": "test1",
+ "description": "Intersection: a large truck approaches laterally from the left at 8 m/s while a pedestrian stands ahead-left. Ported from legacy Test_scene/scenario_manager_test1.py; preview snapshot extrapolated 1 s backwards.",
+ "mock": false,
+ "profile": "realtime",
+ "started_at": "2026-07-04 15:03:38",
+ "phases": {
+  "reflex_preview": {
+   "elapsed_ms": 18.67,
+   "scene_risk": 0.426,
+   "band": "elevated",
+   "min_ttc_s": 2.104878048780488,
+   "primary_threat": "pedestrian",
+   "per_target": {
+    "truck1": {
+     "hj_risk": 0.42,
+     "ttc_s": 2.1,
+     "miss_m": 3.12,
+     "on_collision_course": true,
+     "urgency": 0.298,
+     "combined": 0.371
+    },
+    "pedestrian": {
+     "hj_risk": 0.71,
+     "ttc_s": null,
+     "miss_m": 4.0,
+     "on_collision_course": false,
+     "urgency": 0.0,
+     "combined": 0.426
+    }
+   },
+   "budget": {
+    "deadline_s": 1.604878048780488,
+    "decision_role": "decision",
+    "allow_vision": true,
+    "allow_debate": true,
+    "max_tool_iters": 6,
+    "tier": "deliberate"
+   }
+  },
+  "deliberation": {
+   "elapsed_s": 15.479,
+   "deadline_s": 1.6,
+   "deadline_met": false,
+   "armed_policy": {
+    "scenario_name": "test1",
+    "source": "deliberation",
+    "primary_threat": "truck1",
+    "deliberation_s": 15.479,
+    "branches": [
+     {
+      "condition_type": "primary_threat_maintains",
+      "condition": "If truck1 continues maintaining its current crossing/encroaching motion and remains the triggering lateral threat at execution time",
+      "code": 0,
+      "target_speed_mps": 0.0,
+      "rationale": "t_drift_assessment.preconditions_met is true for truck1, so if the primary threat maintains, the collision is deemed unavoidable at execution time and the recommended T-drift must be used unless a hard rule blocks it. Right corridor is free; left corridor is occupied by a vulnerable pedestrian, so only code 6 keeps the vehicle oriented to take impact on the rear while drifting toward the safer right side. Rollout 6 has min separation 3.6 m and better clearance than the alternative T-drift, with rear-facing impact aligned to energy-absorbing structure. Braking alone is not the correct branch for this laterally crossing threat. [revised by debate arbiter]",
+      "confidence": 0.96
+     },
+     {
+      "condition_type": "primary_threat_yields",
+      "condition": "If truck1 yields sufficiently so it is no longer on a collision course and lateral conflict is resolved",
+      "code": 0,
+      "target_speed_mps": 0.0,
+      "rationale": "When the primary lateral threat yields, the remaining in-lane forward risk is handled by full emergency braking. Physics evidence says braking alone is sufficient for in-lane objects, with stopping distance 6.25 m under the available gap logic. Rollout 0 gives a minimum separation of 3.16 m and reduces end-speed to 2.0 m/s; this is safer than continuing at speed. The pedestrian remains a concern, but the rightward avoidance branches are only needed if lateral clearance is required; if truck1 yields, stop straight and reassess.",
+      "confidence": 0.83
+     },
+     {
+      "condition_type": "primary_threat_accelerates",
+      "condition": "If truck1 accelerates or increases lateral encroachment while still the dominant threat",
+      "code": 0,
+      "target_speed_mps": 0.0,
+      "rationale": "Acceleration by truck1 tightens the already unavoidable lateral conflict. The precomputed T-drift rule explicitly recommends code 6 for this triggering target, and the right corridor is the only free side. Left-side maneuvers are prohibited because the left corridor contains a vulnerable pedestrian and lane change left is marked impossible. Rollout 6 preserves the best available rear-impact geometry under escalation. [revised by debate arbiter]",
+      "confidence": 0.97
+     },
+     {
+      "condition_type": "secondary_threat_activates",
+      "condition": "If the pedestrian steps or moves into the right corridor, or any right-side pedestrian/cyclist occupancy appears before execution",
+      "code": 0,
+      "target_speed_mps": 0.0,
+      "rationale": "Never steer toward an occupied side, so a newly occupied right corridor removes the safer lateral escape option. In that case, revert to full emergency braking and keep the vehicle straight to avoid violating the hard rule against steering toward pedestrians/cyclists. Although braking alone does not solve the laterally crossing truck risk, it is the least-harm alternative when the rightward T-drift is vetoed by vulnerable road-user occupancy. The left side remains blocked by the existing pedestrian, so no lane-change branch is admissible.",
+      "confidence": 0.88
+     },
+     {
+      "condition_type": "default",
+      "condition": "If none of the above branch conditions are met at execution time",
+      "code": 0,
+      "target_speed_mps": 0.0,
+      "rationale": "Default to the precomputed recommended T-drift because the triggering lateral collision is assessed as unavoidable at execution time and the right corridor is free while the left corridor is occupied by a pedestrian. Code 6 rotates the nose right so the rear faces the incoming truck, maximizing use of energy-absorbing structure and avoiding side impact. Historical cases show straight braking alone can leave harmful lateral overlap; the kinematic rollout favors code 6 over other options given the current occupancy constraints. [revised by debate arbiter]",
+      "confidence": 0.95
+     }
+    ]
+   },
+   "safety_rounds": 1,
+   "debate_ran": true
+  },
+  "reflex_trigger": {
+   "scene_risk": 0.703,
+   "band": "critical",
+   "assess_ms": 0.21,
+   "match_ms": 0.17,
+   "trigger_decision_latency_ms": 0.38,
+   "executed_code": 0,
+   "maneuver": "Full emergency braking",
+   "decision_source": "armed_policy[primary_threat_maintains]",
+   "matched_branch": {
+    "condition_type": "primary_threat_maintains",
+    "condition": "If truck1 continues maintaining its current crossing/encroaching motion and remains the triggering lateral threat at execution time",
+    "code": 0,
+    "target_speed_mps": 0.0,
+    "rationale": "t_drift_assessment.preconditions_met is true for truck1, so if the primary threat maintains, the collision is deemed unavoidable at execution time and the recommended T-drift must be used unless a hard rule blocks it. Right corridor is free; left corridor is occupied by a vulnerable pedestrian, so only code 6 keeps the vehicle oriented to take impact on the rear while drifting toward the safer right side. Rollout 6 has min separation 3.6 m and better clearance than the alternative T-drift, with rear-facing impact aligned to energy-absorbing structure. Braking alone is not the correct branch for this laterally crossing threat. [revised by debate arbiter]",
+    "confidence": 0.96
+   }
+  },
+  "consolidation": {
+   "assessment": "The maneuver was not effective: full emergency braking did not prevent the side-impact with the truck, and the subsequent instability led to severe damage and injuries. The decision rationale appears to have misclassified the “unavoidable” condition and/or selected a drift/impact strategy that still put EGO in the truck’s lateral path. Net result: unacceptable safety outcome.",
+   "decision_was_effective": false,
+   "lesson": "In intersection lateral-conflict scenarios, do not commit to an impact-preserving drift/avoidance branch based on “unavoidable” preconditions unless it demonstrably keeps the vehicle out of the other agent’s lateral reach at the relevant time window; prefer to maximize transverse clearance first (e.g., steering to a confirmed free corridor while maintaining longitudinal control) rather than relying on braking alone or planning for a controlled impact.",
+   "better_alternative": "None"
+  }
+ },
+ "execution_outcome": "Side collision with the truck occurred, followed by vehicle instability. Both vehicle damage and injuries were severe.",
+ "trace": [
+  {
+   "phase": "deliberation",
+   "agent": "orchestrator",
+   "output": "scene projected 0.90s forward to the anticipated execution state (risk 0.666)"
+  },
+  {
+   "phase": "deliberation",
+   "agent": "risk",
+   "t_wall": 1783148618.7286222,
+   "output": {
+    "summary": "Primary threat truck1: HJ risk 0.71, TTC 1.2 s, on collision course: True. Braking alone IS sufficient (stopping 6.25 m vs gap None m). Left corridor occupied by pedestrian; right corridor free.",
+    "primary_threat": "truck1"
+   },
+   "note": "deterministic template (realtime profile)"
+  },
+  {
+   "phase": "deliberation",
+   "agent": "memory",
+   "t_wall": 1783148621.2667332,
+   "output": {
+    "cases": [
+     {
+      "scenario": "EGO: small car, v=(10.0,0.0)m/s, road=Intersection, weather=Sunny (good road conditions)\nLARGE TRUCK truck1: 23.0m ahead, 14.4m left, v=(0.0,8.0)m/s, intention=Maintain\nPEDESTRIAN pedestrian: 16.0m ahead, 4.0m left, v=(0.0,0.0)m/s, intention=Maintain",
+      "decision_code": "6",
+      "outcome": "Rear collision with the truck occurred. Due to low relative velocity, no injuries were sustained.",
+      "lesson": "In a close cross-traffic conflict, do not commit to a side-rotation maneuver unless you have a verified escape path; if the obstacle is already inside the stopping/evading envelope, prioritize the maneuver that maximizes full-body clearance and preserves braking while keeping the vehicle stable.",
+      "distance": 0.0
+     },
+     {
+      "scenario": "EGO: small car, v=(10.0,0.0)m/s, road=Intersection, weather=Sunny (good road conditions)\nLARGE TRUCK truck1: 23.0m ahead, 14.4m left, v=(0.0,8.0)m/s, intention=Maintain\nPEDESTRIAN pedestrian: 16.0m ahead, 4.0m left, v=(0.0,0.0)m/s, intention=Maintain",
+      "decision_code": "0",
+      "outcome": "Side collision with the truck occurred, followed by vehicle instability. Both vehicle damage and injuries were severe.",
+      "lesson": "When a collision involves lateral overlap (e.g., target is offset left/right), do not rely on full straight-line braking as the sole avoidance strategy—verify that lateral clearance remains nonzero at closest approach under the other agent’s motion. If lateral clearance cannot be guaranteed, prefer an avoidance maneuver that explicitly removes lateral overlap (controlled steering away from the hazard corridor) even if it reduces speed, rather than only reducing longitudinal distance.",
+      "distance": 0.0
+     }
+    ],
+    "precomputed_policy": null
+   },
+   "elapsed_s": 2.538
+  },
+  {
+   "phase": "deliberation",
+   "agent": "perception",
+   "t_wall": 1783148623.109044,
+   "output": {
+    "summary": "Ego is moving straight at 10 m/s in an intersection with two hazards ahead-left. A pedestrian is 16 m ahead and 4 m left, stationary, and is the most immediate collision concern due to proximity and high risk. A large truck is farther ahead-left at 23 m and is moving laterally leftward (up in the BEV), creating a potential crossing/encroachment pattern but with more separation than the pedestrian.",
+    "hazards": [
+     {
+      "id": "pedestrian",
+      "kind": "pedestrian",
+      "note": "16 m ahead, 4 m left, stationary; highest immediate risk and within likely conflict zone."
+     },
+     {
+      "id": "truck1",
+      "kind": "large truck",
+      "note": "23 m ahead, 14.4 m left, moving leftward laterally; possible crossing/side encroachment but farther away."
+     }
+    ],
+    "free_corridor_left": false,
+    "free_corridor_right": true,
+    "occlusions": "Left corridor is constrained by the stationary pedestrian and the farther truck ahead-left; right side appears comparatively open. No explicit occlusion is shown, but the truck’s lateral motion suggests a potential future block of the left-forward space.",
+    "primary_threat": "pedestrian"
+   },
+   "model": "gpt-5.4-mini",
+   "elapsed_s": 4.233,
+   "usage": {
+    "prompt_tokens": 1067,
+    "completion_tokens": 248
+   },
+   "tool_calls": []
+  },
+  {
+   "phase": "deliberation",
+   "agent": "decision",
+   "t_wall": 1783148627.830087,
+   "output": {
+    "branches": [
+     {
+      "condition_type": "primary_threat_maintains",
+      "condition": "If truck1 continues maintaining its current crossing/encroaching motion and remains the triggering lateral threat at execution time",
+      "code": 6,
+      "target_speed_mps": 0,
+      "rationale": "t_drift_assessment.preconditions_met is true for truck1, so if the primary threat maintains, the collision is deemed unavoidable at execution time and the recommended T-drift must be used unless a hard rule blocks it. Right corridor is free; left corridor is occupied by a vulnerable pedestrian, so only code 6 keeps the vehicle oriented to take impact on the rear while drifting toward the safer right side. Rollout 6 has min separation 3.6 m and better clearance than the alternative T-drift, with rear-facing impact aligned to energy-absorbing structure. Braking alone is not the correct branch for this laterally crossing threat.",
+      "confidence": 0.96
+     },
+     {
+      "condition_type": "primary_threat_yields",
+      "condition": "If truck1 yields sufficiently so it is no longer on a collision course and lateral conflict is resolved",
+      "code": 0,
+      "target_speed_mps": 0,
+      "rationale": "When the primary lateral threat yields, the remaining in-lane forward risk is handled by full emergency braking. Physics evidence says braking alone is sufficient for in-lane objects, with stopping distance 6.25 m under the available gap logic. Rollout 0 gives a minimum separation of 3.16 m and reduces end-speed to 2.0 m/s; this is safer than continuing at speed. The pedestrian remains a concern, but the rightward avoidance branches are only needed if lateral clearance is required; if truck1 yields, stop straight and reassess.",
+      "confidence": 0.83
+     },
+     {
+      "condition_type": "primary_threat_accelerates",
+      "condition": "If truck1 accelerates or increases lateral encroachment while still the dominant threat",
+      "code": 6,
+      "target_speed_mps": 0,
+      "rationale": "Acceleration by truck1 tightens the already unavoidable lateral conflict. The precomputed T-drift rule explicitly recommends code 6 for this triggering target, and the right corridor is the only free side. Left-side maneuvers are prohibited because the left corridor contains a vulnerable pedestrian and lane change left is marked impossible. Rollout 6 preserves the best available rear-impact geometry under escalation.",
+      "confidence": 0.97
+     },
+     {
+      "condition_type": "secondary_threat_activates",
+      "condition": "If the pedestrian steps or moves into the right corridor, or any right-side pedestrian/cyclist occupancy appears before execution",
+      "code": 0,
+      "target_speed_mps": 0,
+      "rationale": "Never steer toward an occupied side, so a newly occupied right corridor removes the safer lateral escape option. In that case, revert to full emergency braking and keep the vehicle straight to avoid violating the hard rule against steering toward pedestrians/cyclists. Although braking alone does not solve the laterally crossing truck risk, it is the least-harm alternative when the rightward T-drift is vetoed by vulnerable road-user occupancy. The left side remains blocked by the existing pedestrian, so no lane-change branch is admissible.",
+      "confidence": 0.88
+     },
+     {
+      "condition_type": "default",
+      "condition": "If none of the above branch conditions are met at execution time",
+      "code": 6,
+      "target_speed_mps": 0,
+      "rationale": "Default to the precomputed recommended T-drift because the triggering lateral collision is assessed as unavoidable at execution time and the right corridor is free while the left corridor is occupied by a pedestrian. Code 6 rotates the nose right so the rear faces the incoming truck, maximizing use of energy-absorbing structure and avoiding side impact. Historical cases show straight braking alone can leave harmful lateral overlap; the kinematic rollout favors code 6 over other options given the current occupancy constraints.",
+      "confidence": 0.95
+     }
+    ],
+    "overall_rationale": "This policy prioritizes minimizing worst-case harm under a laterally crossing truck threat with a vulnerable pedestrian blocking the left corridor. Physics evidence marks truck1 as the triggering unavoidable lateral conflict at execution time, so maintaining or accelerating branches must use the recommended T-drift code 6 unless a hard rule forbids it. Because the right corridor is free and the left corridor contains a pedestrian, all leftward maneuvers are rejected and rightward rear-facing drift is the safest admissible evasive geometry. Emergency braking is reserved for yield or veto scenarios, where it becomes the least-harm fallback even though it does not fully eliminate the lateral threat."
+   },
+   "model": "gpt-5.4-mini",
+   "elapsed_s": 4.717,
+   "usage": {
+    "prompt_tokens": 4047,
+    "completion_tokens": 916
+   },
+   "tool_calls": [],
+   "decision_round": 1,
+   "role_used": "decision"
+  },
+  {
+   "phase": "deliberation",
+   "agent": "debate",
+   "t_wall": 1783148634.20322,
+   "output": {
+    "safety_argument": "Revise the policy to prioritize the vulnerable pedestrian absolutely: whenever the truck’s lateral threat is “dominant/unavoidable,” the controller should minimize the chance of any side-swipe/continued lateral overlap with the pedestrian, even if that means sacrificing passenger comfort or increasing vehicle damage. In this scene, code 6’s “T-drift to take impact on the rear” must be gated by a pedestrian-proximity safety check; if the drift path could bring the EGO’s trajectory through the pedestrian’s reachable/adjacent space at execution time, then braking (or a straight-line hold) should override code 6 as the least-worst option. Only allow code 6 when it demonstrably keeps the pedestrian’s corridor clearance invariant (no additional lateral encroachment relative to the current state). This change directly reduces worst-case harm to the pedestrian, which dominates the optimization objective, and prevents the policy from steering into a vulnerable-road-user risk whenever geometry becomes tight.",
+    "efficiency_argument": "The policy overreacts by committing to a hard “code 6 T-drift” even though the risk summary explicitly says braking alone is sufficient (stopping distance ~6.25 m and lateral conflict can be managed by reducing speed). Forcing a drift with the nose rotated can create instability and increases the chance of secondary impacts (rear-end/side-scrape) or false triggering when the truck’s actual motion is maintain/yield/variable. Given the pedestrian is stationary and the right corridor is free, the mildest maneuver consistent with safety is “keep straight + full emergency braking” whenever there is any credible way to resolve the collision course by deceleration—reserve dramatic lateral geometry for true veto cases. Therefore, the policy should default to code 0 (brake straight) for “truck maintains” as well, and only use code 6 when braking cannot prevent the lateral overlap or a hard constraint blocks straight-line braking.",
+    "resolution": "Revise the policy: because braking alone is sufficient in this scene and the pedestrian is a vulnerable road user near the left corridor, code 6 should not be the default response to a maintaining truck. Use straight emergency braking as the safer first choice for the dominant/maintaining threat, and reserve code 6 only for cases where braking is insufficient and the drift path is verified not to worsen pedestrian clearance.",
+    "revisions": {
+     "primary_threat_maintains": 0,
+     "primary_threat_accelerates": 0,
+     "default": 0
+    }
+   },
+   "model": "gpt-5.4-mini",
+   "elapsed_s": 1.75,
+   "usage": {
+    "prompt_tokens": 1754,
+    "completion_tokens": 135
+   },
+   "tool_calls": []
+  },
+  {
+   "phase": "deliberation",
+   "agent": "safety",
+   "t_wall": 1783148634.2075782,
+   "output": {
+    "round": 1,
+    "approved": true,
+    "veto_reason": ""
+   },
+   "branch_verdicts": [
+    {
+     "condition_type": "primary_threat_maintains",
+     "code": 0,
+     "approved": true,
+     "violations": []
+    },
+    {
+     "condition_type": "primary_threat_yields",
+     "code": 0,
+     "approved": true,
+     "violations": []
+    },
+    {
+     "condition_type": "primary_threat_accelerates",
+     "code": 0,
+     "approved": true,
+     "violations": []
+    },
+    {
+     "condition_type": "secondary_threat_activates",
+     "code": 0,
+     "approved": true,
+     "violations": []
+    },
+    {
+     "condition_type": "default",
+     "code": 0,
+     "approved": true,
+     "violations": []
+    }
+   ]
+  },
+  {
+   "phase": "consolidation",
+   "agent": "evaluation",
+   "t_wall": 1783148637.263693,
+   "output": {
+    "assessment": "The maneuver was not effective: full emergency braking did not prevent the side-impact with the truck, and the subsequent instability led to severe damage and injuries. The decision rationale appears to have misclassified the “unavoidable” condition and/or selected a drift/impact strategy that still put EGO in the truck’s lateral path. Net result: unacceptable safety outcome.",
+    "decision_was_effective": false,
+    "lesson": "In intersection lateral-conflict scenarios, do not commit to an impact-preserving drift/avoidance branch based on “unavoidable” preconditions unless it demonstrably keeps the vehicle out of the other agent’s lateral reach at the relevant time window; prefer to maximize transverse clearance first (e.g., steering to a confirmed free corridor while maintaining longitudinal control) rather than relying on braking alone or planning for a controlled impact.",
+    "better_alternative": "None"
+   },
+   "model": "gpt-5.4-nano",
+   "elapsed_s": 3.055,
+   "usage": {
+    "prompt_tokens": 469,
+    "completion_tokens": 180
+   },
+   "tool_calls": []
+  },
+  {
+   "phase": "consolidation",
+   "agent": "memory",
+   "t_wall": 1783148639.021387,
+   "output": {
+    "stored_case_id": "test1-83eda8ab"
+   }
+  },
+  {
+   "phase": "consolidation",
+   "agent": "evaluation",
+   "t_wall": 1783148639.022151,
+   "output": {
+    "distill_sample_appended": "/Users/shown/Seafile/LLM+避撞问题/Code/fine-tuning/maca_distill.jsonl",
+    "at": "15:03:59"
+   }
+  }
+ ],
+ "latency_summary": {
+  "reflex_preview_ms": 18.67,
+  "deliberation_s": 15.479,
+  "trigger_decision_latency_ms": 0.38,
+  "llm_calls_on_trigger_path": 0
+ }
+}

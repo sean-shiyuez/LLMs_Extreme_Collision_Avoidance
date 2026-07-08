@@ -1,0 +1,33 @@
+{
+ "description": "Intersection cross-traffic emergency: ego has a close follower, a truck crosses from the left on a constructed collision course, and the nominal right-side escape path is occupied by a pedestrian and blocked by roadside clutter. Sweep sub-rule-boundary TTC, ego speed, and right-side clearance to test the blind spot where existing left-crossing/right-escape rules exclude the pedestrian/blocked corridor or only cover Normal Road at TTC >= 1.4 s.",
+ "family_id": "intersection-left-crossing-right-blocked-ped-follower",
+ "hypothesis": "With the right escape corridor blocked by a pedestrian at short TTC, the dominant maneuver should switch from right-drift escape to hard in-lane braking or left-behind-the-truck steering, with the boundary driven mainly by TTC, ego speed, and remaining right-side clearance.",
+ "parameters": [
+  {
+   "name": "ego_speed",
+   "min": 5.0,
+   "max": 30.0,
+   "steps": 3
+  },
+  {
+   "name": "gap",
+   "min": 3.0,
+   "max": 60.0,
+   "steps": 3
+  }
+ ],
+ "pattern": "static_blockage",
+ "template": {
+  "blocked_side": "right",
+  "follower": true,
+  "from_side": "left",
+  "pedestrian": {
+   "present": true,
+   "side": "right"
+  },
+  "road_boundary_left": null,
+  "road_boundary_right": null,
+  "road_topology": "Intersection",
+  "threat_type": "truck"
+ }
+}

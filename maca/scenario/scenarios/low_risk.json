@@ -1,0 +1,68 @@
+{
+  "name": "low_risk",
+  "description": "Cruising scenario used to verify the reflex fast path: the lead car is far ahead and pulling away; a pedestrian waits on the sidewalk beyond the road boundary. Expected outcome: reflex loop returns code 7 without waking deliberation.",
+  "snapshots": [
+    {
+      "t": -1.0,
+      "ego": {
+        "id": "ego",
+        "type": "small car",
+        "coordinate": [0.0, 0.0],
+        "velocity": [15.0, 0.0],
+        "road_topology": "Normal Road",
+        "road_boundary_left": -1.5,
+        "road_boundary_right": 6
+      },
+      "obstacles": [],
+      "participants": [
+        {
+          "id": "lead_car",
+          "type": "small car",
+          "coordinate": [46.0, 0.0],
+          "velocity": [16.0, 0.0],
+          "intention": "Maintain"
+        },
+        {
+          "id": "pedestrian",
+          "type": "Pedestrian",
+          "coordinate": [21.0, 8.0],
+          "velocity": [0.0, 0.0],
+          "intention": "Maintain"
+        }
+      ]
+    },
+    {
+      "t": 0.0,
+      "ego": {
+        "id": "ego",
+        "type": "small car",
+        "coordinate": [0.0, 0.0],
+        "velocity": [15.0, 0.0],
+        "road_topology": "Normal Road",
+        "road_boundary_left": -1.5,
+        "road_boundary_right": 6
+      },
+      "obstacles": [],
+      "participants": [
+        {
+          "id": "lead_car",
+          "type": "small car",
+          "coordinate": [45.0, 0.0],
+          "velocity": [16.0, 0.0],
+          "intention": "Maintain"
+        },
+        {
+          "id": "pedestrian",
+          "type": "Pedestrian",
+          "coordinate": [20.0, 8.0],
+          "velocity": [0.0, 0.0],
+          "intention": "Maintain"
+        }
+      ]
+    }
+  ],
+  "execution_outcomes": {
+    "7": "Continued cruising; no intervention was necessary.",
+    "default": "Unnecessary intervention degraded ride comfort with no safety benefit."
+  }
+}

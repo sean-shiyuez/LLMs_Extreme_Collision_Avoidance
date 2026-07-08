@@ -1,0 +1,108 @@
+{
+ "started_at": "2026-07-08 18:51:48",
+ "mock": false,
+ "source": "both",
+ "queue_processed": [],
+ "families": [
+  {
+   "family_id": "right-cutin-left-ped-follower",
+   "pattern": "cut_in",
+   "hypothesis": "For right-side cut-ins, left evasive/T-drift maneuvers dominate only when TTC and left escape clearance are sufficient; with short TTC, high cut-in lateral speed, or tight pedestrian-side clearance, braking/holding becomes preferable despite rear-end risk from the follower.",
+   "generator": {
+    "model": "gpt-5.5(high)",
+    "elapsed_s": 27.88,
+    "usage": {
+     "prompt_tokens": 1020,
+     "completion_tokens": 1882
+    }
+   },
+   "points": 27,
+   "lawful": 0,
+   "lawful_uncovered": 0,
+   "ambiguous": 0,
+   "doomed": 27,
+   "rule_counterexamples": 0,
+   "rules": [],
+   "cases": [],
+   "skipped_covered_points": 0,
+   "consolidator": {
+    "skipped": true,
+    "reason": "lawful region already covered (0 points, 0 uncovered)"
+   }
+  },
+  {
+   "family_id": "left-cut-in-close-follower-right-gap",
+   "pattern": "cut_in",
+   "hypothesis": "With a close follower and a left-side cut-in, braking should dominate at long TTC or tight right gaps, while right evasive drift/lane-change should dominate at mid/short actionable TTC with high closing speed and sufficient right escape gap.",
+   "generator": {
+    "model": "gpt-5.5(high)",
+    "elapsed_s": 111.54,
+    "usage": {
+     "prompt_tokens": 1020,
+     "completion_tokens": 3293
+    }
+   },
+   "points": 27,
+   "lawful": 0,
+   "lawful_uncovered": 0,
+   "ambiguous": 27,
+   "doomed": 0,
+   "rule_counterexamples": 0,
+   "rules": [],
+   "cases": [
+    {
+     "case_id": "case-da401162",
+     "params": {
+      "ego_speed": 5.0,
+      "gap": 3.0,
+      "speed_diff": 0.0
+     },
+     "executed_code": 7,
+     "severity": 3
+    },
+    {
+     "case_id": "case-09303b47",
+     "params": {
+      "ego_speed": 5.0,
+      "gap": 31.5,
+      "speed_diff": 0.0
+     },
+     "executed_code": 2,
+     "severity": 3
+    },
+    {
+     "case_id": "case-6be173bb",
+     "params": {
+      "ego_speed": 5.0,
+      "gap": 31.5,
+      "speed_diff": 12.0
+     },
+     "executed_code": 7,
+     "severity": 3
+    }
+   ],
+   "skipped_covered_points": 3,
+   "consolidator": {
+    "skipped": true,
+    "reason": "lawful region already covered (0 points, 0 uncovered)"
+   }
+  }
+ ],
+ "revalidation": [],
+ "library_before": {
+  "rules_total": 3,
+  "rules_active": 3,
+  "rules_candidate": 0,
+  "rules_deprecated": 0,
+  "cases": 8,
+  "queued": 0
+ },
+ "library_after": {
+  "rules_total": 3,
+  "rules_active": 3,
+  "rules_candidate": 0,
+  "rules_deprecated": 0,
+  "cases": 11,
+  "queued": 0
+ }
+}

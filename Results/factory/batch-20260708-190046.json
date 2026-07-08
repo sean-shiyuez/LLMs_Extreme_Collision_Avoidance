@@ -1,0 +1,41 @@
+{
+ "started_at": "2026-07-08 19:00:10",
+ "mock": false,
+ "source": "queue",
+ "queue_processed": [
+  {
+   "kind": "gap",
+   "scenario": "gap_vru_right_block",
+   "case_id": "case-81a46d13",
+   "executed_code": 2,
+   "severity": 1,
+   "effective": true
+  },
+  {
+   "kind": "gap",
+   "scenario": "gap_vru_left_block",
+   "case_id": "case-1b87d79f",
+   "executed_code": 1,
+   "severity": 1,
+   "effective": true
+  }
+ ],
+ "families": [],
+ "revalidation": [],
+ "library_before": {
+  "rules_total": 3,
+  "rules_active": 3,
+  "rules_candidate": 0,
+  "rules_deprecated": 0,
+  "cases": 11,
+  "queued": 2
+ },
+ "library_after": {
+  "rules_total": 3,
+  "rules_active": 3,
+  "rules_candidate": 0,
+  "rules_deprecated": 0,
+  "cases": 13,
+  "queued": 0
+ }
+}

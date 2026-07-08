@@ -1,0 +1,130 @@
+{
+ "started_at": "2026-07-05 00:02:09",
+ "mock": false,
+ "source": "generate",
+ "queue_processed": [],
+ "families": [
+  {
+   "family_id": "left-crossing-escape-side-ped-follower",
+   "pattern": "lateral_crossing",
+   "hypothesis": "When the right escape side is occupied by a pedestrian, the law should switch from rightward threat-drift to braking/hold-lane at moderate TTC, but may only accept a constrained right drift at the shortest TTC when follower risk and braking insufficiency dominate.",
+   "generator": {
+    "model": "gpt-5.5(high)",
+    "elapsed_s": 23.31,
+    "usage": {
+     "prompt_tokens": 928,
+     "completion_tokens": 1302
+    }
+   },
+   "points": 27,
+   "lawful": 17,
+   "ambiguous": 10,
+   "rules": [
+    {
+     "rule_id": "left-crossing-escape-side-ped-follower-r1",
+     "status": "active",
+     "checked": 11,
+     "failures": [],
+     "pass_rate": 1.0,
+     "promoted": true
+    },
+    {
+     "rule_id": "left-crossing-escape-side-ped-follower-r2",
+     "status": "active",
+     "checked": 3,
+     "failures": [],
+     "pass_rate": 1.0,
+     "promoted": true
+    }
+   ],
+   "cases": [
+    {
+     "case_id": "case-9f516f0c",
+     "params": {
+      "ego_speed": 5.0,
+      "ttc": 0.4,
+      "lateral_speed": 2.0
+     },
+     "executed_code": 0,
+     "severity": 3
+    },
+    {
+     "case_id": "case-2a676020",
+     "params": {
+      "ego_speed": 5.0,
+      "ttc": 0.4,
+      "lateral_speed": 7.0
+     },
+     "executed_code": 0,
+     "severity": 4
+    },
+    {
+     "case_id": "case-5a05ffbe",
+     "params": {
+      "ego_speed": 5.0,
+      "ttc": 0.4,
+      "lateral_speed": 12.0
+     },
+     "executed_code": 0,
+     "severity": 4
+    }
+   ],
+   "consolidator": {
+    "accepted": 2,
+    "rejected": 0,
+    "trace": [
+     {
+      "agent": "consolidator",
+      "round": 1,
+      "model": "gpt-5.5(medium)",
+      "elapsed_s": 180.64,
+      "n_proposals": 2,
+      "analysis": "The lawful portion of this family strongly supports braking/hold-lane rather than rightward or T-drift when a pedestrian occupies the right escape side. Sixteen of seventeen lawful points have code 0 among the minimum-severity maneuvers; the only non-code-0 dominant point is a single high-speed, no-collision-course case favoring code 3, which is below the 3-point support threshold and is therefore not proposed as a general rule. The 0.4 s TTC cases are all ambiguous/all maneuvers tied at high severity, so they cannot lawfully support the hypothesized constrained right drift. Existing overlapping seed rules are not numerically contradicted by lawful points here: the right/left T-drift seeds either exclude pedestrian_side=right or do not overlap lawful collision-course points in this grid; the brake-sufficient seed is consistent with the front collision-course lawful points."
+     }
+    ]
+   }
+  }
+ ],
+ "revalidation": [
+  {
+   "rule_id": "mock-lateral-crossing-left-r1",
+   "checked": 8,
+   "failures": [],
+   "pass_rate": 1.0,
+   "promoted": true,
+   "still_active": true
+  },
+  {
+   "rule_id": "left-crossing-escape-side-ped-follower-r2",
+   "checked": 3,
+   "failures": [],
+   "pass_rate": 1.0,
+   "promoted": true,
+   "still_active": true
+  },
+  {
+   "rule_id": "left-crossing-escape-side-ped-follower-r1",
+   "checked": 11,
+   "failures": [],
+   "pass_rate": 1.0,
+   "promoted": true,
+   "still_active": true
+  }
+ ],
+ "library_before": {
+  "rules_total": 4,
+  "rules_active": 4,
+  "rules_candidate": 0,
+  "rules_deprecated": 0,
+  "cases": 9,
+  "queued": 0
+ },
+ "library_after": {
+  "rules_total": 6,
+  "rules_active": 6,
+  "rules_candidate": 0,
+  "rules_deprecated": 0,
+  "cases": 12,
+  "queued": 0
+ }
+}

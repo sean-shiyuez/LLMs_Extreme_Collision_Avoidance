@@ -1,0 +1,33 @@
+{
+ "started_at": "2026-07-08 19:05:17",
+ "mock": false,
+ "source": "queue",
+ "queue_processed": [
+  {
+   "kind": "gap",
+   "scenario": "gap_cyclist_cross_left",
+   "case_id": "case-ba4bb98d",
+   "executed_code": 6,
+   "severity": 4,
+   "effective": false
+  }
+ ],
+ "families": [],
+ "revalidation": [],
+ "library_before": {
+  "rules_total": 3,
+  "rules_active": 3,
+  "rules_candidate": 0,
+  "rules_deprecated": 0,
+  "cases": 13,
+  "queued": 1
+ },
+ "library_after": {
+  "rules_total": 3,
+  "rules_active": 3,
+  "rules_candidate": 0,
+  "rules_deprecated": 0,
+  "cases": 14,
+  "queued": 0
+ }
+}

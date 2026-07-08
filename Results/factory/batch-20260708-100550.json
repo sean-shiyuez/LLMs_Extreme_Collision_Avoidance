@@ -1,0 +1,53 @@
+{
+ "started_at": "2026-07-08 10:05:50",
+ "mock": true,
+ "source": "queue",
+ "queue_processed": [
+  {
+   "kind": "gap",
+   "scenario": "blockage_left_escape",
+   "case_id": "case-f8c19996",
+   "executed_code": 0,
+   "severity": 3,
+   "effective": true
+  },
+  {
+   "kind": "conflict",
+   "scenario": "cross_escape",
+   "skipped": true,
+   "covered_by": "case:seed-case-cross_escape"
+  },
+  {
+   "kind": "gap",
+   "scenario": "highway_brake",
+   "case_id": "case-660f5fab",
+   "executed_code": 0,
+   "severity": 3,
+   "effective": true
+  },
+  {
+   "kind": "conflict",
+   "scenario": "test1",
+   "skipped": true,
+   "covered_by": "rule:seed-tdrift-right"
+  }
+ ],
+ "families": [],
+ "revalidation": [],
+ "library_before": {
+  "rules_total": 3,
+  "rules_active": 3,
+  "rules_candidate": 0,
+  "rules_deprecated": 0,
+  "cases": 2,
+  "queued": 4
+ },
+ "library_after": {
+  "rules_total": 3,
+  "rules_active": 3,
+  "rules_candidate": 0,
+  "rules_deprecated": 0,
+  "cases": 4,
+  "queued": 0
+ }
+}

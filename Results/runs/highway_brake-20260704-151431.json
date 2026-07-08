@@ -1,0 +1,308 @@
+{
+ "scenario": "highway_brake",
+ "description": "Highway: the SUV directly ahead performs emergency braking; a faster SUV occupies the right lane ahead and another SUV follows behind. Ported from legacy Test_scene/scenario_manager4.py; preview snapshot extrapolated 1 s backwards; outcomes authored for this port.",
+ "mock": false,
+ "profile": "realtime",
+ "started_at": "2026-07-04 15:14:20",
+ "phases": {
+  "reflex_preview": {
+   "elapsed_ms": 19.04,
+   "scene_risk": 0.54,
+   "band": "elevated",
+   "min_ttc_s": 4.5,
+   "primary_threat": "SUV1",
+   "per_target": {
+    "SUV1": {
+     "hj_risk": 0.9,
+     "ttc_s": 4.5,
+     "miss_m": 0.0,
+     "on_collision_course": true,
+     "urgency": 0.0,
+     "combined": 0.54
+    },
+    "SUV2": {
+     "hj_risk": 0.73,
+     "ttc_s": null,
+     "miss_m": null,
+     "on_collision_course": false,
+     "urgency": 0.0,
+     "combined": 0.438
+    },
+    "SUV3": {
+     "hj_risk": 1.0,
+     "ttc_s": null,
+     "miss_m": null,
+     "on_collision_course": false,
+     "urgency": 0.0,
+     "combined": 0.18
+    }
+   },
+   "budget": {
+    "deadline_s": 4.0,
+    "decision_role": "decision",
+    "allow_vision": true,
+    "allow_debate": true,
+    "max_tool_iters": 6,
+    "tier": "deliberate"
+   }
+  },
+  "deliberation": {
+   "elapsed_s": 2.478,
+   "deadline_s": 4.0,
+   "deadline_met": true,
+   "armed_policy": {
+    "scenario_name": "highway_brake",
+    "source": "precomputed",
+    "primary_threat": "SUV1",
+    "deliberation_s": 2.478,
+    "branches": [
+     {
+      "condition_type": "primary_threat_maintains",
+      "condition": "If primary threat obs1 continues to remain on collision course ahead and the lateral scene stays as assessed",
+      "code": 0,
+      "target_speed_mps": 0.0,
+      "rationale": "Physics evidence says braking alone is sufficient for in-lane forward objects: stopping distance 9.0 m vs 15.6 m gap. Rollout 0 has worst_end_hj_risk 0.94, better than no-intervention 1.0, and historical case says to commit immediately to maximum braking and hold lane when lateral escape is constrained or uncertain. Left corridor is not available and right corridor, while physically open, is constrained by SUV1 and obs2, so a lateral trade is not justified versus the verified straight-line stop.",
+      "confidence": 0.97
+     },
+     {
+      "condition_type": "primary_threat_yields",
+      "condition": "If obs1 no longer presents the primary in-lane collision threat and the SUV remains a lateral conflict but does not cut in",
+      "code": 0,
+      "target_speed_mps": 0.0,
+      "rationale": "Even if the forward obstacle yields as a threat, the best verified safe action remains full braking because rollout 0 keeps worst_end_hj_risk below baseline and preserves lane discipline. The right corridor does not provide a clearly superior escape because the SUV is still ahead-right and obs2 reduces right-side margin. Maintain maximum braking until the threat picture materially changes.",
+      "confidence": 0.9
+     },
+     {
+      "condition_type": "primary_threat_accelerates",
+      "condition": "If obs1 or the forward hazard unexpectedly accelerates toward ego while still remaining in-lane",
+      "code": 0,
+      "target_speed_mps": 0.0,
+      "rationale": "Accelerating into the conflict only worsens closing speed. The precomputed rollout shows straight-line full braking remains the safest verified response among allowed maneuvers, with min separation 5.3 m and end risk 0.94. Because the scene provides no reliable open corridor with better clearance, hold maximum braking rather than swerving into uncertain lateral space.",
+      "confidence": 0.94
+     },
+     {
+      "condition_type": "secondary_threat_activates",
+      "condition": "If SUV1 begins a sharper leftward cut-in or another lateral threat activates without creating a verified, fully clear corridor",
+      "code": 0,
+      "target_speed_mps": 0.0,
+      "rationale": "The T-drift rule does not apply: t_drift_assessment.preconditions_met is false, so no laterally crossing target meets the mandatory drift criteria. The verified rollouts show every lateral maneuver retains high risk, and code 0 remains the least-harm fallback. If a new lateral threat appears, do not steer toward any side unless a fresh physics report proves that side is clear and within bounds; otherwise keep maximum braking and stay in lane.",
+      "confidence": 0.89
+     },
+     {
+      "condition_type": "default",
+      "condition": "Otherwise, execute the safest verified fallback",
+      "code": 0,
+      "target_speed_mps": 0.0,
+      "rationale": "Default to full emergency braking. It is the only maneuver directly supported by the braking feasibility result for the imminent in-lane hazard, it respects the road boundaries, and it avoids trading a known forward hazard for a side-impact risk. Historical evidence also favors immediate maximum braking when lateral escape is constrained or uncertain.",
+      "confidence": 0.98
+     }
+    ]
+   },
+   "safety_rounds": 1,
+   "debate_ran": false
+  },
+  "reflex_trigger": {
+   "scene_risk": 0.783,
+   "band": "critical",
+   "assess_ms": 0.15,
+   "match_ms": 0.15,
+   "trigger_decision_latency_ms": 0.31,
+   "executed_code": 0,
+   "maneuver": "Full emergency braking",
+   "decision_source": "armed_policy[primary_threat_maintains]",
+   "matched_branch": {
+    "condition_type": "primary_threat_maintains",
+    "condition": "If primary threat obs1 continues to remain on collision course ahead and the lateral scene stays as assessed",
+    "code": 0,
+    "target_speed_mps": 0.0,
+    "rationale": "Physics evidence says braking alone is sufficient for in-lane forward objects: stopping distance 9.0 m vs 15.6 m gap. Rollout 0 has worst_end_hj_risk 0.94, better than no-intervention 1.0, and historical case says to commit immediately to maximum braking and hold lane when lateral escape is constrained or uncertain. Left corridor is not available and right corridor, while physically open, is constrained by SUV1 and obs2, so a lateral trade is not justified versus the verified straight-line stop.",
+    "confidence": 0.97
+   }
+  },
+  "consolidation": {
+   "assessment": "Full emergency braking worked for the immediate forward hazard (SUV1): you reduced speed enough to avoid a collision there. However, it created a speed mismatch with SUV3 behind, leading to a rear-end impact even though it was low speed and caused minor damage only. So the maneuver was partially effective—good for the first threat, imperfect overall for the traffic context.",
+   "decision_was_effective": false,
+   "lesson": "If you must brake hard in-lane, also check the nearest vehicle behind for closing speed and minimum safe headway; apply the strongest braking you can that still prevents a rear-end collision (or plan/seed a brief deceleration-release/spacing strategy early if the rear follower is likely to be unable to stop).",
+   "better_alternative": "Use a two-stage controlled deceleration: commit to maximum braking only after verifying SUV3’s ability to stop without impact; otherwise start with strong but not max braking (enough to safely avoid SUV1 while reducing closure on SUV3), and immediately ease to avoid the rear-end scenario—then, if needed, transition to max braking once the gap to SUV1 shrinks but the rear risk is acceptable."
+  }
+ },
+ "execution_outcome": "Hard braking avoided SUV1, but following SUV3 impacted the rear at low relative speed; minor damage, no injuries.",
+ "trace": [
+  {
+   "phase": "deliberation",
+   "agent": "orchestrator",
+   "output": "scene projected 1.00s forward to the anticipated execution state (risk 0.57)"
+  },
+  {
+   "phase": "deliberation",
+   "agent": "memory",
+   "t_wall": 1783149262.5302641,
+   "output": {
+    "cases": [
+     {
+      "scenario": "EGO: small car, v=(12.0,0.0)m/s, road=Normal Road, weather=Sunny (good road conditions)\nROAD BOUNDS: left y=-1.5, right y=10 (y>0 is the ego's right side)\nOBSTACLE obs1: at (27.6,0.0), ellipse 5x2\nOBSTACLE obs2: at (31.6,7.5), ellipse 5x5\nSUV SUV1: 8.6m ahead, 10.0m right, v=(10.0,-2.5)m/s, intention=Left Lane Change",
+      "decision_code": "0",
+      "outcome": "Successfully braked before obs1, no collision occurred.",
+      "lesson": "When both lateral escape paths are constrained or uncertain, commit immediately to maximum braking and hold lane; do not trade braking distance for a risky swerve unless you have a clearly open corridor with verified clearance.",
+      "distance": 0.0763
+     },
+     {
+      "scenario": "EGO: small car, v=(12.0,0.0)m/s, road=Normal Road, weather=Sunny (good road conditions)\nROAD BOUNDS: left y=-1.5, right y=10 (y>0 is the ego's right side)\nOBSTACLE obs1: at (27.6,0.0), ellipse 5x2\nOBSTACLE obs2: at (31.6,7.5), ellipse 5x5\nSUV SUV1: 8.6m ahead, 10.0m right, v=(10.0,-2.5)m/s, intention=Left Lane Change",
+      "decision_code": "0",
+      "outcome": "Successfully braked before obs1, no collision occurred.",
+      "lesson": "When an in-lane obstacle blocks the current path and a lateral escape is even moderately constrained or uncertain, commit immediately to the highest-confidence longitudinal safety action (full emergency braking if available) rather than trading time for a lane change.",
+      "distance": 0.0763
+     }
+    ],
+    "precomputed_policy": {
+     "distance": 0.0763,
+     "policy_tree": {
+      "branches": [
+       {
+        "condition_type": "primary_threat_maintains",
+        "condition": "If primary threat obs1 continues to remain on collision course ahead and the lateral scene stays as assessed",
+        "code": 0,
+        "target_speed_mps": 0,
+        "rationale": "Physics evidence says braking alone is sufficient for in-lane forward objects: stopping distance 9.0 m vs 15.6 m gap. Rollout 0 has worst_end_hj_risk 0.94, better than no-intervention 1.0, and historical case says to commit immediately to maximum braking and hold lane when lateral escape is constrained or uncertain. Left corridor is not available and right corridor, while physically open, is constrained by SUV1 and obs2, so a lateral trade is not justified versus the verified straight-line stop.",
+        "confidence": 0.97
+       },
+       {
+        "condition_type": "primary_threat_yields",
+        "condition": "If obs1 no longer presents the primary in-lane collision threat and the SUV remains a lateral conflict but does not cut in",
+        "code": 0,
+        "target_speed_mps": 0,
+        "rationale": "Even if the forward obstacle yields as a threat, the best verified safe action remains full braking because rollout 0 keeps worst_end_hj_risk below baseline and preserves lane discipline. The right corridor does not provide a clearly superior escape because the SUV is still ahead-right and obs2 reduces right-side margin. Maintain maximum braking until the threat picture materially changes.",
+        "confidence": 0.9
+       },
+       {
+        "condition_type": "primary_threat_accelerates",
+        "condition": "If obs1 or the forward hazard unexpectedly accelerates toward ego while still remaining in-lane",
+        "code": 0,
+        "target_speed_mps": 0,
+        "rationale": "Accelerating into the conflict only worsens closing speed. The precomputed rollout shows straight-line full braking remains the safest verified response among allowed maneuvers, with min separation 5.3 m and end risk 0.94. Because the scene provides no reliable open corridor with better clearance, hold maximum braking rather than swerving into uncertain lateral space.",
+        "confidence": 0.94
+       },
+       {
+        "condition_type": "secondary_threat_activates",
+        "condition": "If SUV1 begins a sharper leftward cut-in or another lateral threat activates without creating a verified, fully clear corridor",
+        "code": 0,
+        "target_speed_mps": 0,
+        "rationale": "The T-drift rule does not apply: t_drift_assessment.preconditions_met is false, so no laterally crossing target meets the mandatory drift criteria. The verified rollouts show every lateral maneuver retains high risk, and code 0 remains the least-harm fallback. If a new lateral threat appears, do not steer toward any side unless a fresh physics report proves that side is clear and within bounds; otherwise keep maximum braking and stay in lane.",
+        "confidence": 0.89
+       },
+       {
+        "condition_type": "default",
+        "condition": "Otherwise, execute the safest verified fallback",
+        "code": 0,
+        "target_speed_mps": 0,
+        "rationale": "Default to full emergency braking. It is the only maneuver directly supported by the braking feasibility result for the imminent in-lane hazard, it respects the road boundaries, and it avoids trading a known forward hazard for a side-impact risk. Historical evidence also favors immediate maximum braking when lateral escape is constrained or uncertain.",
+        "confidence": 0.98
+       }
+      ],
+      "overall_rationale": "The precomputed evidence points to a dominant in-lane forward collision risk from obs1 with braking-alone sufficiency confirmed, while the lateral SUV conflict is real but does not satisfy T-drift preconditions and does not yield a clearly superior safe corridor. Rightward motion is physically possible but not clearly safer than braking because the right side is shaped by SUV1 and obs2, and leftward motion is bounded tightly by the road edge. Therefore the contingency policy should arm full emergency braking as the primary and default response across scene evolutions unless a future report explicitly changes corridor occupancy, boundary margins, or T-drift eligibility."
+     },
+     "scenario_name": "test2"
+    }
+   },
+   "elapsed_s": 2.476
+  },
+  {
+   "phase": "deliberation",
+   "agent": "risk",
+   "t_wall": 1783149262.530402,
+   "output": {
+    "summary": "Primary threat SUV1: HJ risk 0.95, TTC 3.5 s, on collision course: True. Braking alone is NOT sufficient for IN-LANE forward objects (stopping 30.25 m vs gap 7.0 m) — this metric does not cover lateral crossers. Left corridor blocked (boundary margin 0.5 m); right corridor free.",
+    "primary_threat": "SUV1"
+   },
+   "note": "deterministic template (realtime profile)"
+  },
+  {
+   "phase": "deliberation",
+   "agent": "memory",
+   "output": "precomputed policy candidate (distance 0.0763)"
+  },
+  {
+   "phase": "deliberation",
+   "agent": "safety",
+   "t_wall": 1783149262.532573,
+   "output": {
+    "round": 0,
+    "approved": true,
+    "veto_reason": ""
+   },
+   "branch_verdicts": [
+    {
+     "condition_type": "primary_threat_maintains",
+     "code": 0,
+     "approved": true,
+     "violations": []
+    },
+    {
+     "condition_type": "primary_threat_yields",
+     "code": 0,
+     "approved": true,
+     "violations": []
+    },
+    {
+     "condition_type": "primary_threat_accelerates",
+     "code": 0,
+     "approved": true,
+     "violations": []
+    },
+    {
+     "condition_type": "secondary_threat_activates",
+     "code": 0,
+     "approved": true,
+     "violations": []
+    },
+    {
+     "condition_type": "default",
+     "code": 0,
+     "approved": true,
+     "violations": []
+    }
+   ]
+  },
+  {
+   "phase": "consolidation",
+   "agent": "evaluation",
+   "t_wall": 1783149268.957016,
+   "output": {
+    "assessment": "Full emergency braking worked for the immediate forward hazard (SUV1): you reduced speed enough to avoid a collision there. However, it created a speed mismatch with SUV3 behind, leading to a rear-end impact even though it was low speed and caused minor damage only. So the maneuver was partially effective—good for the first threat, imperfect overall for the traffic context.",
+    "decision_was_effective": false,
+    "lesson": "If you must brake hard in-lane, also check the nearest vehicle behind for closing speed and minimum safe headway; apply the strongest braking you can that still prevents a rear-end collision (or plan/seed a brief deceleration-release/spacing strategy early if the rear follower is likely to be unable to stop).",
+    "better_alternative": "Use a two-stage controlled deceleration: commit to maximum braking only after verifying SUV3’s ability to stop without impact; otherwise start with strong but not max braking (enough to safely avoid SUV1 while reducing closure on SUV3), and immediately ease to avoid the rear-end scenario—then, if needed, transition to max braking once the gap to SUV1 shrinks but the rear risk is acceptable."
+   },
+   "model": "gpt-5.4-nano",
+   "elapsed_s": 6.424,
+   "usage": {
+    "prompt_tokens": 518,
+    "completion_tokens": 243
+   },
+   "tool_calls": []
+  },
+  {
+   "phase": "consolidation",
+   "agent": "memory",
+   "t_wall": 1783149271.433072,
+   "output": {
+    "stored_case_id": "highway_brake-6a8e3784"
+   }
+  },
+  {
+   "phase": "consolidation",
+   "agent": "evaluation",
+   "t_wall": 1783149271.4336698,
+   "output": {
+    "distill_sample_appended": "/Users/shown/Seafile/LLM+避撞问题/Code/fine-tuning/maca_distill.jsonl",
+    "at": "15:14:31"
+   }
+  }
+ ],
+ "latency_summary": {
+  "reflex_preview_ms": 19.04,
+  "deliberation_s": 2.478,
+  "trigger_decision_latency_ms": 0.31,
+  "llm_calls_on_trigger_path": 0
+ }
+}

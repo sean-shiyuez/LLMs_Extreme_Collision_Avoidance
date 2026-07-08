@@ -1,0 +1,39 @@
+{
+ "description": "Mirror blind-spot for lateral crossing: on a Normal Road, a truck enters from the ego's right/front-right on a constructed collision course while the nominal left escape corridor contains a pedestrian and is partially blocked; a close follower makes rear-end risk relevant. Truck lateral start is fixed and its lateral speed is derived from the swept TTC.",
+ "family_id": "right-crossing-left-escape-blocked-ped-follower",
+ "hypothesis": "For right-side crossing threats with the left escape side occupied/blocked, the dominant maneuver should switch from nominal left-drift to hard braking or right/hold-lane avoidance as TTC shrinks and the left escape gap falls below a clearance threshold.",
+ "parameters": [
+  {
+   "name": "ego_speed",
+   "min": 5.0,
+   "max": 30.0,
+   "steps": 3
+  },
+  {
+   "name": "ttc",
+   "min": 0.4,
+   "max": 2.4,
+   "steps": 3
+  },
+  {
+   "name": "lateral_speed",
+   "min": 2.0,
+   "max": 12.0,
+   "steps": 3
+  }
+ ],
+ "pattern": "lateral_crossing",
+ "template": {
+  "blocked_side": "left",
+  "follower": true,
+  "from_side": "right",
+  "pedestrian": {
+   "present": true,
+   "side": "left"
+  },
+  "road_boundary_left": null,
+  "road_boundary_right": null,
+  "road_topology": "Normal Road",
+  "threat_type": "truck"
+ }
+}

@@ -1,0 +1,210 @@
+{
+ "started_at": "2026-07-07 17:26:12",
+ "mock": false,
+ "source": "generate",
+ "queue_processed": [],
+ "families": [
+  {
+   "family_id": "left-crossing-right-blocked-ped-follower-short-ttc",
+   "pattern": "static_blockage",
+   "hypothesis": "With the right escape side blocked and pedestrian-occupied, right T-drift should stop dominating; the boundary should shift toward hard braking at lower ego speeds/larger follower gaps and toward a left-biased partial evasive drift only when TTC and lateral crossing speed leave enough room to avoid the truck nose without entering the pedestrian side.",
+   "generator": {
+    "model": "gpt-5.5(high)",
+    "elapsed_s": 101.3,
+    "usage": {
+     "prompt_tokens": 2441,
+     "completion_tokens": 2915
+    }
+   },
+   "points": 9,
+   "lawful": 5,
+   "lawful_uncovered": 3,
+   "ambiguous": 4,
+   "rule_counterexamples": 0,
+   "rules": [
+    {
+     "rule_id": "left-crossing-right-blocked-ped-follower-short-ttc-r1",
+     "status": "active",
+     "checked": 3,
+     "failures": [],
+     "pass_rate": 1.0,
+     "promoted": true
+    }
+   ],
+   "cases": [
+    {
+     "case_id": "case-5407590f",
+     "params": {
+      "ego_speed": 5.0,
+      "gap": 3.0
+     },
+     "executed_code": 0,
+     "severity": 3
+    },
+    {
+     "case_id": "case-3e0ff49c",
+     "params": {
+      "ego_speed": 30.0,
+      "gap": 31.5
+     },
+     "executed_code": 5,
+     "severity": 3
+    }
+   ],
+   "skipped_covered_points": 2,
+   "consolidator": {
+    "accepted": 1,
+    "rejected": 0,
+    "trace": [
+     {
+      "agent": "consolidator",
+      "round": 1,
+      "model": "gpt-5.5(medium)",
+      "elapsed_s": 181.74,
+      "n_proposals": 1,
+      "analysis": "The only maneuver class with at least 3 lawful supporting points is code 7. Those lawful points occur for a stationary frontal obstacle on Normal Road with the right corridor blocked/pedestrian side right, left corridor free, braking sufficient, and TTC from 3.43 to 12.0 s. In all three lawful points within the proposed guard, code 7 is among the minimum-severity maneuvers. The two lawful code-0 points are not proposed as a new rule because they provide only 2 supporting lawful points. Existing active rules are not amended: the relevant short-TTC braking rules either do not overlap these zero-lateral-distance/zero-lateral-speed lawful points, or overlap only points where code 0 remains minimum-severity; the no-intervention intersection rule has the same numeric shape but a different road topology."
+     }
+    ]
+   }
+  },
+  {
+   "family_id": "left-crossing-ped-escape-short-ttc",
+   "pattern": "static_blockage",
+   "hypothesis": "For high lateral-speed left crossings with a pedestrian on the right escape side, right T-drift dominates only when TTC and pedestrian gap are large enough; otherwise hard braking or left-biased evasive braking should dominate despite follower risk.",
+   "generator": {
+    "model": "gpt-5.5(high)",
+    "elapsed_s": 40.02,
+    "usage": {
+     "prompt_tokens": 2709,
+     "completion_tokens": 2916
+    }
+   },
+   "points": 9,
+   "lawful": 5,
+   "lawful_uncovered": 2,
+   "ambiguous": 4,
+   "rule_counterexamples": 0,
+   "rules": [],
+   "cases": [],
+   "skipped_covered_points": 4,
+   "consolidator": {
+    "skipped": true,
+    "reason": "lawful region already covered (5 points, 2 uncovered)"
+   }
+  },
+  {
+   "family_id": "roundabout-right-crossing-left-ped-follower",
+   "pattern": "lateral_crossing",
+   "hypothesis": "With a pedestrian on the left escape side, right-side-crossing T-drift should dominate only at short TTC/high crossing speed when the pedestrian gap is large; otherwise controlled braking should dominate, especially at longer TTC or small escape gaps.",
+   "generator": {
+    "model": "gpt-5.5(high)",
+    "elapsed_s": 33.33,
+    "usage": {
+     "prompt_tokens": 2709,
+     "completion_tokens": 2394
+    }
+   },
+   "points": 27,
+   "lawful": 0,
+   "lawful_uncovered": 0,
+   "ambiguous": 27,
+   "rule_counterexamples": 0,
+   "rules": [],
+   "cases": [
+    {
+     "case_id": "case-b7c2ca2f",
+     "params": {
+      "ego_speed": 5.0,
+      "ttc": 0.4,
+      "lateral_speed": 2.0
+     },
+     "executed_code": 7,
+     "severity": 4
+    },
+    {
+     "case_id": "case-0e7a810f",
+     "params": {
+      "ego_speed": 5.0,
+      "ttc": 0.4,
+      "lateral_speed": 7.0
+     },
+     "executed_code": 0,
+     "severity": 4
+    },
+    {
+     "case_id": "case-860fec79",
+     "params": {
+      "ego_speed": 5.0,
+      "ttc": 1.4,
+      "lateral_speed": 2.0
+     },
+     "executed_code": 0,
+     "severity": 4
+    }
+   ],
+   "skipped_covered_points": 1,
+   "consolidator": {
+    "skipped": true,
+    "reason": "lawful region already covered (0 points, 0 uncovered)"
+   }
+  }
+ ],
+ "revalidation": [
+  {
+   "rule_id": "mock-lateral-crossing-left-r1",
+   "checked": 8,
+   "failures": [],
+   "pass_rate": 1.0,
+   "promoted": true,
+   "still_active": true
+  },
+  {
+   "rule_id": "left-crossing-right-blocked-ped-follower-short-ttc-r1",
+   "checked": 3,
+   "failures": [],
+   "pass_rate": 1.0,
+   "promoted": true,
+   "still_active": true
+  },
+  {
+   "rule_id": "mock-cut-in-right-r2",
+   "checked": 9,
+   "failures": [],
+   "pass_rate": 1.0,
+   "promoted": true,
+   "still_active": true
+  },
+  {
+   "rule_id": "left-crossing-escape-side-ped-follower-r1",
+   "checked": 4,
+   "failures": [],
+   "pass_rate": 1.0,
+   "promoted": true,
+   "still_active": true
+  },
+  {
+   "rule_id": "mock-crossing-escape-window-r1",
+   "checked": 12,
+   "failures": [],
+   "pass_rate": 1.0,
+   "promoted": true,
+   "still_active": true
+  }
+ ],
+ "library_before": {
+  "rules_total": 12,
+  "rules_active": 11,
+  "rules_candidate": 0,
+  "rules_deprecated": 1,
+  "cases": 24,
+  "queued": 0
+ },
+ "library_after": {
+  "rules_total": 13,
+  "rules_active": 12,
+  "rules_candidate": 0,
+  "rules_deprecated": 1,
+  "cases": 29,
+  "queued": 0
+ }
+}

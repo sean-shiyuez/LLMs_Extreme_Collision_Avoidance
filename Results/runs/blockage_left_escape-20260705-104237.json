@@ -1,0 +1,77 @@
+{
+ "scenario": "blockage_left_escape",
+ "libraries": {
+  "rules_active": 6,
+  "cases": 11
+ },
+ "assessment": {
+  "scene_risk": 0.6,
+  "band": "elevated",
+  "min_ttc_s": 1.3333333333333333,
+  "primary_threat": "blockage"
+ },
+ "features": {
+  "discrete": {
+   "road_topology": "Normal Road",
+   "threat_kind": "obstacle",
+   "approach_sector": "front",
+   "pedestrian_side": "none",
+   "corridor_left_free": true,
+   "corridor_right_free": false,
+   "braking_sufficient": false,
+   "on_collision_course": true
+  },
+  "numeric": {
+   "ttc_s": 1.33,
+   "miss_m": 0.0,
+   "lateral_dist_m": 0.0,
+   "lateral_speed_mps": 0.0,
+   "closing_speed_mps": 24.0,
+   "ego_speed_mps": 24.0,
+   "hj_risk": 0.39,
+   "threat_dist_m": 32.0,
+   "scene_risk": 0.6
+  }
+ },
+ "rule_hit": null,
+ "case_hit": null,
+ "case_similarity": 0.6853,
+ "observed_condition": "primary_threat_maintains",
+ "gap_queued": true,
+ "executed_code": 0,
+ "decision_source": "mrm_fallback",
+ "branch": {
+  "condition_type": "default",
+  "condition": "no library coverage",
+  "code": 0,
+  "target_speed_mps": 0.0,
+  "rationale": "Minimal-risk maneuver: no verified rule or case covers this scene.",
+  "confidence": 1.0
+ },
+ "timings": {
+  "monitor_ms": 1.26,
+  "features_ms": 0.084,
+  "rule_match_ms": 0.005,
+  "case_knn_ms": 0.046,
+  "evolution_ms": 0.068,
+  "trigger_path_total_ms": 1.613
+ },
+ "outcome": {
+  "severity": 4,
+  "text": "Collision with blockage at t=1.75s, front impact at 10.0 m/s relative speed: severe damage, serious injuries likely.",
+  "collision": {
+   "target": "blockage",
+   "kind": "obstacle",
+   "t": 1.75,
+   "relative_speed_mps": 10.0,
+   "impact_face": "front",
+   "vulnerable": false
+  },
+  "hj_constraint": {
+   "worst_end_risk": 0.49,
+   "baseline_risk": 1.0,
+   "acceptable": true
+  }
+ },
+ "ran_at": "2026-07-05 10:42:37"
+}

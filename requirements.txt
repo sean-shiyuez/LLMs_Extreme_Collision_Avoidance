@@ -1,0 +1,16 @@
+# MACA — Experience-Compiled Multi-Agent Collision Avoidance
+# Tested with Python 3.9 (conda env: llm_control)
+
+# Online plane (maca/runtime): torch + numpy only — no network dependencies.
+torch>=2.3          # HJ-reachability value network
+numpy>=1.24
+
+# Offline factory (maca/factory):
+openai>=1.60
+python-dotenv>=1.0
+
+# Optional: BEV visualization for figures (not in the pipeline)
+matplotlib>=3.7
+
+# Development / testing
+pytest>=7.0

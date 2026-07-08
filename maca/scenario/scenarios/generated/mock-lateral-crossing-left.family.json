@@ -1,0 +1,39 @@
+{
+ "family_id": "mock-lateral-crossing-left",
+ "description": "Mock family: truck crossing from the left at an intersection, no pedestrian.",
+ "pattern": "lateral_crossing",
+ "template": {
+  "road_topology": "Intersection",
+  "threat_type": "Large Truck",
+  "from_side": "left",
+  "pedestrian": {
+   "present": false,
+   "side": "left"
+  },
+  "road_boundary_left": null,
+  "road_boundary_right": null,
+  "follower": false,
+  "blocked_side": null
+ },
+ "parameters": [
+  {
+   "name": "ego_speed",
+   "min": 12.0,
+   "max": 18.0,
+   "steps": 2
+  },
+  {
+   "name": "ttc",
+   "min": 0.8,
+   "max": 1.6,
+   "steps": 3
+  },
+  {
+   "name": "lateral_speed",
+   "min": 5.0,
+   "max": 9.0,
+   "steps": 2
+  }
+ ],
+ "hypothesis": "T-drift should dominate at short TTC / fast lateral closing; braking or no-op should win at long TTC."
+}

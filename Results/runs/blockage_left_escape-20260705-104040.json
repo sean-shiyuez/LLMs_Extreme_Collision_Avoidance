@@ -1,0 +1,63 @@
+{
+ "scenario": "blockage_left_escape",
+ "libraries": {
+  "rules_active": 6,
+  "cases": 11
+ },
+ "assessment": {
+  "scene_risk": 0.6,
+  "band": "elevated",
+  "min_ttc_s": 1.3333333333333333,
+  "primary_threat": "neighbor"
+ },
+ "features": {
+  "discrete": {
+   "road_topology": "Normal Road",
+   "threat_kind": "suv",
+   "approach_sector": "front_right",
+   "pedestrian_side": "none",
+   "corridor_left_free": true,
+   "corridor_right_free": false,
+   "braking_sufficient": false,
+   "on_collision_course": false
+  },
+  "numeric": {
+   "ttc_s": 99.0,
+   "miss_m": 99.0,
+   "lateral_dist_m": 3.5,
+   "lateral_speed_mps": 0.0,
+   "closing_speed_mps": 0.0,
+   "ego_speed_mps": 24.0,
+   "hj_risk": 1.0,
+   "threat_dist_m": 4.031,
+   "scene_risk": 0.6
+  }
+ },
+ "executed_code": 7,
+ "decision_source": "reflex_monitoring_elevated",
+ "branch": null,
+ "observed_condition": "elevated_monitoring",
+ "timings": {
+  "monitor_ms": 2.408,
+  "features_ms": 0.027,
+  "trigger_path_total_ms": 2.446
+ },
+ "outcome": {
+  "severity": 4,
+  "text": "Collision with blockage at t=1.25s, front impact at 24.0 m/s relative speed: severe damage, serious injuries likely.",
+  "collision": {
+   "target": "blockage",
+   "kind": "obstacle",
+   "t": 1.25,
+   "relative_speed_mps": 24.0,
+   "impact_face": "front",
+   "vulnerable": false
+  },
+  "hj_constraint": {
+   "worst_end_risk": 1.0,
+   "baseline_risk": 1.0,
+   "acceptable": true
+  }
+ },
+ "ran_at": "2026-07-05 10:40:40"
+}

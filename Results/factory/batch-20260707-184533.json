@@ -1,0 +1,193 @@
+{
+ "started_at": "2026-07-07 18:41:17",
+ "mock": false,
+ "source": "generate",
+ "queue_processed": [],
+ "families": [
+  {
+   "family_id": "lead-brake-follower-left-blocked",
+   "pattern": "lead_braking",
+   "hypothesis": "With a close follower and short actionable TTC, right lane-change/escape should dominate hard braking; as TTC increases or follower gap grows, controlled braking should dominate despite the lead-braking threat.",
+   "generator": {
+    "model": "gpt-5.5(high)",
+    "elapsed_s": 17.9,
+    "usage": {
+     "prompt_tokens": 2790,
+     "completion_tokens": 1313
+    }
+   },
+   "points": 27,
+   "lawful": 0,
+   "lawful_uncovered": 0,
+   "ambiguous": 0,
+   "doomed": 27,
+   "rule_counterexamples": 0,
+   "rules": [],
+   "cases": [],
+   "skipped_covered_points": 0,
+   "consolidator": {
+    "skipped": true,
+    "reason": "lawful region already covered (0 points, 0 uncovered)"
+   }
+  },
+  {
+   "family_id": "lead-braking-follower-left-escape",
+   "pattern": "lead_braking",
+   "hypothesis": "Full braking should dominate at higher TTC or larger follower gaps, while left evasive maneuvering should dominate at lower TTC, higher ego speed, and tight follower gaps where rear-end risk makes braking costly.",
+   "generator": {
+    "model": "gpt-5.5(high)",
+    "elapsed_s": 19.36,
+    "usage": {
+     "prompt_tokens": 2790,
+     "completion_tokens": 1388
+    }
+   },
+   "points": 27,
+   "lawful": 21,
+   "lawful_uncovered": 21,
+   "ambiguous": 4,
+   "doomed": 2,
+   "rule_counterexamples": 0,
+   "rules": [
+    {
+     "rule_id": "lead-braking-follower-left-escape-r1",
+     "status": "active",
+     "checked": 6,
+     "failures": [],
+     "pass_rate": 1.0,
+     "promoted": true
+    },
+    {
+     "rule_id": "lead-braking-follower-left-escape-r2",
+     "status": "active",
+     "checked": 4,
+     "failures": [],
+     "pass_rate": 1.0,
+     "promoted": true
+    }
+   ],
+   "cases": [
+    {
+     "case_id": "case-6181184e",
+     "params": {
+      "ego_speed": 5.0,
+      "gap": 3.0,
+      "speed_diff": 6.0
+     },
+     "executed_code": 0,
+     "severity": 3
+    }
+   ],
+   "skipped_covered_points": 3,
+   "consolidator": {
+    "accepted": 2,
+    "rejected": 0,
+    "trace": [
+     {
+      "agent": "consolidator",
+      "round": 1,
+      "model": "gpt-5.5(medium)",
+      "elapsed_s": 169.33,
+      "n_proposals": 2,
+      "analysis": "The lawful grid separates into a broad no-intervention region and a medium-gap left-escape-with-braking region. Code 7 is supported whenever the lead threat is sufficiently far and TTC is at least 6.3 s across 12 lawful points, with no lawful contradiction inside the rectangular guard. Code 3 is supported at the 31.5 m follower gap for ego speeds 17.5-30 m/s and closing speeds 6-12 m/s, where no-intervention is severe and left-change-with-braking is among the minimum-severity maneuvers at all 4 lawful points. The two small-gap stationary high-speed T-drift-left points for code 5 are not proposed because they have only 2 supporting lawful points, below the minimum support requirement. The short-TTC small-gap closing cases are ambiguous or doomed and are excluded. Existing overlapping rules are not contradicted because their guards require features absent here, such as braking_sufficient=true, lateral_speed_mps>=4, crossing sectors, different pedestrian_side, or different threat_kind/topology combinations."
+     }
+    ]
+   }
+  },
+  {
+   "family_id": "left-crossing-escape-ped-highspeed-short-ttc",
+   "pattern": "lateral_crossing",
+   "hypothesis": "With the right escape corridor socially blocked by a pedestrian, the optimal law should switch from right T-drift to hard braking or left-biased evasive drift depending mainly on TTC and ego speed/follower rear-end risk.",
+   "generator": {
+    "model": "gpt-5.5(high)",
+    "elapsed_s": 23.28,
+    "usage": {
+     "prompt_tokens": 3202,
+     "completion_tokens": 1814
+    }
+   },
+   "points": 27,
+   "lawful": 17,
+   "lawful_uncovered": 1,
+   "ambiguous": 2,
+   "doomed": 8,
+   "rule_counterexamples": 0,
+   "rules": [],
+   "cases": [
+    {
+     "case_id": "case-6ce2c747",
+     "params": {
+      "ego_speed": 30.0,
+      "ttc": 1.4,
+      "lateral_speed": 2.0
+     },
+     "executed_code": 5,
+     "severity": 3
+    }
+   ],
+   "skipped_covered_points": 1,
+   "consolidator": {
+    "skipped": true,
+    "reason": "lawful region already covered (17 points, 1 uncovered)"
+   }
+  }
+ ],
+ "revalidation": [
+  {
+   "rule_id": "left-crossing-escape-side-ped-follower-r1",
+   "checked": 4,
+   "failures": [],
+   "pass_rate": 1.0,
+   "promoted": true,
+   "still_active": true
+  },
+  {
+   "rule_id": "mock-lateral-crossing-left-r1",
+   "checked": 8,
+   "failures": [],
+   "pass_rate": 1.0,
+   "promoted": true,
+   "still_active": true
+  },
+  {
+   "rule_id": "lead-braking-follower-left-escape-r1",
+   "checked": 6,
+   "failures": [],
+   "pass_rate": 1.0,
+   "promoted": true,
+   "still_active": true
+  },
+  {
+   "rule_id": "mock-cut-in-right-r1",
+   "checked": 9,
+   "failures": [],
+   "pass_rate": 1.0,
+   "promoted": true,
+   "still_active": true
+  },
+  {
+   "rule_id": "left-crossing-right-blocked-short-ttc-r1",
+   "checked": 15,
+   "failures": [],
+   "pass_rate": 1.0,
+   "promoted": true,
+   "still_active": true
+  }
+ ],
+ "library_before": {
+  "rules_total": 13,
+  "rules_active": 12,
+  "rules_candidate": 0,
+  "rules_deprecated": 1,
+  "cases": 31,
+  "queued": 0
+ },
+ "library_after": {
+  "rules_total": 15,
+  "rules_active": 14,
+  "rules_candidate": 0,
+  "rules_deprecated": 1,
+  "cases": 33,
+  "queued": 0
+ }
+}

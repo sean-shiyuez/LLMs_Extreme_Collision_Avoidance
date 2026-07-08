@@ -1,0 +1,50 @@
+{
+ "started_at": "2026-07-05 10:43:03",
+ "mock": true,
+ "source": "queue",
+ "queue_processed": [
+  {
+   "kind": "conflict",
+   "scenario": "cross_escape",
+   "case_id": "case-f438c936",
+   "executed_code": 2,
+   "severity": 0,
+   "effective": true,
+   "retired_case": "case-39f6b850"
+  },
+  {
+   "kind": "gap",
+   "scenario": "blockage_left_escape",
+   "case_id": "case-c23bf884",
+   "executed_code": 3,
+   "severity": 0,
+   "effective": true
+  },
+  {
+   "kind": "gap",
+   "scenario": "moving_obstacle",
+   "case_id": "case-1044a06c",
+   "executed_code": 1,
+   "severity": 1,
+   "effective": true
+  }
+ ],
+ "families": [],
+ "revalidation": [],
+ "library_before": {
+  "rules_total": 6,
+  "rules_active": 6,
+  "rules_candidate": 0,
+  "rules_deprecated": 0,
+  "cases": 12,
+  "queued": 3
+ },
+ "library_after": {
+  "rules_total": 6,
+  "rules_active": 6,
+  "rules_candidate": 0,
+  "rules_deprecated": 0,
+  "cases": 15,
+  "queued": 0
+ }
+}

@@ -1,0 +1,39 @@
+{
+ "description": "Intersection lateral-crossing truck from the left on a constructed collision course with the ego. The nominal right-escape corridor is made unsafe by a pedestrian on the right plus a right-side blockage, and a following vehicle is present to contest hard braking.",
+ "family_id": "left-cross-right-escape-blocked-follower",
+ "hypothesis": "When a left-side crossing threat would normally favor a right drift, a pedestrian/blocked corridor on the right should suppress the drift; the boundary should shift between hard braking and a left/behind-threat evasive path as TTC, ego speed, lateral closing speed, and follower gap tighten.",
+ "parameters": [
+  {
+   "name": "ego_speed",
+   "min": 5.0,
+   "max": 30.0,
+   "steps": 3
+  },
+  {
+   "name": "ttc",
+   "min": 0.4,
+   "max": 2.4,
+   "steps": 3
+  },
+  {
+   "name": "lateral_speed",
+   "min": 2.0,
+   "max": 12.0,
+   "steps": 3
+  }
+ ],
+ "pattern": "lateral_crossing",
+ "template": {
+  "blocked_side": "right",
+  "follower": true,
+  "from_side": "left",
+  "pedestrian": {
+   "present": true,
+   "side": "right"
+  },
+  "road_boundary_left": null,
+  "road_boundary_right": null,
+  "road_topology": "Intersection",
+  "threat_type": "truck"
+ }
+}

@@ -1,0 +1,115 @@
+{
+ "started_at": "2026-07-04 23:48:27",
+ "mock": true,
+ "source": "both",
+ "queue_processed": [
+  {
+   "kind": "gap",
+   "scenario": "highway_brake",
+   "case_id": "case-2916767b",
+   "executed_code": 0,
+   "severity": 2,
+   "effective": true
+  }
+ ],
+ "families": [
+  {
+   "family_id": "mock-lateral-crossing-left",
+   "pattern": "lateral_crossing",
+   "hypothesis": "T-drift should dominate at short TTC / fast lateral closing; braking or no-op should win at long TTC.",
+   "generator": {
+    "model": "mock-generator",
+    "elapsed_s": 0.0,
+    "usage": {
+     "prompt_tokens": 0,
+     "completion_tokens": 0
+    }
+   },
+   "points": 12,
+   "lawful": 8,
+   "ambiguous": 4,
+   "rules": [
+    {
+     "rule_id": "mock-lateral-crossing-left-r1",
+     "status": "active",
+     "checked": 8,
+     "failures": [],
+     "pass_rate": 1.0,
+     "promoted": true
+    }
+   ],
+   "cases": [
+    {
+     "case_id": "case-6e6c14bd",
+     "params": {
+      "ego_speed": 12.0,
+      "ttc": 0.8,
+      "lateral_speed": 5.0
+     },
+     "executed_code": 0,
+     "severity": 4
+    },
+    {
+     "case_id": "case-39f6b850",
+     "params": {
+      "ego_speed": 12.0,
+      "ttc": 0.8,
+      "lateral_speed": 9.0
+     },
+     "executed_code": 0,
+     "severity": 4
+    },
+    {
+     "case_id": "case-61479e4c",
+     "params": {
+      "ego_speed": 18.0,
+      "ttc": 0.8,
+      "lateral_speed": 5.0
+     },
+     "executed_code": 0,
+     "severity": 4
+    }
+   ],
+   "consolidator": {
+    "accepted": 1,
+    "rejected": 0,
+    "trace": [
+     {
+      "agent": "consolidator",
+      "round": 1,
+      "model": "mock-consolidator",
+      "elapsed_s": 0.0,
+      "n_proposals": 1,
+      "analysis": "Mock consolidation via the no-LLM induction baseline."
+     }
+    ]
+   }
+  }
+ ],
+ "revalidation": [
+  {
+   "rule_id": "mock-lateral-crossing-left-r1",
+   "checked": 8,
+   "failures": [],
+   "pass_rate": 1.0,
+   "promoted": true,
+   "still_active": true
+  }
+ ],
+ "library_before": {
+  "rules_total": 3,
+  "rules_active": 3,
+  "rules_candidate": 0,
+  "rules_deprecated": 0,
+  "cases": 0,
+  "queued": 1
+ },
+ "library_after": {
+  "rules_total": 4,
+  "rules_active": 4,
+  "rules_candidate": 0,
+  "rules_deprecated": 0,
+  "cases": 4,
+  "queued": 0
+ }
+}

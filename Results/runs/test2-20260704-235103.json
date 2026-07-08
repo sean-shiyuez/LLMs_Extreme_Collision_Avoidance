@@ -1,0 +1,69 @@
+{
+ "scenario": "test2",
+ "libraries": {
+  "rules_active": 4,
+  "cases": 5
+ },
+ "assessment": {
+  "scene_risk": 0.647,
+  "band": "critical",
+  "min_ttc_s": 1.2999999999999998,
+  "primary_threat": "obs1"
+ },
+ "features": {
+  "discrete": {
+   "road_topology": "Normal Road",
+   "threat_kind": "obstacle",
+   "approach_sector": "front",
+   "pedestrian_side": "none",
+   "corridor_left_free": false,
+   "corridor_right_free": true,
+   "braking_sufficient": true,
+   "on_collision_course": true
+  },
+  "numeric": {
+   "ttc_s": 1.3,
+   "miss_m": 0.0,
+   "lateral_dist_m": 0.0,
+   "lateral_speed_mps": 0.0,
+   "closing_speed_mps": 12.0,
+   "ego_speed_mps": 12.0,
+   "hj_risk": 0.7,
+   "threat_dist_m": 15.6,
+   "scene_risk": 0.647
+  }
+ },
+ "rule_hit": "seed-brake-sufficient",
+ "case_hit": null,
+ "case_similarity": 0.7933,
+ "observed_condition": "primary_threat_maintains",
+ "executed_code": 0,
+ "decision_source": "rule[seed-brake-sufficient]",
+ "branch": {
+  "condition_type": "primary_threat_maintains",
+  "condition": "forward threat keeps closing",
+  "code": 0,
+  "target_speed_mps": 0.0,
+  "rationale": "Stopping distance fits the gap: full braking resolves the conflict without lateral risk.",
+  "confidence": 0.95
+ },
+ "timings": {
+  "monitor_ms": 1.172,
+  "features_ms": 0.022,
+  "rule_match_ms": 0.006,
+  "case_knn_ms": 0.04,
+  "evolution_ms": 0.086,
+  "trigger_path_total_ms": 1.34
+ },
+ "outcome": {
+  "severity": 0,
+  "text": "No collision; minimum separation 4.1 m.",
+  "collision": null,
+  "hj_constraint": {
+   "worst_end_risk": 0.98,
+   "baseline_risk": 1.0,
+   "acceptable": true
+  }
+ },
+ "ran_at": "2026-07-04 23:51:03"
+}

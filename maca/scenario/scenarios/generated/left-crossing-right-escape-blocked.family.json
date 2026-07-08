@@ -1,0 +1,39 @@
+{
+ "description": "Intersection lateral-crossing emergency: ego travels straight through, a vehicle enters from the left on a constructed collision course at short TTC. The normally preferred right-drift escape path is deliberately unsafe: a pedestrian is present on the right shoulder/curb side and the right corridor is also marked blocked. Ego speed is swept to vary braking sufficiency while TTC and lateral closing speed set threat urgency; pedestrian clearance sweeps how hard the escape-side constraint bites.",
+ "family_id": "left-crossing-right-escape-blocked",
+ "hypothesis": "For left-side crossing threats, the existing right-drift response should dominate only when the right escape side is clear; with a right-side pedestrian/blocked corridor, the law should switch toward hard braking when sufficient and avoid right drift even at very short TTC.",
+ "parameters": [
+  {
+   "name": "ego_speed",
+   "min": 5.0,
+   "max": 30.0,
+   "steps": 3
+  },
+  {
+   "name": "ttc",
+   "min": 0.4,
+   "max": 2.4,
+   "steps": 3
+  },
+  {
+   "name": "lateral_speed",
+   "min": 2.0,
+   "max": 12.0,
+   "steps": 3
+  }
+ ],
+ "pattern": "lateral_crossing",
+ "template": {
+  "blocked_side": "right",
+  "follower": false,
+  "from_side": "left",
+  "pedestrian": {
+   "present": true,
+   "side": "right"
+  },
+  "road_boundary_left": null,
+  "road_boundary_right": 3.5,
+  "road_topology": "Intersection",
+  "threat_type": "crossing_vehicle"
+ }
+}

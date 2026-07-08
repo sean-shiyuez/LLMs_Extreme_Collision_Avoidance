@@ -1,0 +1,71 @@
+{
+  "name": "cross_right_tdrift",
+  "description": "Mirror of test1: a truck crosses from the RIGHT on an unavoidable-collision course. Only the leftward T-drift (code 5) takes the impact on the rear (severity 3); every other maneuver ends in a severity-4 side/front impact. Exercises the seed-tdrift-left rule.",
+  "snapshots": [
+    {
+      "t": -1.0,
+      "ego": {
+        "id": "ego",
+        "type": "small car",
+        "coordinate": [
+          0.0,
+          0.0
+        ],
+        "velocity": [
+          12.0,
+          0.0
+        ],
+        "road_topology": "Intersection"
+      },
+      "obstacles": [],
+      "participants": [
+        {
+          "id": "truck1",
+          "type": "Large Truck",
+          "coordinate": [
+            24.0,
+            20.0
+          ],
+          "velocity": [
+            0.0,
+            -8.0
+          ],
+          "intention": "Maintain"
+        }
+      ]
+    },
+    {
+      "ego": {
+        "id": "ego",
+        "type": "small car",
+        "coordinate": [
+          0.0,
+          0.0
+        ],
+        "velocity": [
+          12.0,
+          0.0
+        ],
+        "road_topology": "Intersection"
+      },
+      "obstacles": [],
+      "participants": [
+        {
+          "id": "truck1",
+          "type": "Large Truck",
+          "coordinate": [
+            12.0,
+            12.0
+          ],
+          "velocity": [
+            0.0,
+            -8.0
+          ],
+          "intention": "Maintain"
+        }
+      ],
+      "t": 0.0
+    }
+  ],
+  "execution_outcomes": {}
+}

@@ -1,0 +1,69 @@
+{
+ "scenario": "moving_obstacle",
+ "libraries": {
+  "rules_active": 3,
+  "cases": 8
+ },
+ "assessment": {
+  "scene_risk": 0.656,
+  "band": "critical",
+  "min_ttc_s": 1.0533807829181494,
+  "primary_threat": "cargo"
+ },
+ "features": {
+  "discrete": {
+   "road_topology": "Normal Road",
+   "threat_kind": "obstacle",
+   "approach_sector": "front_right",
+   "pedestrian_side": "none",
+   "corridor_left_free": true,
+   "corridor_right_free": false,
+   "braking_sufficient": false,
+   "on_collision_course": true
+  },
+  "numeric": {
+   "ttc_s": 1.05,
+   "miss_m": 2.86,
+   "lateral_dist_m": 8.0,
+   "lateral_speed_mps": 5.0,
+   "closing_speed_mps": 16.763,
+   "ego_speed_mps": 12.0,
+   "hj_risk": 0.66,
+   "threat_dist_m": 17.889,
+   "scene_risk": 0.656
+  }
+ },
+ "rule_hit": null,
+ "case_hit": "seed-case-moving_obstacle",
+ "case_similarity": 1.0,
+ "observed_condition": "primary_threat_maintains",
+ "executed_code": 1,
+ "decision_source": "case[seed-case-moving_obstacle]",
+ "branch": {
+  "condition_type": "primary_threat_maintains",
+  "condition": "threat keeps closing on the current course",
+  "code": 1,
+  "target_speed_mps": 0.0,
+  "rationale": "Laterally drifting obstacle, near boundary blocks one side: sharp lane change to the open side.",
+  "confidence": 0.9
+ },
+ "timings": {
+  "monitor_ms": 1.342,
+  "features_ms": 0.111,
+  "rule_match_ms": 0.004,
+  "case_knn_ms": 0.045,
+  "evolution_ms": 0.047,
+  "trigger_path_total_ms": 1.563
+ },
+ "outcome": {
+  "severity": 0,
+  "text": "No collision; minimum separation 0.5 m.",
+  "collision": null,
+  "hj_constraint": {
+   "worst_end_risk": 0.22,
+   "baseline_risk": 0.19,
+   "acceptable": true
+  }
+ },
+ "ran_at": "2026-07-08 10:35:57"
+}

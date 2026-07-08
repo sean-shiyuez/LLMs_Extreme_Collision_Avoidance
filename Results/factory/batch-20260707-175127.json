@@ -1,0 +1,92 @@
+{
+ "started_at": "2026-07-07 17:51:27",
+ "mock": true,
+ "source": "both",
+ "queue_processed": [],
+ "families": [
+  {
+   "family_id": "mock-lateral-crossing-left",
+   "pattern": "lateral_crossing",
+   "hypothesis": "T-drift should dominate at short TTC / fast lateral closing; braking or no-op should win at long TTC.",
+   "generator": {
+    "model": "mock-generator",
+    "elapsed_s": 0.0,
+    "usage": {
+     "prompt_tokens": 0,
+     "completion_tokens": 0
+    }
+   },
+   "points": 12,
+   "lawful": 8,
+   "lawful_uncovered": 0,
+   "ambiguous": 0,
+   "doomed": 4,
+   "rule_counterexamples": 0,
+   "rules": [],
+   "cases": [],
+   "skipped_covered_points": 0,
+   "consolidator": {
+    "skipped": true,
+    "reason": "lawful region already covered (8 points, 0 uncovered)"
+   }
+  }
+ ],
+ "revalidation": [
+  {
+   "rule_id": "mock-cut-in-right-r2",
+   "checked": 9,
+   "failures": [],
+   "pass_rate": 1.0,
+   "promoted": true,
+   "still_active": true
+  },
+  {
+   "rule_id": "right-crossing-left-escape-blocked-ped-follower-r1",
+   "checked": 15,
+   "failures": [],
+   "pass_rate": 1.0,
+   "promoted": true,
+   "still_active": true
+  },
+  {
+   "rule_id": "left-crossing-escape-side-ped-follower-r1",
+   "checked": 4,
+   "failures": [],
+   "pass_rate": 1.0,
+   "promoted": true,
+   "still_active": true
+  },
+  {
+   "rule_id": "left-crossing-right-blocked-short-ttc-r1",
+   "checked": 15,
+   "failures": [],
+   "pass_rate": 1.0,
+   "promoted": true,
+   "still_active": true
+  },
+  {
+   "rule_id": "mock-lateral-crossing-left-r1",
+   "checked": 8,
+   "failures": [],
+   "pass_rate": 1.0,
+   "promoted": true,
+   "still_active": true
+  }
+ ],
+ "library_before": {
+  "rules_total": 13,
+  "rules_active": 12,
+  "rules_candidate": 0,
+  "rules_deprecated": 1,
+  "cases": 29,
+  "queued": 0
+ },
+ "library_after": {
+  "rules_total": 13,
+  "rules_active": 12,
+  "rules_candidate": 0,
+  "rules_deprecated": 1,
+  "cases": 29,
+  "queued": 0
+ }
+}

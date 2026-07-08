@@ -1,0 +1,76 @@
+{
+ "scenario": "blockage_left_escape",
+ "libraries": {
+  "rules_active": 3,
+  "cases": 8
+ },
+ "assessment": {
+  "scene_risk": 0.54,
+  "band": "elevated",
+  "min_ttc_s": 1.3333333333333333,
+  "primary_threat": "blk"
+ },
+ "features": {
+  "discrete": {
+   "road_topology": "Normal Road",
+   "threat_kind": "obstacle",
+   "approach_sector": "front",
+   "pedestrian_side": "none",
+   "corridor_left_free": true,
+   "corridor_right_free": true,
+   "braking_sufficient": false,
+   "on_collision_course": true
+  },
+  "numeric": {
+   "ttc_s": 1.33,
+   "miss_m": 0.0,
+   "lateral_dist_m": 0.0,
+   "lateral_speed_mps": 0.0,
+   "closing_speed_mps": 18.0,
+   "ego_speed_mps": 18.0,
+   "hj_risk": 0.53,
+   "threat_dist_m": 24.0,
+   "scene_risk": 0.54
+  }
+ },
+ "rule_hit": null,
+ "case_hit": "seed-case-blockage_left_escape",
+ "case_similarity": 1.0,
+ "observed_condition": "primary_threat_maintains",
+ "executed_code": 0,
+ "decision_source": "case[seed-case-blockage_left_escape]",
+ "branch": {
+  "condition_type": "primary_threat_maintains",
+  "condition": "threat keeps closing on the current course",
+  "code": 0,
+  "target_speed_mps": 0.0,
+  "rationale": "High-speed into a static blockage, cannot brake out: full braking is least-harm (lane changes too slow).",
+  "confidence": 0.9
+ },
+ "timings": {
+  "monitor_ms": 1.765,
+  "features_ms": 0.137,
+  "rule_match_ms": 0.006,
+  "case_knn_ms": 0.146,
+  "evolution_ms": 0.082,
+  "trigger_path_total_ms": 2.153
+ },
+ "outcome": {
+  "severity": 3,
+  "text": "Collision with blk at t=1.55s, front impact at 6.6 m/s relative speed: moderate damage, injuries possible.",
+  "collision": {
+   "target": "blk",
+   "kind": "obstacle",
+   "t": 1.55,
+   "relative_speed_mps": 6.62,
+   "impact_face": "front",
+   "vulnerable": false
+  },
+  "hj_constraint": {
+   "worst_end_risk": 1.0,
+   "baseline_risk": 0.26,
+   "acceptable": false
+  }
+ },
+ "ran_at": "2026-07-08 10:35:51"
+}

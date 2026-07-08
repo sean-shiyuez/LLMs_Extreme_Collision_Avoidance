@@ -1,0 +1,359 @@
+{
+ "scenario": "test1",
+ "description": "Intersection: a large truck approaches laterally from the left at 8 m/s while a pedestrian stands ahead-left. Ported from legacy Test_scene/scenario_manager_test1.py; preview snapshot extrapolated 1 s backwards.",
+ "mock": true,
+ "profile": "realtime",
+ "started_at": "2026-07-04 14:55:44",
+ "phases": {
+  "reflex_preview": {
+   "elapsed_ms": 18.34,
+   "scene_risk": 0.426,
+   "band": "elevated",
+   "min_ttc_s": 2.104878048780488,
+   "primary_threat": "pedestrian",
+   "per_target": {
+    "truck1": {
+     "hj_risk": 0.42,
+     "ttc_s": 2.1,
+     "miss_m": 3.12,
+     "on_collision_course": true,
+     "urgency": 0.298,
+     "combined": 0.371
+    },
+    "pedestrian": {
+     "hj_risk": 0.71,
+     "ttc_s": null,
+     "miss_m": 4.0,
+     "on_collision_course": false,
+     "urgency": 0.0,
+     "combined": 0.426
+    }
+   },
+   "budget": {
+    "deadline_s": 1.604878048780488,
+    "decision_role": "decision",
+    "allow_vision": true,
+    "allow_debate": true,
+    "max_tool_iters": 6,
+    "tier": "deliberate"
+   }
+  },
+  "deliberation": {
+   "elapsed_s": 0.083,
+   "deadline_s": 1.6,
+   "deadline_met": true,
+   "armed_policy": {
+    "scenario_name": "test1",
+    "source": "deliberation",
+    "primary_threat": "pedestrian",
+    "deliberation_s": 0.083,
+    "branches": [
+     {
+      "condition_type": "primary_threat_maintains",
+      "condition": "Primary threat keeps closing on the current course",
+      "code": 6,
+      "target_speed_mps": 0.0,
+      "rationale": "Rear-facing T-drift toward the safer side takes the impact on the energy-absorbing rear structure.",
+      "confidence": 0.85
+     },
+     {
+      "condition_type": "primary_threat_yields",
+      "condition": "Primary threat brakes or turns away",
+      "code": 0,
+      "target_speed_mps": 0.0,
+      "rationale": "Straight-line braking is sufficient once the threat yields.",
+      "confidence": 0.9
+     },
+     {
+      "condition_type": "default",
+      "condition": "Any other evolution",
+      "code": 0,
+      "target_speed_mps": 0.0,
+      "rationale": "Full braking is the minimal-risk fallback.",
+      "confidence": 0.9
+     }
+    ]
+   },
+   "safety_rounds": 2,
+   "debate_ran": true
+  },
+  "reflex_trigger": {
+   "scene_risk": 0.703,
+   "band": "critical",
+   "assess_ms": 0.06,
+   "match_ms": 0.05,
+   "trigger_decision_latency_ms": 0.11,
+   "executed_code": 0,
+   "maneuver": "Full emergency braking",
+   "decision_source": "armed_policy[secondary_threat_activates]",
+   "matched_branch": {
+    "condition_type": "default",
+    "condition": "Any other evolution",
+    "code": 0,
+    "target_speed_mps": 0.0,
+    "rationale": "Full braking is the minimal-risk fallback.",
+    "confidence": 0.9
+   }
+  },
+  "consolidation": {
+   "assessment": "The executed maneuver matched the armed branch and produced the least-harm outcome available in this scenario.",
+   "lesson": "For laterally approaching heavy vehicles with TTC below 1.3 s, arm a rear-facing T-drift branch early and keep full braking as the default branch.",
+   "better_alternative": "None identified given the geometry."
+  }
+ },
+ "execution_outcome": "Side collision with the truck occurred, followed by vehicle instability. Both vehicle damage and injuries were severe.",
+ "trace": [
+  {
+   "phase": "deliberation",
+   "agent": "orchestrator",
+   "output": "scene projected 0.90s forward to the anticipated execution state (risk 0.666)"
+  },
+  {
+   "phase": "deliberation",
+   "agent": "risk",
+   "t_wall": 1783148144.5737548,
+   "output": {
+    "summary": "Primary threat pedestrian: HJ risk 0.71, TTC None s, on collision course: False. Braking alone IS sufficient (stopping 6.25 m vs gap None m). Left corridor occupied by pedestrian; right corridor free.",
+    "primary_threat": "pedestrian"
+   },
+   "note": "deterministic template (realtime profile)"
+  },
+  {
+   "phase": "deliberation",
+   "agent": "memory",
+   "t_wall": 1783148144.591032,
+   "output": {
+    "cases": [],
+    "precomputed_policy": null
+   },
+   "elapsed_s": 0.017
+  },
+  {
+   "phase": "deliberation",
+   "agent": "perception",
+   "t_wall": 1783148144.6526752,
+   "output": {
+    "summary": "BEV shows the ego lane constrained by nearby traffic; see hazards.",
+    "hazards": [
+     {
+      "id": "truck1",
+      "kind": "truck",
+      "note": "23.0m ahead, 14.4m left, v=(0.0,8.0)m/s, intention=Maintain, risk=0.42"
+     },
+     {
+      "id": "pedestrian",
+      "kind": "pedestrian",
+      "note": "16.0m ahead, 4.0m left, v=(0.0,0.0)m/s, intention=Maintain, risk=0.71"
+     }
+    ],
+    "free_corridor_left": false,
+    "free_corridor_right": true,
+    "occlusions": "None visible in the rendered BEV.",
+    "primary_threat": "truck1"
+   },
+   "model": "mock-perception",
+   "elapsed_s": 0.001,
+   "usage": {
+    "prompt_tokens": 0,
+    "completion_tokens": 0
+   },
+   "tool_calls": []
+  },
+  {
+   "phase": "deliberation",
+   "agent": "decision",
+   "t_wall": 1783148144.654073,
+   "output": {
+    "branches": [
+     {
+      "condition_type": "primary_threat_maintains",
+      "condition": "Primary threat keeps closing on the current course",
+      "code": 3,
+      "target_speed_mps": 6.0,
+      "rationale": "Swerve left with braking to open lateral distance.",
+      "confidence": 0.55
+     },
+     {
+      "condition_type": "default",
+      "condition": "Any other evolution",
+      "code": 0,
+      "target_speed_mps": 0.0,
+      "rationale": "Full braking minimizes kinetic energy.",
+      "confidence": 0.8
+     }
+    ],
+    "overall_rationale": "Contingency tree covering threat persistence, yielding, and a braking fallback.",
+    "requested_by": "mock-round-1"
+   },
+   "model": "mock-decision",
+   "elapsed_s": 0.001,
+   "usage": {
+    "prompt_tokens": 0,
+    "completion_tokens": 0
+   },
+   "tool_calls": [],
+   "decision_round": 1,
+   "role_used": "decision"
+  },
+  {
+   "phase": "deliberation",
+   "agent": "debate",
+   "t_wall": 1783148144.6542048,
+   "output": {
+    "safety_argument": "Prioritize minimizing worst-case harm; accept maneuver cost to protect the vulnerable participant.",
+    "efficiency_argument": "Prioritize minimizing worst-case harm; accept maneuver cost to protect the vulnerable participant.",
+    "resolution": "Adopt the safety advocate's branch ordering; efficiency concerns are secondary under an imminent-collision TTC.",
+    "revisions": {}
+   },
+   "model": "mock-arbiter",
+   "elapsed_s": 0.001,
+   "usage": {
+    "prompt_tokens": 0,
+    "completion_tokens": 0
+   },
+   "tool_calls": []
+  },
+  {
+   "phase": "deliberation",
+   "agent": "safety",
+   "t_wall": 1783148144.6545348,
+   "output": {
+    "round": 1,
+    "approved": false,
+    "veto_reason": "branch[primary_threat_maintains] code 3: steers toward the left side occupied by a vulnerable road user; left lane change infeasible (occupants=['pedestrian'], boundary_margin=None); rollout predicts near-contact (min separation -0.08 m with pedestrian)"
+   },
+   "branch_verdicts": [
+    {
+     "condition_type": "primary_threat_maintains",
+     "code": 3,
+     "approved": false,
+     "violations": [
+      "steers toward the left side occupied by a vulnerable road user",
+      "left lane change infeasible (occupants=['pedestrian'], boundary_margin=None)",
+      "rollout predicts near-contact (min separation -0.08 m with pedestrian)"
+     ]
+    },
+    {
+     "condition_type": "default",
+     "code": 0,
+     "approved": true,
+     "violations": []
+    }
+   ]
+  },
+  {
+   "phase": "deliberation",
+   "agent": "decision",
+   "t_wall": 1783148144.655673,
+   "output": {
+    "branches": [
+     {
+      "condition_type": "primary_threat_maintains",
+      "condition": "Primary threat keeps closing on the current course",
+      "code": 6,
+      "target_speed_mps": 0.0,
+      "rationale": "Rear-facing T-drift toward the safer side takes the impact on the energy-absorbing rear structure.",
+      "confidence": 0.85
+     },
+     {
+      "condition_type": "primary_threat_yields",
+      "condition": "Primary threat brakes or turns away",
+      "code": 0,
+      "target_speed_mps": 0.0,
+      "rationale": "Straight-line braking is sufficient once the threat yields.",
+      "confidence": 0.9
+     },
+     {
+      "condition_type": "default",
+      "condition": "Any other evolution",
+      "code": 0,
+      "target_speed_mps": 0.0,
+      "rationale": "Full braking is the minimal-risk fallback.",
+      "confidence": 0.9
+     }
+    ],
+    "overall_rationale": "Contingency tree covering threat persistence, yielding, and a braking fallback.",
+    "requested_by": "mock-round-2"
+   },
+   "model": "mock-decision",
+   "elapsed_s": 0.001,
+   "usage": {
+    "prompt_tokens": 0,
+    "completion_tokens": 0
+   },
+   "tool_calls": [],
+   "decision_round": 2,
+   "role_used": "decision"
+  },
+  {
+   "phase": "deliberation",
+   "agent": "safety",
+   "t_wall": 1783148144.656424,
+   "output": {
+    "round": 2,
+    "approved": true,
+    "veto_reason": ""
+   },
+   "branch_verdicts": [
+    {
+     "condition_type": "primary_threat_maintains",
+     "code": 6,
+     "approved": true,
+     "violations": []
+    },
+    {
+     "condition_type": "primary_threat_yields",
+     "code": 0,
+     "approved": true,
+     "violations": []
+    },
+    {
+     "condition_type": "default",
+     "code": 0,
+     "approved": true,
+     "violations": []
+    }
+   ]
+  },
+  {
+   "phase": "consolidation",
+   "agent": "evaluation",
+   "t_wall": 1783148144.656577,
+   "output": {
+    "assessment": "The executed maneuver matched the armed branch and produced the least-harm outcome available in this scenario.",
+    "lesson": "For laterally approaching heavy vehicles with TTC below 1.3 s, arm a rear-facing T-drift branch early and keep full braking as the default branch.",
+    "better_alternative": "None identified given the geometry."
+   },
+   "model": "mock-evaluation",
+   "elapsed_s": 0.001,
+   "usage": {
+    "prompt_tokens": 0,
+    "completion_tokens": 0
+   },
+   "tool_calls": []
+  },
+  {
+   "phase": "consolidation",
+   "agent": "memory",
+   "t_wall": 1783148144.6623948,
+   "output": {
+    "stored_case_id": "test1-d13aa55b"
+   }
+  },
+  {
+   "phase": "consolidation",
+   "agent": "evaluation",
+   "t_wall": 1783148144.663738,
+   "output": {
+    "distill_sample_appended": "/Users/shown/Seafile/LLM+避撞问题/Code/fine-tuning/maca_distill.jsonl",
+    "at": "14:55:44"
+   }
+  }
+ ],
+ "latency_summary": {
+  "reflex_preview_ms": 18.34,
+  "deliberation_s": 0.083,
+  "trigger_decision_latency_ms": 0.11,
+  "llm_calls_on_trigger_path": 0
+ }
+}

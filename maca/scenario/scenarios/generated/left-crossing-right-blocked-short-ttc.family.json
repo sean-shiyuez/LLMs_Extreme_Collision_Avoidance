@@ -1,0 +1,39 @@
+{
+ "description": "Emergency left-to-right truck crossing on a Normal Road, with the ego followed closely and the nominal right-side escape corridor occupied by a pedestrian and marked blocked. All points are constructed on a collision course; the grid stays below the 1.4 s lower edge of the active escape-side-pedestrian/follower rule, and lateral gap is implied by TTC × lateral speed.",
+ "family_id": "left-crossing-right-blocked-short-ttc",
+ "hypothesis": "With a pedestrian blocking the normal right escape, rightward T-drift should be vetoed; braking should dominate at longer TTC/lower ego speed, while the shortest-TTC/high-speed corner should expose whether a leftward evasive maneuver becomes preferable despite the crossing threat.",
+ "parameters": [
+  {
+   "name": "ego_speed",
+   "min": 5.0,
+   "max": 30.0,
+   "steps": 3
+  },
+  {
+   "name": "ttc",
+   "min": 0.4,
+   "max": 2.4,
+   "steps": 3
+  },
+  {
+   "name": "lateral_speed",
+   "min": 2.0,
+   "max": 12.0,
+   "steps": 3
+  }
+ ],
+ "pattern": "lateral_crossing",
+ "template": {
+  "blocked_side": "right",
+  "follower": true,
+  "from_side": "left",
+  "pedestrian": {
+   "present": true,
+   "side": "right"
+  },
+  "road_boundary_left": null,
+  "road_boundary_right": 3.6,
+  "road_topology": "Normal Road",
+  "threat_type": "truck"
+ }
+}

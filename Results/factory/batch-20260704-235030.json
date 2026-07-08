@@ -1,0 +1,34 @@
+{
+ "started_at": "2026-07-04 23:50:30",
+ "mock": true,
+ "source": "queue",
+ "queue_processed": [
+  {
+   "kind": "conflict",
+   "scenario": "test1",
+   "case_id": "case-3993b89d",
+   "executed_code": 6,
+   "severity": 3,
+   "effective": true,
+   "retired_case": "case-57faf957"
+  }
+ ],
+ "families": [],
+ "revalidation": [],
+ "library_before": {
+  "rules_total": 4,
+  "rules_active": 4,
+  "rules_candidate": 0,
+  "rules_deprecated": 0,
+  "cases": 5,
+  "queued": 1
+ },
+ "library_after": {
+  "rules_total": 4,
+  "rules_active": 4,
+  "rules_candidate": 0,
+  "rules_deprecated": 0,
+  "cases": 6,
+  "queued": 0
+ }
+}

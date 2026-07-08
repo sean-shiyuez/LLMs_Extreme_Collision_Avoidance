@@ -1,0 +1,39 @@
+{
+ "description": "Unexplored lead-braking family: ego follows a passenger car on a normal road when the lead vehicle performs a fixed hard brake; the left escape corridor is blocked by a median/barrier, the right lane is open, and a follower behind ego creates rear-impact risk if ego brakes hard. The lead vehicle is instantiated on a collision course for each TTC/ego-speed point, with fixed lead deceleration of 8 m/s^2.",
+ "family_id": "lead-brake-follower-left-blocked",
+ "hypothesis": "With a close follower and short actionable TTC, right lane-change/escape should dominate hard braking; as TTC increases or follower gap grows, controlled braking should dominate despite the lead-braking threat.",
+ "parameters": [
+  {
+   "name": "ego_speed",
+   "min": 5.0,
+   "max": 30.0,
+   "steps": 3
+  },
+  {
+   "name": "gap",
+   "min": 3.0,
+   "max": 60.0,
+   "steps": 3
+  },
+  {
+   "name": "speed_diff",
+   "min": 0.0,
+   "max": 12.0,
+   "steps": 3
+  }
+ ],
+ "pattern": "lead_braking",
+ "template": {
+  "blocked_side": "left",
+  "follower": true,
+  "from_side": "right",
+  "pedestrian": {
+   "present": false,
+   "side": "right"
+  },
+  "road_boundary_left": 0.0,
+  "road_boundary_right": null,
+  "road_topology": "Normal Road",
+  "threat_type": "lead_vehicle_hard_braking"
+ }
+}

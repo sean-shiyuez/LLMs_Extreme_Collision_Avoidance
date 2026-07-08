@@ -1,0 +1,39 @@
+{
+ "description": "Left-origin lateral truck crossing on a normal two-lane road where the nominal rightward escape path is occupied by a pedestrian; a close follower makes pure hard braking contested. The truck is instantiated on a collision course for each TTC/lateral-speed pair, with lateral distance determined by construction.",
+ "family_id": "left-crossing-escape-side-ped-follower",
+ "hypothesis": "When the right escape side is occupied by a pedestrian, the law should switch from rightward threat-drift to braking/hold-lane at moderate TTC, but may only accept a constrained right drift at the shortest TTC when follower risk and braking insufficiency dominate.",
+ "parameters": [
+  {
+   "name": "ego_speed",
+   "min": 5.0,
+   "max": 30.0,
+   "steps": 3
+  },
+  {
+   "name": "ttc",
+   "min": 0.4,
+   "max": 2.4,
+   "steps": 3
+  },
+  {
+   "name": "lateral_speed",
+   "min": 2.0,
+   "max": 12.0,
+   "steps": 3
+  }
+ ],
+ "pattern": "lateral_crossing",
+ "template": {
+  "blocked_side": null,
+  "follower": true,
+  "from_side": "left",
+  "pedestrian": {
+   "present": true,
+   "side": "right"
+  },
+  "road_boundary_left": null,
+  "road_boundary_right": 3.6,
+  "road_topology": "Normal Road",
+  "threat_type": "truck"
+ }
+}

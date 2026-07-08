@@ -1,0 +1,72 @@
+{
+ "started_at": "2026-07-08 10:24:45",
+ "mock": true,
+ "source": "generate",
+ "queue_processed": [],
+ "families": [
+  {
+   "family_id": "mock-lateral-crossing-left",
+   "pattern": "lateral_crossing",
+   "hypothesis": "T-drift should dominate at short TTC / fast lateral closing; braking or no-op should win at long TTC.",
+   "generator": {
+    "model": "mock-generator",
+    "elapsed_s": 0.0,
+    "usage": {
+     "prompt_tokens": 0,
+     "completion_tokens": 0
+    }
+   },
+   "points": 12,
+   "lawful": 5,
+   "lawful_uncovered": 4,
+   "ambiguous": 0,
+   "doomed": 7,
+   "rule_counterexamples": 1,
+   "rules": [
+    {
+     "rule_id": "mock-lateral-crossing-left-r1",
+     "status": "candidate",
+     "checked": 9,
+     "failures": [
+      "scenario test1: severity 4 vs achievable 2"
+     ],
+     "pass_rate": 0.889,
+     "promoted": false
+    }
+   ],
+   "cases": [],
+   "skipped_covered_points": 0,
+   "consolidator": {
+    "accepted": 1,
+    "rejected": 0,
+    "trace": [
+     {
+      "agent": "consolidator",
+      "round": 1,
+      "model": "mock-consolidator",
+      "elapsed_s": 0.0,
+      "n_proposals": 1,
+      "analysis": "Mock consolidation via the no-LLM induction baseline."
+     }
+    ]
+   }
+  }
+ ],
+ "revalidation": [],
+ "library_before": {
+  "rules_total": 4,
+  "rules_active": 3,
+  "rules_candidate": 1,
+  "rules_deprecated": 0,
+  "cases": 9,
+  "queued": 0
+ },
+ "library_after": {
+  "rules_total": 4,
+  "rules_active": 3,
+  "rules_candidate": 1,
+  "rules_deprecated": 0,
+  "cases": 9,
+  "queued": 0
+ }
+}

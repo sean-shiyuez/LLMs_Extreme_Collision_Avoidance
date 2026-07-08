@@ -1,0 +1,39 @@
+{
+ "description": "Unexplored lead-braking family: ego follows an in-lane lead vehicle that has already begun hard braking, with a close rear follower creating a front-vs-rear severity tradeoff. The right escape corridor is blocked, the left corridor is open, and there is no pedestrian, so the sweep isolates when straight braking is preferable to a left evasive lane change/T-drift. Initial lead gap is set deterministically from TTC and closing speed so the lead vehicle remains on a collision course unless ego reacts.",
+ "family_id": "lead-brake-follower-left-escape",
+ "hypothesis": "In the actionable 0.7–1.5 s TTC window, braking dominates when closing speed is low or follower gap is large, left escape dominates when follower gap is short and TTC is still sufficient for lateral motion, and straight mitigative braking returns at the shortest-TTC/high-closing corner where lateral escape cannot complete.",
+ "parameters": [
+  {
+   "name": "ego_speed",
+   "min": 5.0,
+   "max": 30.0,
+   "steps": 3
+  },
+  {
+   "name": "gap",
+   "min": 3.0,
+   "max": 60.0,
+   "steps": 3
+  },
+  {
+   "name": "speed_diff",
+   "min": 0.0,
+   "max": 12.0,
+   "steps": 3
+  }
+ ],
+ "pattern": "lead_braking",
+ "template": {
+  "blocked_side": "right",
+  "follower": true,
+  "from_side": "left",
+  "pedestrian": {
+   "present": false,
+   "side": "left"
+  },
+  "road_boundary_left": null,
+  "road_boundary_right": null,
+  "road_topology": "Normal Road",
+  "threat_type": "lead_braking_car"
+ }
+}

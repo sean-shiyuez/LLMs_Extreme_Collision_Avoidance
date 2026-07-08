@@ -1,0 +1,77 @@
+{
+ "scenario": "highway_brake",
+ "libraries": {
+  "rules_active": 3,
+  "cases": 0
+ },
+ "assessment": {
+  "scene_risk": 0.783,
+  "band": "critical",
+  "min_ttc_s": 1.4,
+  "primary_threat": "SUV1"
+ },
+ "features": {
+  "discrete": {
+   "road_topology": "Normal Road",
+   "threat_kind": "suv",
+   "approach_sector": "front",
+   "pedestrian_side": "none",
+   "corridor_left_free": false,
+   "corridor_right_free": true,
+   "braking_sufficient": false,
+   "on_collision_course": true
+  },
+  "numeric": {
+   "ttc_s": 1.4,
+   "miss_m": 0.0,
+   "lateral_dist_m": 0.0,
+   "lateral_speed_mps": 0.0,
+   "closing_speed_mps": 5.0,
+   "ego_speed_mps": 22.0,
+   "hj_risk": 0.95,
+   "threat_dist_m": 7.0,
+   "scene_risk": 0.783
+  }
+ },
+ "rule_hit": null,
+ "case_hit": null,
+ "case_similarity": null,
+ "observed_condition": "primary_threat_maintains",
+ "gap_queued": true,
+ "executed_code": 0,
+ "decision_source": "mrm_fallback",
+ "branch": {
+  "condition_type": "default",
+  "condition": "no library coverage",
+  "code": 0,
+  "target_speed_mps": 0.0,
+  "rationale": "Minimal-risk maneuver: no verified rule or case covers this scene.",
+  "confidence": 1.0
+ },
+ "timings": {
+  "monitor_ms": 1.527,
+  "features_ms": 0.023,
+  "rule_match_ms": 0.004,
+  "case_knn_ms": 0.0,
+  "evolution_ms": 0.086,
+  "trigger_path_total_ms": 1.897
+ },
+ "outcome": {
+  "severity": 2,
+  "text": "Collision with SUV3 at t=1.05s, rear impact at 7.4 m/s relative speed: minor damage, no injuries expected.",
+  "collision": {
+   "target": "SUV3",
+   "kind": "SUV",
+   "t": 1.05,
+   "relative_speed_mps": 7.4,
+   "impact_face": "rear",
+   "vulnerable": false
+  },
+  "hj_constraint": {
+   "worst_end_risk": 1.0,
+   "baseline_risk": 0.66,
+   "acceptable": false
+  }
+ },
+ "ran_at": "2026-07-04 16:25:29"
+}

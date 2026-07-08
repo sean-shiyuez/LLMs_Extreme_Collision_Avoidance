@@ -1,0 +1,65 @@
+{
+ "scenario": "low_risk",
+ "description": "Cruising scenario used to verify the reflex fast path: the lead car is far ahead and pulling away; a pedestrian waits on the sidewalk beyond the road boundary. Expected outcome: reflex loop returns code 7 without waking deliberation.",
+ "mock": true,
+ "profile": "realtime",
+ "started_at": "2026-07-04 15:17:15",
+ "phases": {
+  "reflex_preview": {
+   "elapsed_ms": 1.24,
+   "scene_risk": 0.342,
+   "band": "low",
+   "min_ttc_s": null,
+   "primary_threat": "pedestrian",
+   "per_target": {
+    "lead_car": {
+     "hj_risk": 0.14,
+     "ttc_s": null,
+     "miss_m": null,
+     "on_collision_course": false,
+     "urgency": 0.0,
+     "combined": 0.084
+    },
+    "pedestrian": {
+     "hj_risk": 0.57,
+     "ttc_s": null,
+     "miss_m": 8.0,
+     "on_collision_course": false,
+     "urgency": 0.0,
+     "combined": 0.342
+    }
+   },
+   "budget": {
+    "deadline_s": 8.0,
+    "decision_role": "decision",
+    "allow_vision": true,
+    "allow_debate": true,
+    "max_tool_iters": 6,
+    "tier": "deliberate"
+   }
+  },
+  "deliberation": {
+   "skipped": true,
+   "reason": "low risk"
+  },
+  "reflex_trigger": {
+   "scene_risk": 0.354,
+   "band": "low",
+   "assess_ms": 0.06,
+   "match_ms": 0.0,
+   "trigger_decision_latency_ms": 0.06,
+   "executed_code": 7,
+   "maneuver": "No need to intervene",
+   "decision_source": "reflex_no_intervention",
+   "matched_branch": null
+  }
+ },
+ "execution_outcome": "Continued cruising; no intervention was necessary.",
+ "trace": [],
+ "latency_summary": {
+  "reflex_preview_ms": 1.24,
+  "deliberation_s": null,
+  "trigger_decision_latency_ms": 0.06,
+  "llm_calls_on_trigger_path": 0
+ }
+}

@@ -1,0 +1,39 @@
+{
+ "description": "Cut-in pattern on a normal multilane road: ego travels in the center lane while a car from the right adjacent lane deterministically cuts into the ego lane on a collision course from the front-right. A follower is close behind the ego, making hard braking costly, and a pedestrian is present on the left escape side, making leftward avoidance contested rather than automatically preferred. The sweep varies actionable TTC, cut-in lateral speed, and left-side escape clearance to expose when braking, holding, or a constrained left evasive maneuver dominates.",
+ "family_id": "right-cutin-left-ped-follower",
+ "hypothesis": "For right-side cut-ins, left evasive/T-drift maneuvers dominate only when TTC and left escape clearance are sufficient; with short TTC, high cut-in lateral speed, or tight pedestrian-side clearance, braking/holding becomes preferable despite rear-end risk from the follower.",
+ "parameters": [
+  {
+   "name": "ego_speed",
+   "min": 5.0,
+   "max": 30.0,
+   "steps": 3
+  },
+  {
+   "name": "gap",
+   "min": 3.0,
+   "max": 60.0,
+   "steps": 3
+  },
+  {
+   "name": "speed_diff",
+   "min": 0.0,
+   "max": 12.0,
+   "steps": 3
+  }
+ ],
+ "pattern": "cut_in",
+ "template": {
+  "blocked_side": null,
+  "follower": true,
+  "from_side": "right",
+  "pedestrian": {
+   "present": true,
+   "side": "left"
+  },
+  "road_boundary_left": 5.5,
+  "road_boundary_right": -5.5,
+  "road_topology": "Normal Road",
+  "threat_type": "cut_in_car"
+ }
+}

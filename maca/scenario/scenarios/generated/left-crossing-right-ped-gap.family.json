@@ -1,0 +1,39 @@
+{
+ "description": "Normal-road lateral-crossing emergency that mirrors the existing left-side truck/threat cases, but places a pedestrian on the nominal right-side escape corridor. Ego travels straight; a truck/van crosses from the left/front-left on a deterministic collision course set by TTC and lateral speed. The right-side pedestrian offset is swept to make the escape corridor range from blocked to marginally usable.",
+ "family_id": "left-crossing-right-ped-gap",
+ "hypothesis": "For left-origin lateral threats, rightward drift should dominate only when TTC is very short and the right pedestrian gap is adequate; when the escape-side pedestrian gap is small, the law should suppress drift-right and prefer hard braking/hold-lane despite the lateral threat.",
+ "parameters": [
+  {
+   "name": "ego_speed",
+   "min": 5.0,
+   "max": 30.0,
+   "steps": 3
+  },
+  {
+   "name": "ttc",
+   "min": 0.4,
+   "max": 2.4,
+   "steps": 3
+  },
+  {
+   "name": "lateral_speed",
+   "min": 2.0,
+   "max": 12.0,
+   "steps": 3
+  }
+ ],
+ "pattern": "lateral_crossing",
+ "template": {
+  "blocked_side": null,
+  "follower": false,
+  "from_side": "left",
+  "pedestrian": {
+   "present": true,
+   "side": "right"
+  },
+  "road_boundary_left": 3.7,
+  "road_boundary_right": -3.7,
+  "road_topology": "Normal Road",
+  "threat_type": "truck"
+ }
+}

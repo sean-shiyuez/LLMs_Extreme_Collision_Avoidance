@@ -1,0 +1,494 @@
+{
+ "scenario": "highway_brake",
+ "description": "Highway: the SUV directly ahead performs emergency braking; a faster SUV occupies the right lane ahead and another SUV follows behind. Ported from legacy Test_scene/scenario_manager4.py; preview snapshot extrapolated 1 s backwards; outcomes authored for this port.",
+ "mock": true,
+ "started_at": "2026-07-04 09:58:48",
+ "phases": {
+  "reflex_preview": {
+   "elapsed_ms": 56.65,
+   "scene_risk": 0.54,
+   "band": "elevated",
+   "min_ttc_s": 4.5,
+   "primary_threat": "SUV1",
+   "per_target": {
+    "SUV1": {
+     "hj_risk": 0.9,
+     "ttc_s": 4.5,
+     "miss_m": 0.0,
+     "on_collision_course": true,
+     "urgency": 0.0,
+     "combined": 0.54
+    },
+    "SUV2": {
+     "hj_risk": 0.73,
+     "ttc_s": null,
+     "miss_m": null,
+     "on_collision_course": false,
+     "urgency": 0.0,
+     "combined": 0.438
+    },
+    "SUV3": {
+     "hj_risk": 1.0,
+     "ttc_s": null,
+     "miss_m": null,
+     "on_collision_course": false,
+     "urgency": 0.0,
+     "combined": 0.18
+    }
+   },
+   "budget": {
+    "deadline_s": 4.0,
+    "decision_role": "decision",
+    "allow_vision": true,
+    "allow_debate": true,
+    "max_tool_iters": 6,
+    "tier": "deliberate"
+   }
+  },
+  "deliberation": {
+   "elapsed_s": 2.374,
+   "deadline_s": 4.0,
+   "deadline_met": true,
+   "armed_policy": {
+    "scenario_name": "highway_brake",
+    "source": "deliberation",
+    "primary_threat": "SUV1",
+    "deliberation_s": 2.374,
+    "branches": [
+     {
+      "condition_type": "primary_threat_maintains",
+      "condition": "Primary threat keeps closing on the current course",
+      "code": 0,
+      "target_speed_mps": 0.0,
+      "rationale": "Replaced by the minimal-risk maneuver after repeated safety vetoes: Rear-facing T-drift toward the safer side takes the impact on the energy-absorbing rear structure.",
+      "confidence": 0.85
+     },
+     {
+      "condition_type": "primary_threat_yields",
+      "condition": "Primary threat brakes or turns away",
+      "code": 0,
+      "target_speed_mps": 0.0,
+      "rationale": "Straight-line braking is sufficient once the threat yields.",
+      "confidence": 0.9
+     },
+     {
+      "condition_type": "default",
+      "condition": "Any other evolution",
+      "code": 0,
+      "target_speed_mps": 0.0,
+      "rationale": "Full braking is the minimal-risk fallback.",
+      "confidence": 0.9
+     }
+    ]
+   },
+   "safety_rounds": 2,
+   "debate_ran": true
+  },
+  "reflex_trigger": {
+   "scene_risk": 0.783,
+   "band": "critical",
+   "assess_ms": 0.4,
+   "match_ms": 0.37,
+   "trigger_decision_latency_ms": 0.77,
+   "executed_code": 0,
+   "maneuver": "Full emergency braking",
+   "decision_source": "armed_policy[primary_threat_maintains]",
+   "matched_branch": {
+    "condition_type": "primary_threat_maintains",
+    "condition": "Primary threat keeps closing on the current course",
+    "code": 0,
+    "target_speed_mps": 0.0,
+    "rationale": "Replaced by the minimal-risk maneuver after repeated safety vetoes: Rear-facing T-drift toward the safer side takes the impact on the energy-absorbing rear structure.",
+    "confidence": 0.85
+   }
+  },
+  "consolidation": {
+   "assessment": "The executed maneuver matched the armed branch and produced the least-harm outcome available in this scenario.",
+   "lesson": "For laterally approaching heavy vehicles with TTC below 1.3 s, arm a rear-facing T-drift branch early and keep full braking as the default branch.",
+   "better_alternative": "None identified given the geometry."
+  }
+ },
+ "execution_outcome": "Hard braking avoided SUV1, but following SUV3 impacted the rear at low relative speed; minor damage, no injuries.",
+ "trace": [
+  {
+   "phase": "deliberation",
+   "agent": "orchestrator",
+   "output": "scene projected 1.00s forward to the anticipated execution state (risk 0.57)"
+  },
+  {
+   "phase": "deliberation",
+   "agent": "perception",
+   "t_wall": 1783130331.001062,
+   "output": {
+    "summary": "BEV shows the ego lane constrained by nearby traffic; see hazards.",
+    "hazards": [
+     {
+      "id": "SUV1",
+      "kind": "suv",
+      "note": "9.0m ahead, 0.0m left, v=(20.0,0.0)m/s, intention=Emergency Braking, risk=0.90"
+     },
+     {
+      "id": "SUV2",
+      "kind": "suv",
+      "note": "14.0m ahead, 6.0m right, v=(23.0,0.0)m/s, intention=Maintain, risk=0.73"
+     },
+     {
+      "id": "SUV3",
+      "kind": "suv",
+      "note": "5.0m behind, 0.0m left, v=(21.0,0.0)m/s, intention=Maintain, risk=1.00"
+     }
+    ],
+    "free_corridor_left": false,
+    "free_corridor_right": false,
+    "occlusions": "None visible in the rendered BEV.",
+    "primary_threat": "SUV1"
+   },
+   "model": "mock-perception",
+   "elapsed_s": 0.001,
+   "usage": {
+    "prompt_tokens": 0,
+    "completion_tokens": 0
+   },
+   "tool_calls": []
+  },
+  {
+   "phase": "deliberation",
+   "agent": "risk",
+   "t_wall": 1783130331.005347,
+   "output": {
+    "summary": "Deterministic metrics indicate an imminent-collision geometry dominated by the primary threat; braking distance exceeds the available gap so steering-based maneuvers must be considered.",
+    "primary_threat": "SUV1"
+   },
+   "model": "mock-risk",
+   "elapsed_s": 0.001,
+   "usage": {
+    "prompt_tokens": 0,
+    "completion_tokens": 0
+   },
+   "tool_calls": []
+  },
+  {
+   "phase": "deliberation",
+   "agent": "memory",
+   "t_wall": 1783130331.2331588,
+   "output": {
+    "cases": [
+     {
+      "scenario": "EGO: small car, v=(12.0,0.0)m/s, road=Normal Road, weather=Sunny (good road conditions)\nROAD BOUNDS: left y=-1.5, right y=10 (y>0 is the ego's right side)\nOBSTACLE obs1: at (27.6,0.0), ellipse 5x2\nOBSTACLE obs2: at (31.6,7.5), ellipse 5x5\nSUV SUV1: 8.6m ahead, 10.0m right, v=(10.0,-2.5)m/s, intention=Left Lane Change",
+      "decision_code": "0",
+      "outcome": "Successfully braked before obs1, no collision occurred.",
+      "lesson": "For laterally approaching heavy vehicles with TTC below 1.3 s, arm a rear-facing T-drift branch early and keep full braking as the default branch.",
+      "distance": 0.4369
+     },
+     {
+      "scenario": "EGO: small car, v=(10.0,0.0)m/s, road=Intersection, weather=Sunny (good road conditions)\nLARGE TRUCK truck1: 23.0m ahead, 14.4m left, v=(0.0,8.0)m/s, intention=Maintain\nPEDESTRIAN pedestrian: 16.0m ahead, 4.0m left, v=(0.0,0.0)m/s, intention=Maintain",
+      "decision_code": "6",
+      "outcome": "Rear collision with the truck occurred. Due to low relative velocity, no injuries were sustained.",
+      "lesson": "For laterally approaching heavy vehicles with TTC below 1.3 s, arm a rear-facing T-drift branch early and keep full braking as the default branch.",
+      "distance": 0.4583
+     }
+    ],
+    "precomputed_policy": null
+   },
+   "elapsed_s": 0.228
+  },
+  {
+   "phase": "deliberation",
+   "agent": "decision",
+   "t_wall": 1783130331.238689,
+   "output": {
+    "branches": [
+     {
+      "condition_type": "primary_threat_maintains",
+      "condition": "Primary threat keeps closing on the current course",
+      "code": 3,
+      "target_speed_mps": 6.0,
+      "rationale": "Swerve left with braking to open lateral distance.",
+      "confidence": 0.55
+     },
+     {
+      "condition_type": "default",
+      "condition": "Any other evolution",
+      "code": 0,
+      "target_speed_mps": 0.0,
+      "rationale": "Full braking minimizes kinetic energy.",
+      "confidence": 0.8
+     }
+    ],
+    "overall_rationale": "Contingency tree covering threat persistence, yielding, and a braking fallback.",
+    "requested_by": "mock-round-1"
+   },
+   "model": "mock-decision",
+   "elapsed_s": 0.005,
+   "usage": {
+    "prompt_tokens": 0,
+    "completion_tokens": 0
+   },
+   "tool_calls": [
+    {
+     "tool": "compute_ttc",
+     "arguments": {
+      "target_id": "SUV1"
+     },
+     "result": {
+      "target": "SUV1",
+      "on_collision_course": true,
+      "ttc_s": 3.5,
+      "predicted_miss_distance_m": 0.0,
+      "collision_radius_m": 3.8,
+      "current_distance_m": 7.0
+     },
+     "elapsed": 4.7750000000235104e-05
+    },
+    {
+     "tool": "query_hj_risk",
+     "arguments": {
+      "target_id": "SUV1"
+     },
+     "result": {
+      "target": "SUV1",
+      "hj_risk": 0.95,
+      "vulnerability_weight": 0.8
+     },
+     "elapsed": 0.0005056669999987662
+    },
+    {
+     "tool": "braking_distance",
+     "arguments": {},
+     "result": {
+      "ego_speed_mps": 22.0,
+      "decel_mps2": 8.0,
+      "stopping_distance_m": 30.25,
+      "nearest_in_lane_object": "SUV1",
+      "gap_to_it_m": 7.0,
+      "braking_alone_sufficient": false
+     },
+     "elapsed": 2.5999999998305157e-05
+    }
+   ],
+   "decision_round": 1,
+   "role_used": "decision"
+  },
+  {
+   "phase": "deliberation",
+   "agent": "debate",
+   "t_wall": 1783130331.239625,
+   "output": {
+    "safety_argument": "Prioritize minimizing worst-case harm; accept maneuver cost to protect the vulnerable participant.",
+    "efficiency_argument": "Prioritize minimizing worst-case harm; accept maneuver cost to protect the vulnerable participant.",
+    "resolution": "Adopt the safety advocate's branch ordering; efficiency concerns are secondary under an imminent-collision TTC.",
+    "revisions": {}
+   },
+   "model": "mock-arbiter",
+   "elapsed_s": 0.001,
+   "usage": {
+    "prompt_tokens": 0,
+    "completion_tokens": 0
+   },
+   "tool_calls": []
+  },
+  {
+   "phase": "deliberation",
+   "agent": "safety",
+   "t_wall": 1783130331.2415411,
+   "output": {
+    "round": 1,
+    "approved": false,
+    "veto_reason": "branch[primary_threat_maintains] code 3: left lane change infeasible (occupants=[], boundary_margin=0.5); rollout end state inside the HJ high-risk set (worst risk 1.00 >= 0.7) | LLM: Rejected branches violate hard safety rules (steering toward a pedestrian-occupied side or exceeding HJ safe-set risk)."
+   },
+   "model": "mock-safety",
+   "elapsed_s": 0.001,
+   "usage": {
+    "prompt_tokens": 0,
+    "completion_tokens": 0
+   },
+   "tool_calls": [],
+   "branch_verdicts": [
+    {
+     "condition_type": "primary_threat_maintains",
+     "code": 3,
+     "approved": false,
+     "violations": [
+      "left lane change infeasible (occupants=[], boundary_margin=0.5)",
+      "rollout end state inside the HJ high-risk set (worst risk 1.00 >= 0.7)"
+     ]
+    },
+    {
+     "condition_type": "default",
+     "code": 0,
+     "approved": true,
+     "violations": []
+    }
+   ]
+  },
+  {
+   "phase": "deliberation",
+   "agent": "decision",
+   "t_wall": 1783130331.242228,
+   "output": {
+    "branches": [
+     {
+      "condition_type": "primary_threat_maintains",
+      "condition": "Primary threat keeps closing on the current course",
+      "code": 0,
+      "target_speed_mps": 0.0,
+      "rationale": "Replaced by the minimal-risk maneuver after repeated safety vetoes: Rear-facing T-drift toward the safer side takes the impact on the energy-absorbing rear structure.",
+      "confidence": 0.85
+     },
+     {
+      "condition_type": "primary_threat_yields",
+      "condition": "Primary threat brakes or turns away",
+      "code": 0,
+      "target_speed_mps": 0.0,
+      "rationale": "Straight-line braking is sufficient once the threat yields.",
+      "confidence": 0.9
+     },
+     {
+      "condition_type": "default",
+      "condition": "Any other evolution",
+      "code": 0,
+      "target_speed_mps": 0.0,
+      "rationale": "Full braking is the minimal-risk fallback.",
+      "confidence": 0.9
+     }
+    ],
+    "overall_rationale": "Contingency tree covering threat persistence, yielding, and a braking fallback.",
+    "requested_by": "mock-round-2"
+   },
+   "model": "mock-decision",
+   "elapsed_s": 0.0,
+   "usage": {
+    "prompt_tokens": 0,
+    "completion_tokens": 0
+   },
+   "tool_calls": [
+    {
+     "tool": "compute_ttc",
+     "arguments": {
+      "target_id": "SUV1"
+     },
+     "result": {
+      "target": "SUV1",
+      "on_collision_course": true,
+      "ttc_s": 3.5,
+      "predicted_miss_distance_m": 0.0,
+      "collision_radius_m": 3.8,
+      "current_distance_m": 7.0
+     },
+     "elapsed": 2.050000000153318e-05
+    },
+    {
+     "tool": "query_hj_risk",
+     "arguments": {
+      "target_id": "SUV1"
+     },
+     "result": {
+      "target": "SUV1",
+      "hj_risk": 0.95,
+      "vulnerability_weight": 0.8
+     },
+     "elapsed": 0.00017408299999743804
+    },
+    {
+     "tool": "braking_distance",
+     "arguments": {},
+     "result": {
+      "ego_speed_mps": 22.0,
+      "decel_mps2": 8.0,
+      "stopping_distance_m": 30.25,
+      "nearest_in_lane_object": "SUV1",
+      "gap_to_it_m": 7.0,
+      "braking_alone_sufficient": false
+     },
+     "elapsed": 1.6708000000420498e-05
+    }
+   ],
+   "decision_round": 2,
+   "role_used": "decision"
+  },
+  {
+   "phase": "deliberation",
+   "agent": "safety",
+   "t_wall": 1783130331.247553,
+   "output": {
+    "round": 2,
+    "approved": false,
+    "veto_reason": "branch[primary_threat_maintains] code 6: T-drift preconditions unmet at the anticipated execution state (needs a laterally approaching target ahead, |vy|>4 m/s, lateral distance <8 m, TTC<=1.3 s) | LLM: Rejected branches violate hard safety rules (steering toward a pedestrian-occupied side or exceeding HJ safe-set risk)."
+   },
+   "model": "mock-safety",
+   "elapsed_s": 0.001,
+   "usage": {
+    "prompt_tokens": 0,
+    "completion_tokens": 0
+   },
+   "tool_calls": [],
+   "branch_verdicts": [
+    {
+     "condition_type": "primary_threat_maintains",
+     "code": 6,
+     "approved": false,
+     "violations": [
+      "T-drift preconditions unmet at the anticipated execution state (needs a laterally approaching target ahead, |vy|>4 m/s, lateral distance <8 m, TTC<=1.3 s)"
+     ]
+    },
+    {
+     "condition_type": "primary_threat_yields",
+     "code": 0,
+     "approved": true,
+     "violations": []
+    },
+    {
+     "condition_type": "default",
+     "code": 0,
+     "approved": true,
+     "violations": []
+    }
+   ]
+  },
+  {
+   "phase": "deliberation",
+   "agent": "safety",
+   "output": "policy hardened: failing branches replaced with code 0 (minimal-risk maneuver)"
+  },
+  {
+   "phase": "consolidation",
+   "agent": "evaluation",
+   "t_wall": 1783130331.248585,
+   "output": {
+    "assessment": "The executed maneuver matched the armed branch and produced the least-harm outcome available in this scenario.",
+    "lesson": "For laterally approaching heavy vehicles with TTC below 1.3 s, arm a rear-facing T-drift branch early and keep full braking as the default branch.",
+    "better_alternative": "None identified given the geometry."
+   },
+   "model": "mock-evaluation",
+   "elapsed_s": 0.001,
+   "usage": {
+    "prompt_tokens": 0,
+    "completion_tokens": 0
+   },
+   "tool_calls": []
+  },
+  {
+   "phase": "consolidation",
+   "agent": "memory",
+   "t_wall": 1783130331.279715,
+   "output": {
+    "stored_case_id": "highway_brake-548ce3b3"
+   }
+  },
+  {
+   "phase": "consolidation",
+   "agent": "evaluation",
+   "t_wall": 1783130331.2813818,
+   "output": {
+    "distill_sample_appended": "/Users/shown/Seafile/LLM+避撞问题/Code/fine-tuning/maca_distill.jsonl",
+    "at": "09:58:51"
+   }
+  }
+ ],
+ "latency_summary": {
+  "reflex_preview_ms": 56.65,
+  "deliberation_s": 2.374,
+  "trigger_decision_latency_ms": 0.77,
+  "llm_calls_on_trigger_path": 0
+ }
+}

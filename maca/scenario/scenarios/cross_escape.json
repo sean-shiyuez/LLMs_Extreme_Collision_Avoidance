@@ -1,0 +1,71 @@
+{
+  "name": "cross_escape",
+  "description": "A truck crosses from the left with enough lead time and lateral room that a sharp right lane change (code 2) escapes cleanly (severity 1) while every other maneuver, including the T-drift, ends far worse (severity 4). Demonstrates that evasion beats impact-posture optimization when an escape exists; the T-drift seed rule over-claims here and is corrected online by a case via conservative arbitration.",
+  "snapshots": [
+    {
+      "t": -1.0,
+      "ego": {
+        "id": "ego",
+        "type": "small car",
+        "coordinate": [
+          0.0,
+          0.0
+        ],
+        "velocity": [
+          14.0,
+          0.0
+        ],
+        "road_topology": "Intersection"
+      },
+      "obstacles": [],
+      "participants": [
+        {
+          "id": "truck1",
+          "type": "Large Truck",
+          "coordinate": [
+            24.0,
+            -13.0
+          ],
+          "velocity": [
+            0.0,
+            5.0
+          ],
+          "intention": "Maintain"
+        }
+      ]
+    },
+    {
+      "ego": {
+        "id": "ego",
+        "type": "small car",
+        "coordinate": [
+          0.0,
+          0.0
+        ],
+        "velocity": [
+          14.0,
+          0.0
+        ],
+        "road_topology": "Intersection"
+      },
+      "obstacles": [],
+      "participants": [
+        {
+          "id": "truck1",
+          "type": "Large Truck",
+          "coordinate": [
+            10.0,
+            -8.0
+          ],
+          "velocity": [
+            0.0,
+            5.0
+          ],
+          "intention": "Maintain"
+        }
+      ],
+      "t": 0.0
+    }
+  ],
+  "execution_outcomes": {}
+}

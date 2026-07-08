@@ -1,0 +1,88 @@
+{
+ "scenario": "cross_escape",
+ "libraries": {
+  "rules_active": 14,
+  "cases": 31
+ },
+ "assessment": {
+  "scene_risk": 0.726,
+  "band": "critical",
+  "min_ttc_s": 0.8366782006920416,
+  "primary_threat": "truck1"
+ },
+ "features": {
+  "discrete": {
+   "road_topology": "Intersection",
+   "threat_kind": "truck",
+   "approach_sector": "front_left",
+   "pedestrian_side": "none",
+   "corridor_left_free": true,
+   "corridor_right_free": true,
+   "braking_sufficient": false,
+   "on_collision_course": true
+  },
+  "numeric": {
+   "ttc_s": 0.84,
+   "miss_m": 3.29,
+   "lateral_dist_m": 9.6,
+   "lateral_speed_mps": 8.0,
+   "closing_speed_mps": 17.0,
+   "ego_speed_mps": 15.0,
+   "hj_risk": 0.73,
+   "threat_dist_m": 14.6,
+   "scene_risk": 0.726
+  }
+ },
+ "rule_hit": "seed-tdrift-right",
+ "case_hit": "case-f438c936",
+ "case_similarity": 1.0,
+ "observed_condition": "primary_threat_maintains",
+ "conflict": {
+  "rule": {
+   "code": 6,
+   "severity": 3,
+   "contact_speed": 12.19,
+   "aggressiveness": 4,
+   "outcome": "Collision with truck1 at t=0.9s, rear impact at 12.2 m/s relative speed: moderate damage, injuries possible."
+  },
+  "case": {
+   "code": 2,
+   "severity": 0,
+   "contact_speed": 0.0,
+   "aggressiveness": 3,
+   "outcome": "No collision; minimum separation 0.8 m."
+  },
+  "chosen": "case"
+ },
+ "conflict_adjudicated": true,
+ "executed_code": 2,
+ "decision_source": "conservative_arbitration->case (rule 6 vs case 2)",
+ "branch": {
+  "condition_type": "primary_threat_maintains",
+  "condition": "threat keeps closing",
+  "code": 2,
+  "target_speed_mps": 0.0,
+  "rationale": "Follow the simulator's least-harm ranking.",
+  "confidence": 0.8
+ },
+ "timings": {
+  "monitor_ms": 1.171,
+  "features_ms": 0.05,
+  "rule_match_ms": 0.013,
+  "case_knn_ms": 0.039,
+  "evolution_ms": 0.046,
+  "arbitration_ms": 0.077,
+  "trigger_path_total_ms": 1.411
+ },
+ "outcome": {
+  "severity": 0,
+  "text": "No collision; minimum separation 0.8 m.",
+  "collision": null,
+  "hj_constraint": {
+   "worst_end_risk": 0.18,
+   "baseline_risk": 0.16,
+   "acceptable": true
+  }
+ },
+ "ran_at": "2026-07-07 18:46:01"
+}

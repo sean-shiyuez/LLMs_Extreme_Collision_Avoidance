@@ -1,0 +1,69 @@
+{
+ "scenario": "moving_obstacle",
+ "libraries": {
+  "rules_active": 14,
+  "cases": 31
+ },
+ "assessment": {
+  "scene_risk": 0.668,
+  "band": "critical",
+  "min_ttc_s": 0.9602122015915119,
+  "primary_threat": "cargo"
+ },
+ "features": {
+  "discrete": {
+   "road_topology": "Normal Road",
+   "threat_kind": "obstacle",
+   "approach_sector": "front",
+   "pedestrian_side": "none",
+   "corridor_left_free": true,
+   "corridor_right_free": false,
+   "braking_sufficient": false,
+   "on_collision_course": true
+  },
+  "numeric": {
+   "ttc_s": 0.96,
+   "miss_m": 1.18,
+   "lateral_dist_m": 5.0,
+   "lateral_speed_mps": 4.0,
+   "closing_speed_mps": 19.416,
+   "ego_speed_mps": 16.0,
+   "hj_risk": 0.66,
+   "threat_dist_m": 18.682,
+   "scene_risk": 0.668
+  }
+ },
+ "rule_hit": null,
+ "case_hit": "case-1044a06c",
+ "case_similarity": 1.0,
+ "observed_condition": "primary_threat_maintains",
+ "executed_code": 1,
+ "decision_source": "case[case-1044a06c]",
+ "branch": {
+  "condition_type": "primary_threat_maintains",
+  "condition": "threat keeps closing",
+  "code": 1,
+  "target_speed_mps": 0.0,
+  "rationale": "Follow the simulator's least-harm ranking.",
+  "confidence": 0.8
+ },
+ "timings": {
+  "monitor_ms": 1.305,
+  "features_ms": 0.055,
+  "rule_match_ms": 0.009,
+  "case_knn_ms": 0.045,
+  "evolution_ms": 0.046,
+  "trigger_path_total_ms": 1.471
+ },
+ "outcome": {
+  "severity": 1,
+  "text": "Near miss: minimum separation 0.05 m.",
+  "collision": null,
+  "hj_constraint": {
+   "worst_end_risk": 0.2,
+   "baseline_risk": 0.17,
+   "acceptable": true
+  }
+ },
+ "ran_at": "2026-07-07 18:46:03"
+}

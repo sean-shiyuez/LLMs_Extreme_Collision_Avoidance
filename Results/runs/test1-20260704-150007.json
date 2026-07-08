@@ -1,0 +1,349 @@
+{
+ "scenario": "test1",
+ "description": "Intersection: a large truck approaches laterally from the left at 8 m/s while a pedestrian stands ahead-left. Ported from legacy Test_scene/scenario_manager_test1.py; preview snapshot extrapolated 1 s backwards.",
+ "mock": false,
+ "profile": "realtime",
+ "started_at": "2026-07-04 14:59:52",
+ "phases": {
+  "reflex_preview": {
+   "elapsed_ms": 16.13,
+   "scene_risk": 0.426,
+   "band": "elevated",
+   "min_ttc_s": 2.104878048780488,
+   "primary_threat": "pedestrian",
+   "per_target": {
+    "truck1": {
+     "hj_risk": 0.42,
+     "ttc_s": 2.1,
+     "miss_m": 3.12,
+     "on_collision_course": true,
+     "urgency": 0.298,
+     "combined": 0.371
+    },
+    "pedestrian": {
+     "hj_risk": 0.71,
+     "ttc_s": null,
+     "miss_m": 4.0,
+     "on_collision_course": false,
+     "urgency": 0.0,
+     "combined": 0.426
+    }
+   },
+   "budget": {
+    "deadline_s": 1.604878048780488,
+    "decision_role": "decision",
+    "allow_vision": true,
+    "allow_debate": true,
+    "max_tool_iters": 6,
+    "tier": "deliberate"
+   }
+  },
+  "deliberation": {
+   "elapsed_s": 11.154,
+   "deadline_s": 1.6,
+   "deadline_met": false,
+   "armed_policy": {
+    "scenario_name": "test1",
+    "source": "precomputed",
+    "primary_threat": "truck1",
+    "deliberation_s": 11.154,
+    "branches": [
+     {
+      "condition_type": "secondary_threat_activates",
+      "condition": "truck1 accelerates or continues closing laterally such that a left-side impact is imminent with TTC <= 1.3 s, while the pedestrian is not in the rightward swept path",
+      "code": 6,
+      "target_speed_mps": 0.0,
+      "rationale": "Truck1 is ahead-left, within the 8 m lateral trigger distance at execution, closing laterally at about 8 m/s, and has TTC about 1.2 s. This satisfies the T-drift criterion. Code 6 points the ego nose right so the rear faces the incoming truck from the left, using the rear crash structure instead of exposing the weak side. This is physically different from the previously vetoed straight-line braking fallback. [revised by debate arbiter]",
+      "confidence": 0.74
+     },
+     {
+      "condition_type": "primary_threat_accelerates",
+      "condition": "pedestrian moves further into the ego/left-forward conflict area or pedestrian position uncertainty increases",
+      "code": 4,
+      "target_speed_mps": 3.0,
+      "rationale": "The left corridor is occupied by a vulnerable pedestrian, so steering left is prohibited. The right corridor is clear. Right lane change with braking moves away from the pedestrian while reducing speed. Target 3 m/s is feasible on sunny/good-friction pavement: reducing from 10 to 3 m/s at about 8 m/s² requires roughly 5.7 m, within the approximately 7 m longitudinal gap at anticipated execution. Rollout for code 4 reduced pedestrian end HJ risk to 0.29, far better than braking-only or sharp right without braking.",
+      "confidence": 0.82
+     },
+     {
+      "condition_type": "primary_threat_maintains",
+      "condition": "pedestrian remains stationary near the forward-left conflict area and truck1 does not yet make an unavoidable side-impact condition",
+      "code": 4,
+      "target_speed_mps": 3.0,
+      "rationale": "The pedestrian remains the highest vulnerability threat, and the left side is unavailable. Code 4 uses the clear right corridor while braking, matching the historical lesson not to rely on straight-line braking alone when a large crossing truck is present. Target 3 m/s is justified by good road friction and the remaining gap: decelerating from 10 to 3 m/s needs about 5.7 m, less than the 7 m pedestrian longitudinal gap, while the lateral escape increases pedestrian clearance.",
+      "confidence": 0.83
+     },
+     {
+      "condition_type": "primary_threat_yields",
+      "condition": "pedestrian clearly retreats or clears the forward-left conflict zone before ego reaches it, while truck1 remains on the lateral crossing course",
+      "code": 6,
+      "target_speed_mps": 0.0,
+      "rationale": "If the vulnerable-road-user conflict is resolved, the dominant remaining danger is the laterally crossing truck. With truck1 TTC about 1.2 s and lateral closing speed above 4 m/s, code 6 rotates the ego vehicle so any unavoidable truck impact is preferentially taken on the rear rather than the side, reducing crash severity and EV side/battery fire risk.",
+      "confidence": 0.7
+     },
+     {
+      "condition_type": "default",
+      "condition": "default: perception is ambiguous, branch predicates are not cleanly satisfied, or the scene evolves within expected uncertainty",
+      "code": 4,
+      "target_speed_mps": 3.0,
+      "rationale": "The default must avoid the previously vetoed full-brake-only fallback. Code 4 is the most robust defensible maneuver: it does not steer toward the pedestrian, uses the clear right corridor, adds braking for speed control, and follows the historical lesson to combine braking with an escape path away from the crossing truck. Target 3 m/s is feasible on good-friction pavement within the available gap and materially reduces harm risk versus sharp right without braking.",
+      "confidence": 0.78
+     }
+    ]
+   },
+   "safety_rounds": 1,
+   "debate_ran": true
+  },
+  "reflex_trigger": {
+   "scene_risk": 0.703,
+   "band": "critical",
+   "assess_ms": 0.14,
+   "match_ms": 0.13,
+   "trigger_decision_latency_ms": 0.28,
+   "executed_code": 4,
+   "maneuver": "Turn right to change lanes, with braking",
+   "decision_source": "armed_policy[primary_threat_maintains]",
+   "matched_branch": {
+    "condition_type": "primary_threat_maintains",
+    "condition": "pedestrian remains stationary near the forward-left conflict area and truck1 does not yet make an unavoidable side-impact condition",
+    "code": 4,
+    "target_speed_mps": 3.0,
+    "rationale": "The pedestrian remains the highest vulnerability threat, and the left side is unavailable. Code 4 uses the clear right corridor while braking, matching the historical lesson not to rely on straight-line braking alone when a large crossing truck is present. Target 3 m/s is justified by good road friction and the remaining gap: decelerating from 10 to 3 m/s needs about 5.7 m, less than the 7 m pedestrian longitudinal gap, while the lateral escape increases pedestrian clearance.",
+    "confidence": 0.83
+   }
+  },
+  "consolidation": {
+   "assessment": "Code 4 was ineffective: the “right lane change while braking” maneuver directly produced a side collision with the nearby large truck, then caused vehicle instability. The rationale underestimated how constrained the geometry was around a moving (8 m/s lateral) truck, so the lateral escape path was not actually clear/safe. Overall, the maneuver increased risk rather than resolving it.",
+   "lesson": "When a large adjacent vehicle is near and moving laterally, do NOT commit to a lateral lane-change based on assumed “clear corridor” and relative gap estimates; instead, prioritize maintaining a straight, fully controlled trajectory with maximum deceleration until the lateral path is verifiably clear (confirm relative motion and space in the target corridor before any yaw/side move).",
+   "better_alternative": "None"
+  }
+ },
+ "execution_outcome": "Side collision with the truck occurred, followed by vehicle instability. Both vehicle damage and injuries were severe.",
+ "trace": [
+  {
+   "phase": "deliberation",
+   "agent": "orchestrator",
+   "output": "scene projected 0.90s forward to the anticipated execution state (risk 0.666)"
+  },
+  {
+   "phase": "deliberation",
+   "agent": "risk",
+   "t_wall": 1783148392.332393,
+   "output": {
+    "summary": "Primary threat truck1: HJ risk 0.71, TTC 1.2 s, on collision course: True. Braking alone IS sufficient (stopping 6.25 m vs gap None m). Left corridor occupied by pedestrian; right corridor free.",
+    "primary_threat": "truck1"
+   },
+   "note": "deterministic template (realtime profile)"
+  },
+  {
+   "phase": "deliberation",
+   "agent": "memory",
+   "t_wall": 1783148396.9025002,
+   "output": {
+    "cases": [
+     {
+      "scenario": "EGO: small car, v=(10.0,0.0)m/s, road=Intersection, weather=Sunny (good road conditions)\nLARGE TRUCK truck1: 23.0m ahead, 14.4m left, v=(0.0,8.0)m/s, intention=Maintain\nPEDESTRIAN pedestrian: 16.0m ahead, 4.0m left, v=(0.0,0.0)m/s, intention=Maintain",
+      "decision_code": "6",
+      "outcome": "Rear collision with the truck occurred. Due to low relative velocity, no injuries were sustained.",
+      "lesson": "In a close cross-traffic conflict, do not commit to a side-rotation maneuver unless you have a verified escape path; if the obstacle is already inside the stopping/evading envelope, prioritize the maneuver that maximizes full-body clearance and preserves braking while keeping the vehicle stable.",
+      "distance": 0.0
+     },
+     {
+      "scenario": "EGO: small car, v=(10.0,0.0)m/s, road=Intersection, weather=Sunny (good road conditions)\nLARGE TRUCK truck1: 23.0m ahead, 14.4m left, v=(0.0,8.0)m/s, intention=Maintain\nPEDESTRIAN pedestrian: 16.0m ahead, 4.0m left, v=(0.0,0.0)m/s, intention=Maintain",
+      "decision_code": "0",
+      "outcome": "Side collision with the truck occurred, followed by vehicle instability. Both vehicle damage and injuries were severe.",
+      "lesson": "In an intersection, if a large vehicle is crossing laterally, do not rely on straight-line hard braking alone; immediately assess lateral threat and, if space exists, combine braking with an escape path away from the crossing vehicle while maintaining stability.",
+      "distance": 0.0
+     }
+    ],
+    "precomputed_policy": {
+     "distance": 0.0,
+     "policy_tree": {
+      "branches": [
+       {
+        "code": 6,
+        "condition": "truck1 accelerates or continues closing laterally such that a left-side impact is imminent with TTC <= 1.3 s, while the pedestrian is not in the rightward swept path",
+        "condition_type": "secondary_threat_activates",
+        "confidence": 0.74,
+        "rationale": "Truck1 is ahead-left, within the 8 m lateral trigger distance at execution, closing laterally at about 8 m/s, and has TTC about 1.2 s. This satisfies the T-drift criterion. Code 6 points the ego nose right so the rear faces the incoming truck from the left, using the rear crash structure instead of exposing the weak side. This is physically different from the previously vetoed straight-line braking fallback.",
+        "target_speed_mps": 0
+       },
+       {
+        "code": 4,
+        "condition": "pedestrian moves further into the ego/left-forward conflict area or pedestrian position uncertainty increases",
+        "condition_type": "primary_threat_accelerates",
+        "confidence": 0.82,
+        "rationale": "The left corridor is occupied by a vulnerable pedestrian, so steering left is prohibited. The right corridor is clear. Right lane change with braking moves away from the pedestrian while reducing speed. Target 3 m/s is feasible on sunny/good-friction pavement: reducing from 10 to 3 m/s at about 8 m/s² requires roughly 5.7 m, within the approximately 7 m longitudinal gap at anticipated execution. Rollout for code 4 reduced pedestrian end HJ risk to 0.29, far better than braking-only or sharp right without braking.",
+        "target_speed_mps": 3
+       },
+       {
+        "code": 4,
+        "condition": "pedestrian remains stationary near the forward-left conflict area and truck1 does not yet make an unavoidable side-impact condition",
+        "condition_type": "primary_threat_maintains",
+        "confidence": 0.83,
+        "rationale": "The pedestrian remains the highest vulnerability threat, and the left side is unavailable. Code 4 uses the clear right corridor while braking, matching the historical lesson not to rely on straight-line braking alone when a large crossing truck is present. Target 3 m/s is justified by good road friction and the remaining gap: decelerating from 10 to 3 m/s needs about 5.7 m, less than the 7 m pedestrian longitudinal gap, while the lateral escape increases pedestrian clearance.",
+        "target_speed_mps": 3
+       },
+       {
+        "code": 6,
+        "condition": "pedestrian clearly retreats or clears the forward-left conflict zone before ego reaches it, while truck1 remains on the lateral crossing course",
+        "condition_type": "primary_threat_yields",
+        "confidence": 0.7,
+        "rationale": "If the vulnerable-road-user conflict is resolved, the dominant remaining danger is the laterally crossing truck. With truck1 TTC about 1.2 s and lateral closing speed above 4 m/s, code 6 rotates the ego vehicle so any unavoidable truck impact is preferentially taken on the rear rather than the side, reducing crash severity and EV side/battery fire risk.",
+        "target_speed_mps": 0
+       },
+       {
+        "code": 4,
+        "condition": "default: perception is ambiguous, branch predicates are not cleanly satisfied, or the scene evolves within expected uncertainty",
+        "condition_type": "default",
+        "confidence": 0.78,
+        "rationale": "The default must avoid the previously vetoed full-brake-only fallback. Code 4 is the most robust defensible maneuver: it does not steer toward the pedestrian, uses the clear right corridor, adds braking for speed control, and follows the historical lesson to combine braking with an escape path away from the crossing truck. Target 3 m/s is feasible on good-friction pavement within the available gap and materially reduces harm risk versus sharp right without braking.",
+        "target_speed_mps": 3
+       }
+      ],
+      "overall_rationale": "Evidence gathered before decision: full braking from 10 m/s at 8 m/s² needs 6.25 m and is physically feasible, but a prior safety veto and the retrieved historical case both show that straight-line hard braking alone is hazardous here because the crossing truck can still strike the ego side. Left corridor is occupied by a vulnerable pedestrian and is therefore forbidden; right corridor is clear. Pedestrian HJ risk is high at 0.94, and truck1 is on a collision course with TTC about 1.2 s. Rollouts showed code 4 is the best robust pedestrian-safe default, while code 6 is reserved for the truck-dominant unavoidable lateral-impact case because it presents the rear, not the side, to the incoming truck. Codes 1, 3, and 5 are rejected because they steer toward the occupied left side; code 2 is rejected because sharp right without braking had only 1.26 m minimum separation and worst HJ risk 1.0; code 0 is rejected by the previous safety veto; and code 7 is inappropriate because intervention is required."
+     },
+     "scenario_name": "test1"
+    }
+   },
+   "elapsed_s": 4.57
+  },
+  {
+   "phase": "deliberation",
+   "agent": "perception",
+   "t_wall": 1783148397.982628,
+   "output": {
+    "summary": "Ego is approaching an intersection at 10 m/s with two hazards ahead-left. A pedestrian is closer and more critical, located 16 m ahead and 4 m left, stationary in the ego's left-front corridor. A large truck is farther ahead-left at 23 m ahead and 14.4 m left, moving laterally leftward across the scene, creating a broader but less immediate conflict.",
+    "hazards": [
+     {
+      "id": "pedestrian",
+      "kind": "pedestrian",
+      "note": "16 m ahead, 4 m left; stationary; highest immediate collision risk in left-front path."
+     },
+     {
+      "id": "truck1",
+      "kind": "large truck",
+      "note": "23 m ahead, 14.4 m left; moving laterally (v=(0,8) m/s); potential crossing/occluding hazard."
+     }
+    ],
+    "free_corridor_left": false,
+    "free_corridor_right": true,
+    "occlusions": "Left-front corridor is occupied by the pedestrian; truck1 may partially occlude farther-left intersection space and could obscure additional cross-traffic. Right corridor appears geometrically open in the BEV.",
+    "primary_threat": "pedestrian"
+   },
+   "model": "gpt-5.4-mini",
+   "elapsed_s": 5.501,
+   "usage": {
+    "prompt_tokens": 1067,
+    "completion_tokens": 236
+   },
+   "tool_calls": []
+  },
+  {
+   "phase": "deliberation",
+   "agent": "memory",
+   "output": "precomputed policy reused (distance 0.0)"
+  },
+  {
+   "phase": "deliberation",
+   "agent": "debate",
+   "t_wall": 1783148403.4838321,
+   "output": {
+    "safety_argument": "We must prioritize the pedestrian, so any policy that includes code 6 “nose right / rear impact via truck” risks side/secondary contact at a TTC~1.2 s, which is worst-case harm to a vulnerable road user if the vehicle rotation or timing is off. Braking-only can still be acceptable only if it demonstrably prevents both the pedestrian conflict and the truck side-impact; however your own summary states braking-alone is sufficient to stop before the crossing, and the policy’s justification for avoiding it is inconsistent with the given distances. Therefore revise: remove/strictly gate code 6 so it triggers only when the pedestrian is already cleared with high certainty and stopping is infeasible, otherwise always execute code 4 with maximum safe deceleration to minimize speed before the intersection. In this scenario, the safest worst-case is: brake first while steering away from the pedestrian (right corridor), not a maneuver designed to “prefer rear impact” under uncertainty.",
+    "efficiency_argument": "Even if the truck produces a low TTC (~1.2 s), the most defensible choice under good road conditions is the mildest maneuver that avoids the pedestrian while reducing speed: a controlled rightward lane escape with braking (your Code 4). Escalating to Code 6 (rotating to put the truck on the rear) is an overreaction unless a side-impact is truly imminent and unavoidable; otherwise it increases yaw/instability and the chance of secondary conflicts like a loss of control or misalignment into the pedestrian’s zone. Since the left corridor is forbidden and the right corridor is clear, we should not gamble on re-orienting the vehicle to change impact “type” when speed reduction already improves both truck and pedestrian outcomes. Therefore, prioritize Code 4 as the robust default and reserve Code 6 only for a clearly confirmed, imminent left-side collision condition—not just moderate closing.",
+    "resolution": "Maintain Code 4 as the default and primary response; do not broaden Code 6. The pedestrian occupies the left corridor, the right corridor is clear, and braking-plus-right escape is the safest robust maneuver under the stated uncertainty. Code 6 should remain tightly gated to a truly imminent, unavoidable left-side truck impact after the pedestrian has clearly cleared; otherwise it creates unnecessary yaw/secondary-risk exposure.",
+    "revisions": {
+     "secondary_threat_activates": 6
+    }
+   },
+   "model": "gpt-5.4-mini",
+   "elapsed_s": 1.956,
+   "usage": {
+    "prompt_tokens": 1839,
+    "completion_tokens": 111
+   },
+   "tool_calls": []
+  },
+  {
+   "phase": "deliberation",
+   "agent": "safety",
+   "t_wall": 1783148403.485921,
+   "output": {
+    "round": 1,
+    "approved": true,
+    "veto_reason": ""
+   },
+   "branch_verdicts": [
+    {
+     "condition_type": "secondary_threat_activates",
+     "code": 6,
+     "approved": true,
+     "violations": []
+    },
+    {
+     "condition_type": "primary_threat_accelerates",
+     "code": 4,
+     "approved": true,
+     "violations": []
+    },
+    {
+     "condition_type": "primary_threat_maintains",
+     "code": 4,
+     "approved": true,
+     "violations": []
+    },
+    {
+     "condition_type": "primary_threat_yields",
+     "code": 6,
+     "approved": true,
+     "violations": []
+    },
+    {
+     "condition_type": "default",
+     "code": 4,
+     "approved": true,
+     "violations": []
+    }
+   ]
+  },
+  {
+   "phase": "consolidation",
+   "agent": "evaluation",
+   "t_wall": 1783148405.5622652,
+   "output": {
+    "assessment": "Code 4 was ineffective: the “right lane change while braking” maneuver directly produced a side collision with the nearby large truck, then caused vehicle instability. The rationale underestimated how constrained the geometry was around a moving (8 m/s lateral) truck, so the lateral escape path was not actually clear/safe. Overall, the maneuver increased risk rather than resolving it.",
+    "lesson": "When a large adjacent vehicle is near and moving laterally, do NOT commit to a lateral lane-change based on assumed “clear corridor” and relative gap estimates; instead, prioritize maintaining a straight, fully controlled trajectory with maximum deceleration until the lateral path is verifiably clear (confirm relative motion and space in the target corridor before any yaw/side move).",
+    "better_alternative": "None"
+   },
+   "model": "gpt-5.4-nano",
+   "elapsed_s": 2.076,
+   "usage": {
+    "prompt_tokens": 405,
+    "completion_tokens": 164
+   },
+   "tool_calls": []
+  },
+  {
+   "phase": "consolidation",
+   "agent": "memory",
+   "t_wall": 1783148407.0454998,
+   "output": {
+    "stored_case_id": "test1-4b417e45"
+   }
+  },
+  {
+   "phase": "consolidation",
+   "agent": "evaluation",
+   "t_wall": 1783148407.046251,
+   "output": {
+    "distill_sample_appended": "/Users/shown/Seafile/LLM+避撞问题/Code/fine-tuning/maca_distill.jsonl",
+    "at": "15:00:07"
+   }
+  }
+ ],
+ "latency_summary": {
+  "reflex_preview_ms": 16.13,
+  "deliberation_s": 11.154,
+  "trigger_decision_latency_ms": 0.28,
+  "llm_calls_on_trigger_path": 0
+ }
+}

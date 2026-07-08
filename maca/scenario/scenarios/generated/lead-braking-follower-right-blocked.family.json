@@ -1,0 +1,39 @@
+{
+ "description": "Unexplored lead-braking family: ego follows a same-lane lead vehicle that suddenly performs hard braking in a normal road segment. The right escape corridor is blocked, the left corridor is nominally available, and a follower behind the ego makes pure braking potentially risky. Lead and follower placements are deterministic: lead headway is chosen so the no-action ego reaches collision at the swept TTC, and follower distance is set by the swept rear gap.",
+ "family_id": "lead-braking-follower-right-blocked",
+ "hypothesis": "For lead braking with a rear follower, pure braking dominates when TTC and rear gap are large, but evasive movement into the left corridor dominates when rear gap is short and the left escape gap is sufficient; with low TTC or small escape gap, controlled braking/front-impact mitigation should re-emerge.",
+ "parameters": [
+  {
+   "name": "ego_speed",
+   "min": 5.0,
+   "max": 30.0,
+   "steps": 3
+  },
+  {
+   "name": "gap",
+   "min": 3.0,
+   "max": 60.0,
+   "steps": 3
+  },
+  {
+   "name": "speed_diff",
+   "min": 0.0,
+   "max": 12.0,
+   "steps": 3
+  }
+ ],
+ "pattern": "lead_braking",
+ "template": {
+  "blocked_side": "right",
+  "follower": true,
+  "from_side": "left",
+  "pedestrian": {
+   "present": false,
+   "side": "left"
+  },
+  "road_boundary_left": null,
+  "road_boundary_right": null,
+  "road_topology": "Normal Road",
+  "threat_type": "lead_braking_vehicle"
+ }
+}

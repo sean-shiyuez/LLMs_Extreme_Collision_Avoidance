@@ -1,0 +1,39 @@
+{
+ "family_id": "mock-crossing-escape-window",
+ "description": "Mock family: left-crossing truck with more lateral room — probing the escape window inside the seed T-drift rule's claimed region.",
+ "pattern": "lateral_crossing",
+ "template": {
+  "road_topology": "Intersection",
+  "threat_type": "Large Truck",
+  "from_side": "left",
+  "pedestrian": {
+   "present": false,
+   "side": "left"
+  },
+  "road_boundary_left": null,
+  "road_boundary_right": null,
+  "follower": false,
+  "blocked_side": null
+ },
+ "parameters": [
+  {
+   "name": "ego_speed",
+   "min": 14.0,
+   "max": 16.0,
+   "steps": 2
+  },
+  {
+   "name": "ttc",
+   "min": 1.1,
+   "max": 1.7,
+   "steps": 3
+  },
+  {
+   "name": "lateral_speed",
+   "min": 7.0,
+   "max": 9.0,
+   "steps": 2
+  }
+ ],
+ "hypothesis": "With enough lateral room a sharp far-side lane change escapes cleanly, so the T-drift seed rule overclaims here."
+}

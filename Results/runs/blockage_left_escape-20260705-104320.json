@@ -1,0 +1,69 @@
+{
+ "scenario": "blockage_left_escape",
+ "libraries": {
+  "rules_active": 6,
+  "cases": 13
+ },
+ "assessment": {
+  "scene_risk": 0.6,
+  "band": "elevated",
+  "min_ttc_s": 1.3333333333333333,
+  "primary_threat": "blockage"
+ },
+ "features": {
+  "discrete": {
+   "road_topology": "Normal Road",
+   "threat_kind": "obstacle",
+   "approach_sector": "front",
+   "pedestrian_side": "none",
+   "corridor_left_free": true,
+   "corridor_right_free": false,
+   "braking_sufficient": false,
+   "on_collision_course": true
+  },
+  "numeric": {
+   "ttc_s": 1.33,
+   "miss_m": 0.0,
+   "lateral_dist_m": 0.0,
+   "lateral_speed_mps": 0.0,
+   "closing_speed_mps": 24.0,
+   "ego_speed_mps": 24.0,
+   "hj_risk": 0.39,
+   "threat_dist_m": 32.0,
+   "scene_risk": 0.6
+  }
+ },
+ "rule_hit": null,
+ "case_hit": "case-c23bf884",
+ "case_similarity": 1.0,
+ "observed_condition": "primary_threat_maintains",
+ "executed_code": 3,
+ "decision_source": "case[case-c23bf884]",
+ "branch": {
+  "condition_type": "primary_threat_maintains",
+  "condition": "threat keeps closing",
+  "code": 3,
+  "target_speed_mps": 0.0,
+  "rationale": "Follow the simulator's least-harm ranking.",
+  "confidence": 0.8
+ },
+ "timings": {
+  "monitor_ms": 1.212,
+  "features_ms": 0.096,
+  "rule_match_ms": 0.005,
+  "case_knn_ms": 0.047,
+  "evolution_ms": 0.067,
+  "trigger_path_total_ms": 1.441
+ },
+ "outcome": {
+  "severity": 0,
+  "text": "No collision; minimum separation 0.6 m.",
+  "collision": null,
+  "hj_constraint": {
+   "worst_end_risk": 0.7,
+   "baseline_risk": 1.0,
+   "acceptable": true
+  }
+ },
+ "ran_at": "2026-07-05 10:43:20"
+}

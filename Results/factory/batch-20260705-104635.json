@@ -1,0 +1,202 @@
+{
+ "started_at": "2026-07-05 10:46:34",
+ "mock": true,
+ "source": "both",
+ "queue_processed": [
+  {
+   "kind": "conflict",
+   "scenario": "cross_escape",
+   "skipped": true,
+   "covered_by": "case:case-f438c936"
+  }
+ ],
+ "families": [
+  {
+   "family_id": "mock-lateral-crossing-left",
+   "pattern": "lateral_crossing",
+   "hypothesis": "T-drift should dominate at short TTC / fast lateral closing; braking or no-op should win at long TTC.",
+   "generator": {
+    "model": "mock-generator",
+    "elapsed_s": 0.0,
+    "usage": {
+     "prompt_tokens": 0,
+     "completion_tokens": 0
+    }
+   },
+   "points": 12,
+   "lawful": 8,
+   "lawful_uncovered": 0,
+   "ambiguous": 4,
+   "rule_counterexamples": 0,
+   "rules": [],
+   "cases": [],
+   "skipped_covered_points": 4,
+   "consolidator": {
+    "skipped": true,
+    "reason": "lawful region already covered (8 points, 0 uncovered)"
+   }
+  },
+  {
+   "family_id": "mock-crossing-escape-window",
+   "pattern": "lateral_crossing",
+   "hypothesis": "With enough lateral room a sharp far-side lane change escapes cleanly, so the T-drift seed rule overclaims here.",
+   "generator": {
+    "model": "mock-generator",
+    "elapsed_s": 0.0,
+    "usage": {
+     "prompt_tokens": 0,
+     "completion_tokens": 0
+    }
+   },
+   "points": 12,
+   "lawful": 12,
+   "lawful_uncovered": 8,
+   "ambiguous": 0,
+   "rule_counterexamples": 4,
+   "rules": [
+    {
+     "rule_id": "mock-crossing-escape-window-r1",
+     "status": "active",
+     "checked": 12,
+     "failures": [],
+     "pass_rate": 1.0,
+     "promoted": true
+    }
+   ],
+   "cases": [],
+   "skipped_covered_points": 0,
+   "consolidator": {
+    "accepted": 1,
+    "rejected": 0,
+    "trace": [
+     {
+      "agent": "consolidator",
+      "round": 1,
+      "model": "mock-consolidator",
+      "elapsed_s": 0.0,
+      "n_proposals": 1,
+      "analysis": "Mock consolidation via the no-LLM induction baseline."
+     }
+    ]
+   }
+  },
+  {
+   "family_id": "mock-cut-in-right",
+   "pattern": "cut_in",
+   "hypothesis": "Braking dominates close cut-ins; no intervention suffices at long gaps.",
+   "generator": {
+    "model": "mock-generator",
+    "elapsed_s": 0.0,
+    "usage": {
+     "prompt_tokens": 0,
+     "completion_tokens": 0
+    }
+   },
+   "points": 12,
+   "lawful": 12,
+   "lawful_uncovered": 10,
+   "ambiguous": 0,
+   "rule_counterexamples": 0,
+   "rules": [
+    {
+     "rule_id": "mock-cut-in-right-r1",
+     "status": "active",
+     "checked": 9,
+     "failures": [],
+     "pass_rate": 1.0,
+     "promoted": true
+    },
+    {
+     "rule_id": "mock-cut-in-right-r2",
+     "status": "active",
+     "checked": 9,
+     "failures": [],
+     "pass_rate": 1.0,
+     "promoted": true
+    }
+   ],
+   "cases": [],
+   "skipped_covered_points": 0,
+   "consolidator": {
+    "accepted": 2,
+    "rejected": 1,
+    "trace": [
+     {
+      "agent": "consolidator",
+      "round": 1,
+      "model": "mock-consolidator",
+      "elapsed_s": 0.0,
+      "n_proposals": 2,
+      "analysis": "Mock consolidation via the no-LLM induction baseline."
+     },
+     {
+      "agent": "consolidator",
+      "round": 2,
+      "model": "mock-consolidator",
+      "elapsed_s": 0.0,
+      "n_proposals": 2,
+      "analysis": "Mock consolidation via the no-LLM induction baseline."
+     }
+    ]
+   }
+  }
+ ],
+ "revalidation": [
+  {
+   "rule_id": "left-crossing-escape-side-ped-follower-r2",
+   "checked": 0,
+   "failures": [],
+   "pass_rate": 1.0,
+   "promoted": false,
+   "still_active": false
+  },
+  {
+   "rule_id": "mock-cut-in-right-r1",
+   "checked": 9,
+   "failures": [],
+   "pass_rate": 1.0,
+   "promoted": true,
+   "still_active": true
+  },
+  {
+   "rule_id": "mock-lateral-crossing-left-r1",
+   "checked": 8,
+   "failures": [],
+   "pass_rate": 1.0,
+   "promoted": true,
+   "still_active": true
+  },
+  {
+   "rule_id": "mock-cut-in-right-r2",
+   "checked": 9,
+   "failures": [],
+   "pass_rate": 1.0,
+   "promoted": true,
+   "still_active": true
+  },
+  {
+   "rule_id": "mock-crossing-escape-window-r1",
+   "checked": 12,
+   "failures": [],
+   "pass_rate": 1.0,
+   "promoted": true,
+   "still_active": true
+  }
+ ],
+ "library_before": {
+  "rules_total": 6,
+  "rules_active": 6,
+  "rules_candidate": 0,
+  "rules_deprecated": 0,
+  "cases": 15,
+  "queued": 1
+ },
+ "library_after": {
+  "rules_total": 9,
+  "rules_active": 8,
+  "rules_candidate": 0,
+  "rules_deprecated": 1,
+  "cases": 15,
+  "queued": 0
+ }
+}
